@@ -387,7 +387,6 @@ async function loadDataFromGitHub(filename) {
     $('loader').style.display = 'block';
     
     try {
-        // Al quitarle la carpeta, busca el Excel justo al lado del index.html
         const response = await fetch(filename);
         
         if (!response.ok) {
@@ -706,8 +705,10 @@ function renderChart() {
     });
 }
 
+// === CORRECCIÓN AQUÍ: querySelector en lugar de document.getElementById ===
+
 function renderDeviationTable() {
-    let tbody = $('#devTable tbody');
+    let tbody = document.querySelector('#devTable tbody');
     tbody.innerHTML = '';
     
     if(testingData.length === 0) {
@@ -737,7 +738,7 @@ function renderDeviationTable() {
 }
 
 function renderFutureTable() {
-    let tbody = $('#futureTable tbody');
+    let tbody = document.querySelector('#futureTable tbody');
     tbody.innerHTML = '';
     
     let fctOnlyFuture = futureForecast.filter(f => f.date > new Date($('filterTo').value + "T23:59:59"));
@@ -754,7 +755,7 @@ function renderFutureTable() {
 }
 
 function renderIndicesTable() {
-    let tbody = $('#indicesTable tbody');
+    let tbody = document.querySelector('#indicesTable tbody');
     tbody.innerHTML = '';
     
     for(let key in seasonalIndices) {
