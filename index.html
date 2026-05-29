@@ -99,6 +99,7 @@
   /* Alertas y Botones */
   .alert { padding: 12px 16px; border-radius: 6px; font-size: 13px; display: flex; align-items: center; gap: 8px; margin-bottom: 16px; font-weight: 500; }
   .alert-info { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
+  .alert-warning { background: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
   .loader { display: none; text-align: center; padding: 40px; color: var(--tp-magenta); font-weight: 600; }
   
   /* Scrollbars */
@@ -147,6 +148,14 @@
           </select>
         </div>
 
+        <div id="lowVolumeWarning" class="alert alert-warning" style="display:none; margin-top: 5px; margin-bottom: 15px;">
+          <i class="ti ti-alert-triangle"></i>
+          <div>
+            <b>Volumen bajo.</b><br>
+            <span style="font-size: 11px;">Para cuentas de &lt; 200 casos/día, sugerimos usar <b>Promedio Simple</b>.</span>
+          </div>
+        </div>
+
         <div class="input-group">
           <label>Ventana de Memoria (Días)</label>
           <input type="number" id="trendBaseInput" value="45" min="14" max="180">
@@ -171,8 +180,8 @@
 
       <div class="control-card" style="background: #f8fafc; border: 1px dashed #cbd5e1; box-shadow: none;">
         <div class="card-header" style="margin-bottom: 8px;"><i class="ti ti-upload"></i> Subida Manual Alternativa</div>
-        <span class="help-text" style="margin-bottom: 8px;">Usa esto si estás fuera de GitHub o quieres evaluar un archivo no estandarizado.</span>
-        <input type="file" id="fileInput" accept=".xlsx,.xls,.csv" style="width: 100%; font-size: 12px;">
+        <span class="help-text" style="margin-bottom: 8px;">Usa esto si estás fuera de GitHub o quieres evaluar un archivo local.</span>
+        <input type="file" id="fileInput" accept=".xlsx,.xls,.csv" style="width: 100%; font-size: 12px; background: white;">
       </div>
 
     </aside>
@@ -181,7 +190,13 @@
       
       <div id="loader" class="loader">
         <i class="ti ti-loader ti-spin" style="font-size: 32px; margin-bottom: 10px; display: block;"></i>
-        Procesando datos del repositorio GitHub...
+        Procesando datos...
+      </div>
+
+      <div class="control-card" id="emptyState" style="text-align: center; padding: 80px 20px; display: flex; flex-direction: column; align-items: center; gap: 16px;">
+        <i class="ti ti-presentation-analytics" style="font-size: 54px; opacity: 0.3; color: var(--text-main);"></i>
+        <h3 style="font-size: 18px; margin: 0;">Análisis Operativo de Llamadas</h3>
+        <p style="color: var(--text-muted);">Selecciona un servicio en la barra superior o carga un archivo manualmente<br>para entrenar el modelo predictivo.</p>
       </div>
 
       <div id="mainDashboard" style="display: none; flex-direction: column; gap: 24px;">
@@ -367,6 +382,7 @@ $('fileInput').addEventListener('change', e => {
 // ==========================================
 
 async function loadDataFromGitHub(filename) {
+    $('emptyState').style.display = 'none';
     $('mainDashboard').style.display = 'none';
     $('loader').style.display = 'block';
     
@@ -379,17 +395,18 @@ async function loadDataFromGitHub(filename) {
         parseWorkbook(wb, filename);
     } catch (error) {
         $('loader').style.display = 'none';
-        // Solo alertamos si no es local file fallback
+        $('emptyState').style.display = 'flex';
+        // Solo alertamos si no es local file fallback (Si la URL es http/https)
         if (window.location.protocol.includes('http')) {
-            alert(`Error cargando: ${filename}\n\nAsegúrate de haber subido la carpeta 'datos' con este archivo a GitHub.`);
+            alert(`Error cargando: ${filename}\n\nAsegúrate de haber subido la carpeta 'datos' con este archivo a tu repositorio de GitHub.`);
         } else {
-            // Si lo está abriendo en su PC directo haciendo doble clic (CORS block)
-            alert(`Para cargar automáticamente, el archivo debe estar en un servidor o GitHub.\nPor favor, usa la Subida Manual en el panel izquierdo.`);
+            console.log("Ambiente local detectado. Esperando subida manual de archivo.");
         }
     }
 }
 
 function readExcelFile(file) {
+    $('emptyState').style.display = 'none';
     $('mainDashboard').style.display = 'none';
     $('loader').style.display = 'block';
     
@@ -421,6 +438,7 @@ function parseWorkbook(wb, sourceName) {
     if(parsedData.length === 0) {
         alert("El Excel no tiene el formato correcto. Necesita columnas 'Fechas' y 'Recibidas'.");
         $('loader').style.display = 'none';
+        $('emptyState').style.display = 'flex';
         return;
     }
 
@@ -429,6 +447,7 @@ function parseWorkbook(wb, sourceName) {
 
     let lastDate = rawData[rawData.length - 1].date;
     let suggestedCutoff = new Date(lastDate);
+    // Por defecto, usar los últimos 7 días como prueba
     suggestedCutoff.setDate(suggestedCutoff.getDate() - 7);
     
     $('filterTo').value = formatISODate(suggestedCutoff);
@@ -482,6 +501,13 @@ function calculateBaseTrends() {
     if(n === 0) return;
 
     baseFlat = recent.reduce((s, d) => s + d.value, 0) / n;
+    
+    // Alerta de volumen bajo
+    if (baseFlat < 200 && $('trendMethodInput').value !== 'avg') {
+        $('lowVolumeWarning').style.display = 'flex';
+    } else {
+        $('lowVolumeWarning').style.display = 'none';
+    }
 
     let sumX = 0, sumY = 0, sumXY = 0, sumXX = 0;
     for (let i = 0; i < n; i++) {
@@ -588,7 +614,7 @@ function updateDashboardUI() {
     // KPI 1: Base
     $('kpiBase').innerText = Math.round($('trendMethodInput').value === 'ema' ? baseEma : ($('trendMethodInput').value === 'linear' ? getForecastValue(new Date(), 0) : baseFlat)).toLocaleString('es-CL');
     
-    // KPI 2: Precisión (WAPE)
+    // KPI 2: Precisión
     let absErrorSum = 0; let actualSum = 0;
     testingData.forEach(act => {
         let fct = futureForecast.find(f => f.date.getTime() === act.date.getTime());
