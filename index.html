@@ -387,18 +387,24 @@ async function loadDataFromGitHub(filename) {
     $('loader').style.display = 'block';
     
     try {
-        const response = await fetch(`./datos/${filename}`);
-        if (!response.ok) throw new Error("No se encontró el archivo");
-        const arrayBuffer = await response.arrayBuffer();
+        // Le quitamos el "./" inicial para que GitHub no se confunda con la ruta
+        const response = await fetch(`datos/${filename}`);
         
+        if (!response.ok) {
+            throw new Error(`Código de error HTTP: ${response.status}`);
+        }
+        
+        const arrayBuffer = await response.arrayBuffer();
         const wb = XLSX.read(arrayBuffer, {type: 'array', cellDates: true});
         parseWorkbook(wb, filename);
+        
     } catch (error) {
         $('loader').style.display = 'none';
         $('emptyState').style.display = 'flex';
-        // Solo alertamos si no es local file fallback (Si la URL es http/https)
+        
+        // Ahora la alerta nos dirá el motivo técnico real del fallo
         if (window.location.protocol.includes('http')) {
-            alert(`Error cargando: ${filename}\n\nAsegúrate de haber subido la carpeta 'datos' con este archivo a tu repositorio de GitHub.`);
+            alert(`🚨 DETALLE TÉCNICO DEL ERROR:\n${error.message}\n\nEl sistema intentó buscar el archivo en: datos/${filename}`);
         } else {
             console.log("Ambiente local detectado. Esperando subida manual de archivo.");
         }
