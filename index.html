@@ -93,17 +93,14 @@
   .cell-date { font-weight: 600; color: var(--text-main); }
   .cell-fct { font-weight: 700; color: var(--tp-blue); background: rgba(30,58,138,0.03); }
   .cell-real { font-weight: 700; color: var(--text-main); }
-  .cell-var-pos { color: var(--danger); font-weight: 600; } /* Entró más de lo esperado (Peligro SLAs) */
-  .cell-var-neg { color: var(--success); font-weight: 600; } /* Entró menos (Holgura) */
+  .cell-var-pos { color: var(--danger); font-weight: 600; } 
+  .cell-var-neg { color: var(--success); font-weight: 600; } 
 
   /* Alertas y Botones */
   .alert { padding: 12px 16px; border-radius: 6px; font-size: 13px; display: flex; align-items: center; gap: 8px; margin-bottom: 16px; font-weight: 500; }
   .alert-info { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
   .loader { display: none; text-align: center; padding: 40px; color: var(--tp-magenta); font-weight: 600; }
   
-  .manual-upload { display: flex; gap: 10px; margin-top: 10px; }
-  .manual-upload input { font-size: 12px; }
-
   /* Scrollbars */
   .table-wrapper { max-height: 500px; overflow-y: auto; }
   ::-webkit-scrollbar { width: 8px; height: 8px; }
@@ -187,11 +184,10 @@
         Procesando datos del repositorio GitHub...
       </div>
 
-      <div id="dashboard" style="display: none; flex-direction: column; gap: 24px;">
+      <div id="mainDashboard" style="display: none; flex-direction: column; gap: 24px;">
         
         <div class="alert alert-info" id="dataInfoAlert">
-          <i class="ti ti-info-square-rounded"></i> <span>Datos cargados.</span>
-        </div>
+            </div>
 
         <div class="kpi-grid">
           <div class="kpi-card">
@@ -309,6 +305,11 @@ let chartInstance = null;
 // ==========================================
 const $ = id => document.getElementById(id);
 
+// Cargar primer servicio por defecto al entrar
+window.addEventListener('DOMContentLoaded', () => {
+    loadDataFromGitHub($('serviceSelect').value);
+});
+
 // Pestañas
 document.querySelectorAll('.tab-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
@@ -366,24 +367,30 @@ $('fileInput').addEventListener('change', e => {
 // ==========================================
 
 async function loadDataFromGitHub(filename) {
-    $('dashboard').style.display = 'none';
+    $('mainDashboard').style.display = 'none';
     $('loader').style.display = 'block';
     
     try {
         const response = await fetch(`./datos/${filename}`);
-        if (!response.ok) throw new Error("No se encontró el archivo en el repositorio.");
+        if (!response.ok) throw new Error("No se encontró el archivo");
         const arrayBuffer = await response.arrayBuffer();
         
         const wb = XLSX.read(arrayBuffer, {type: 'array', cellDates: true});
         parseWorkbook(wb, filename);
     } catch (error) {
         $('loader').style.display = 'none';
-        alert(`Error cargando archivo: ${error.message}\n\nAsegúrate de tener la carpeta 'datos' con los archivos Excel en tu repositorio de GitHub, o usa la subida manual.`);
+        // Solo alertamos si no es local file fallback
+        if (window.location.protocol.includes('http')) {
+            alert(`Error cargando: ${filename}\n\nAsegúrate de haber subido la carpeta 'datos' con este archivo a GitHub.`);
+        } else {
+            // Si lo está abriendo en su PC directo haciendo doble clic (CORS block)
+            alert(`Para cargar automáticamente, el archivo debe estar en un servidor o GitHub.\nPor favor, usa la Subida Manual en el panel izquierdo.`);
+        }
     }
 }
 
 function readExcelFile(file) {
-    $('dashboard').style.display = 'none';
+    $('mainDashboard').style.display = 'none';
     $('loader').style.display = 'block';
     
     const reader = new FileReader();
@@ -425,7 +432,7 @@ function parseWorkbook(wb, sourceName) {
     suggestedCutoff.setDate(suggestedCutoff.getDate() - 7);
     
     $('filterTo').value = formatISODate(suggestedCutoff);
-    $('dataInfoAlert').innerHTML = `<i class="ti ti-table"></i> <span>Datos analizados desde <b>${sourceName}</b> (${rawData.length} días históricos encontrados).</span>`;
+    $('dataInfoAlert').innerHTML = `<i class="ti ti-circle-check" style="font-size: 18px;"></i> <span>Servicio <b>${sourceName}</b> conectado. ${rawData.length} registros cargados exitosamente.</span>`;
     
     processModel();
 }
@@ -464,7 +471,7 @@ function processModel() {
     updateDashboardUI();
     
     $('loader').style.display = 'none';
-    $('dashboard').style.display = 'flex';
+    $('mainDashboard').style.display = 'flex';
 }
 
 function calculateBaseTrends() {
@@ -581,7 +588,7 @@ function updateDashboardUI() {
     // KPI 1: Base
     $('kpiBase').innerText = Math.round($('trendMethodInput').value === 'ema' ? baseEma : ($('trendMethodInput').value === 'linear' ? getForecastValue(new Date(), 0) : baseFlat)).toLocaleString('es-CL');
     
-    // KPI 2: Precisión
+    // KPI 2: Precisión (WAPE)
     let absErrorSum = 0; let actualSum = 0;
     testingData.forEach(act => {
         let fct = futureForecast.find(f => f.date.getTime() === act.date.getTime());
