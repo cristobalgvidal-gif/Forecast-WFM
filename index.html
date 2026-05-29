@@ -387,11 +387,11 @@ async function loadDataFromGitHub(filename) {
     $('loader').style.display = 'block';
     
     try {
-        // Le quitamos el "./" inicial para que GitHub no se confunda con la ruta
-        const response = await fetch(`datos/${filename}`);
+        // Al quitarle la carpeta, busca el Excel justo al lado del index.html
+        const response = await fetch(filename);
         
         if (!response.ok) {
-            throw new Error(`Código de error HTTP: ${response.status}`);
+            throw new Error(`Código HTTP: ${response.status}. Archivo no encontrado.`);
         }
         
         const arrayBuffer = await response.arrayBuffer();
@@ -402,9 +402,8 @@ async function loadDataFromGitHub(filename) {
         $('loader').style.display = 'none';
         $('emptyState').style.display = 'flex';
         
-        // Ahora la alerta nos dirá el motivo técnico real del fallo
         if (window.location.protocol.includes('http')) {
-            alert(`🚨 DETALLE TÉCNICO DEL ERROR:\n${error.message}\n\nEl sistema intentó buscar el archivo en: datos/${filename}`);
+            alert(`🚨 ERROR DE LECTURA:\n${error.message}\n\nAsegúrate de que el archivo ${filename} esté subido junto al index.html`);
         } else {
             console.log("Ambiente local detectado. Esperando subida manual de archivo.");
         }
