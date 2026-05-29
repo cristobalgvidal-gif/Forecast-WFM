@@ -3,289 +3,209 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TP Chile | WFM Executive Forecast v2</title>
+<title>TP Chile | WFM Executive Forecast v2.5</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-:root {
-  --bg: #f0f2f5;
-  --surface: #ffffff;
-  --surface2: #f8f9fb;
-  --border: #e4e7ed;
-  --border-strong: #d0d5de;
-  --text: #0f1623;
-  --muted: #6b7585;
-  --muted2: #9ba3b0;
-  --magenta: #C80064;
-  --magenta-dim: rgba(200,0,100,0.08);
-  --magenta-mid: rgba(200,0,100,0.15);
-  --blue: #1a3a78;
-  --blue-dim: rgba(26,58,120,0.06);
-  --green: #0b6e4f;
-  --green-dim: rgba(11,110,79,0.08);
-  --amber: #92530a;
-  --amber-dim: rgba(146,83,10,0.08);
-  --red: #c0292b;
-  --red-dim: rgba(192,41,43,0.08);
-  --r: 8px;
-  --r-lg: 12px;
-  --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
-  --shadow-md: 0 4px 12px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.04);
-}
-body { font-family: 'IBM Plex Sans', 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); font-size: 13.5px; line-height: 1.5; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #f0f2f5;
+    --surface: #ffffff;
+    --surface2: #f8f9fb;
+    --border: #e4e7ed;
+    --border-strong: #d0d5de;
+    --text: #0f1623;
+    --muted: #6b7585;
+    --muted2: #9ba3b0;
+    --magenta: #C80064;
+    --magenta-dim: rgba(200,0,100,0.08);
+    --magenta-mid: rgba(200,0,100,0.15);
+    --blue: #1a3a78;
+    --blue-dim: rgba(26,58,120,0.06);
+    --green: #0b6e4f;
+    --green-dim: rgba(11,110,79,0.08);
+    --amber: #92530a;
+    --amber-dim: rgba(146,83,10,0.08);
+    --red: #c0292b;
+    --red-dim: rgba(192,41,43,0.08);
+    --r: 8px;
+    --r-lg: 12px;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.04);
+  }
+  body { font-family: 'IBM Plex Sans', 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); font-size: 13.5px; line-height: 1.5; }
 
-/* ─── Navbar ─── */
-.navbar {
-  background: var(--surface);
-  border-bottom: 1px solid var(--border);
-  padding: 0 28px;
-  height: 64px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  box-shadow: var(--shadow);
-}
-.nav-brand { display: flex; align-items: center; gap: 10px; }
-.nav-logo {
-  width: 36px; height: 36px;
-  background: var(--magenta);
-  border-radius: 8px;
-  display: flex; align-items: center; justify-content: center;
-  color: white; font-size: 18px;
-}
-.nav-title { font-size: 15px; font-weight: 700; color: var(--blue); letter-spacing: -0.3px; }
-.nav-subtitle { font-size: 11px; color: var(--muted); font-weight: 500; letter-spacing: 0.2px; margin-top: -1px; }
-.nav-right { display: flex; align-items: center; gap: 12px; }
-.service-pill {
-  display: flex; align-items: center; gap: 8px;
-  background: var(--bg);
-  border: 1px solid var(--border-strong);
-  border-radius: 24px;
-  padding: 6px 14px 6px 10px;
-}
-.service-pill i { color: var(--magenta); font-size: 16px; }
-.service-pill select { background: transparent; border: none; font-size: 13px; font-weight: 600; color: var(--text); outline: none; cursor: pointer; font-family: inherit; }
-.model-badge {
-  background: var(--blue-dim);
-  color: var(--blue);
-  border: 1px solid rgba(26,58,120,0.15);
-  border-radius: 20px;
-  padding: 4px 12px;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.3px;
-  display: flex; align-items: center; gap: 5px;
-}
-.model-badge.active { background: var(--green-dim); color: var(--green); border-color: rgba(11,110,79,0.2); }
+  /* ─── Navbar ─── */
+  .navbar {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 28px; height: 64px;
+    display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 100; box-shadow: var(--shadow);
+  }
+  .nav-brand { display: flex; align-items: center; gap: 10px; }
+  .nav-logo {
+    width: 36px; height: 36px; background: var(--magenta); border-radius: 8px;
+    display: flex; align-items: center; justify-content: center; color: white; font-size: 18px;
+  }
+  .nav-title { font-size: 15px; font-weight: 700; color: var(--blue); letter-spacing: -0.3px; }
+  .nav-subtitle { font-size: 11px; color: var(--muted); font-weight: 500; letter-spacing: 0.2px; margin-top: -1px; }
+  .nav-right { display: flex; align-items: center; gap: 12px; }
+  .service-pill {
+    display: flex; align-items: center; gap: 8px; background: var(--bg);
+    border: 1px solid var(--border-strong); border-radius: 24px; padding: 6px 14px 6px 10px;
+  }
+  .service-pill i { color: var(--magenta); font-size: 16px; }
+  .service-pill select { background: transparent; border: none; font-size: 13px; font-weight: 600; color: var(--text); outline: none; cursor: pointer; font-family: inherit; }
+  .model-badge {
+    background: var(--blue-dim); color: var(--blue); border: 1px solid rgba(26,58,120,0.15);
+    border-radius: 20px; padding: 4px 12px; font-size: 11px; font-weight: 600; display: flex; align-items: center; gap: 5px;
+  }
+  .model-badge.active { background: var(--green-dim); color: var(--green); border-color: rgba(11,110,79,0.2); }
 
-/* ─── Layout ─── */
-.layout { display: grid; grid-template-columns: 300px 1fr; gap: 20px; padding: 20px 24px; max-width: 1560px; margin: 0 auto; align-items: start; }
+  /* ─── Layout ─── */
+  .layout { display: grid; grid-template-columns: 300px 1fr; gap: 20px; padding: 20px 24px; max-width: 1560px; margin: 0 auto; align-items: start; }
 
-/* ─── Cards base ─── */
-.card { background: var(--surface); border-radius: var(--r-lg); border: 1px solid var(--border); box-shadow: var(--shadow); }
-.card-section { padding: 16px 18px; border-bottom: 1px solid var(--border); }
-.card-section:last-child { border-bottom: none; }
-.section-label {
-  font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px;
-  color: var(--muted); margin-bottom: 12px;
-  display: flex; align-items: center; gap: 6px;
-}
-.section-label i { font-size: 14px; color: var(--magenta); }
+  /* ─── Cards base ─── */
+  .card { background: var(--surface); border-radius: var(--r-lg); border: 1px solid var(--border); box-shadow: var(--shadow); }
+  .card-section { padding: 16px 18px; border-bottom: 1px solid var(--border); }
+  .card-section:last-child { border-bottom: none; }
+  .section-label {
+    font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px;
+    color: var(--muted); margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between;
+  }
+  .section-label-left { display: flex; align-items: center; gap: 6px; }
+  .section-label i { font-size: 14px; color: var(--magenta); }
 
-/* ─── Sidebar ─── */
-.sidebar { display: flex; flex-direction: column; gap: 16px; }
-.input-row { margin-bottom: 12px; }
-.input-row:last-child { margin-bottom: 0; }
-.input-row label { display: block; font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 5px; }
-.input-row input, .input-row select {
-  width: 100%; padding: 8px 10px;
-  border: 1px solid var(--border-strong);
-  border-radius: 6px;
-  font-size: 13px; color: var(--text);
-  font-family: inherit;
-  background: var(--surface);
-  transition: border 0.15s, box-shadow 0.15s;
-}
-.input-row input:focus, .input-row select:focus {
-  border-color: var(--magenta);
-  outline: none;
-  box-shadow: 0 0 0 3px var(--magenta-dim);
-}
-.hint { font-size: 11px; color: var(--muted); margin-top: 4px; line-height: 1.4; }
-.hint.important { color: var(--amber); background: var(--amber-dim); border-radius: 5px; padding: 6px 8px; margin-top: 6px; display: flex; gap: 6px; align-items: flex-start; }
-.hint.important i { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
-.hint.success { color: var(--green); background: var(--green-dim); border-radius: 5px; padding: 6px 8px; margin-top: 6px; display: flex; gap: 6px; align-items: flex-start; }
-.hint.success i { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+  /* ─── Sidebar ─── */
+  .sidebar { display: flex; flex-direction: column; gap: 16px; }
+  .input-row { margin-bottom: 12px; }
+  .input-row:last-child { margin-bottom: 0; }
+  .input-row label { display: block; font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 5px; }
+  .input-row input, .input-row select {
+    width: 100%; padding: 8px 10px; border: 1px solid var(--border-strong); border-radius: 6px;
+    font-size: 13px; color: var(--text); font-family: inherit; background: var(--surface); transition: border 0.15s, box-shadow 0.15s;
+  }
+  .input-row input:focus, .input-row select:focus { border-color: var(--magenta); outline: none; box-shadow: 0 0 0 3px var(--magenta-dim); }
+  .hint { font-size: 11px; color: var(--muted); margin-top: 4px; line-height: 1.4; }
+  .hint.important { color: var(--amber); background: var(--amber-dim); border-radius: 5px; padding: 6px 8px; margin-top: 6px; display: flex; gap: 6px; align-items: flex-start; }
+  .hint.important i { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+  .hint.success { color: var(--green); background: var(--green-dim); border-radius: 5px; padding: 6px 8px; margin-top: 6px; display: flex; gap: 6px; align-items: flex-start; }
 
-/* Anomaly tags */
-.tag-area { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
-.tag {
-  background: var(--magenta-dim); color: var(--magenta);
-  border: 1px solid var(--magenta-mid);
-  border-radius: 16px; padding: 3px 10px;
-  font-size: 11.5px; font-weight: 600;
-  display: inline-flex; align-items: center; gap: 5px;
-  font-family: 'IBM Plex Mono', monospace;
-}
-.tag button { background: none; border: none; color: inherit; cursor: pointer; padding: 0; line-height: 1; font-size: 14px; display: flex; }
-.tag button:hover { color: var(--red); }
-.anom-row { display: flex; gap: 6px; }
-.anom-row input { flex: 1; }
-.btn-sm {
-  background: var(--magenta); color: white; border: none;
-  border-radius: 6px; padding: 0 12px; cursor: pointer;
-  font-size: 13px; font-weight: 600; font-family: inherit;
-  white-space: nowrap;
-}
-.btn-sm:hover { background: #a80050; }
+  /* Anomaly tags */
+  .tag-area { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .tag {
+    background: var(--magenta-dim); color: var(--magenta); border: 1px solid var(--magenta-mid);
+    border-radius: 16px; padding: 3px 10px; font-size: 11.5px; font-weight: 600; display: inline-flex; align-items: center; gap: 5px; font-family: 'IBM Plex Mono', monospace;
+  }
+  .tag button { background: none; border: none; color: inherit; cursor: pointer; padding: 0; display: flex; }
+  .tag button:hover { color: var(--red); }
+  .anom-row { display: flex; gap: 6px; }
+  .anom-row input { flex: 1; }
+  .btn-sm {
+    background: var(--magenta); color: white; border: none; border-radius: 6px; padding: 0 12px; cursor: pointer;
+    font-size: 13px; font-weight: 600; font-family: inherit; white-space: nowrap;
+  }
+  .btn-sm:hover { background: #a80050; }
 
-/* Upload fallback */
-.upload-zone {
-  border: 1.5px dashed var(--border-strong);
-  border-radius: var(--r);
-  padding: 14px;
-  background: var(--surface2);
-}
-.upload-zone input { font-size: 12px; width: 100%; }
+  .upload-zone { border: 1.5px dashed var(--border-strong); border-radius: var(--r); padding: 14px; background: var(--surface2); }
+  .upload-zone input { font-size: 12px; width: 100%; }
 
-/* ─── Main Content ─── */
-.main { display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+  /* ─── Main Content ─── */
+  .main { display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+  .empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 80px 20px; gap: 14px; text-align: center; }
+  .empty-state i { font-size: 52px; opacity: 0.2; color: var(--text); }
+  .empty-state h3 { font-size: 17px; font-weight: 600; }
+  .empty-state p { color: var(--muted); max-width: 360px; line-height: 1.6; }
+  .loader-screen { display: none; flex-direction: column; align-items: center; justify-content: center; padding: 80px; gap: 12px; }
+  .loader-screen i { font-size: 36px; color: var(--magenta); animation: spin 0.8s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
 
-/* State screens */
-.empty-state {
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  padding: 80px 20px; gap: 14px; text-align: center;
-}
-.empty-state i { font-size: 52px; opacity: 0.2; color: var(--text); }
-.empty-state h3 { font-size: 17px; font-weight: 600; }
-.empty-state p { color: var(--muted); max-width: 360px; line-height: 1.6; }
-.loader-screen { display: none; flex-direction: column; align-items: center; justify-content: center; padding: 80px; gap: 12px; }
-.loader-screen i { font-size: 36px; color: var(--magenta); animation: spin 0.8s linear infinite; }
-@keyframes spin { to { transform: rotate(360deg); } }
-.loader-screen span { font-weight: 600; color: var(--muted); }
+  .banner { border-radius: var(--r); padding: 10px 14px; font-size: 13px; display: flex; align-items: center; gap: 8px; font-weight: 500; border: 1px solid; }
+  .banner.info { background: #eff6ff; color: #1d4ed8; border-color: #bfdbfe; }
+  .banner.warning { background: var(--amber-dim); color: var(--amber); border-color: rgba(146,83,10,0.2); }
 
-/* Alert banner */
-.banner {
-  border-radius: var(--r);
-  padding: 10px 14px;
-  font-size: 13px;
-  display: flex; align-items: center; gap: 8px;
-  font-weight: 500;
-  border: 1px solid;
-}
-.banner.info { background: #eff6ff; color: #1d4ed8; border-color: #bfdbfe; }
-.banner.warning { background: var(--amber-dim); color: var(--amber); border-color: rgba(146,83,10,0.2); }
+  /* ─── KPI Grid ─── */
+  .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .kpi { background: var(--surface); border-radius: var(--r-lg); border: 1px solid var(--border); padding: 16px 18px; box-shadow: var(--shadow); }
+  .kpi-label { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: var(--muted); }
+  .kpi-value { font-size: 24px; font-weight: 700; color: var(--blue); margin: 6px 0 3px; letter-spacing: -0.5px; font-family: 'IBM Plex Mono', monospace; }
+  .kpi-sub { font-size: 12px; font-weight: 500; color: var(--muted); }
+  .kpi-accent { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 700; margin-top: 4px; }
+  .kpi-accent.good { background: var(--green-dim); color: var(--green); }
+  .kpi-accent.warn { background: var(--amber-dim); color: var(--amber); }
+  .kpi-accent.bad { background: var(--red-dim); color: var(--red); }
 
-/* ─── KPI Grid ─── */
-.kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
-.kpi {
-  background: var(--surface); border-radius: var(--r-lg);
-  border: 1px solid var(--border);
-  padding: 16px 18px;
-  box-shadow: var(--shadow);
-}
-.kpi-label { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: var(--muted); }
-.kpi-value { font-size: 26px; font-weight: 700; color: var(--blue); margin: 6px 0 3px; letter-spacing: -0.5px; font-family: 'IBM Plex Mono', monospace; }
-.kpi-sub { font-size: 12px; font-weight: 500; color: var(--muted); }
-.kpi-accent { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 700; margin-top: 4px; }
-.kpi-accent.good { background: var(--green-dim); color: var(--green); }
-.kpi-accent.warn { background: var(--amber-dim); color: var(--amber); }
-.kpi-accent.bad { background: var(--red-dim); color: var(--red); }
+  /* ─── Chart ─── */
+  .chart-card { background: var(--surface); border-radius: var(--r-lg); border: 1px solid var(--border); box-shadow: var(--shadow); padding: 16px 20px; }
+  .chart-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+  .chart-title { font-size: 13px; font-weight: 700; color: var(--text); display: flex; align-items: center; gap: 8px; }
+  .chart-legend { display: flex; gap: 16px; }
+  .legend-item { display: flex; align-items: center; gap: 5px; font-size: 11.5px; color: var(--muted); }
+  .legend-dot { width: 10px; height: 3px; border-radius: 2px; }
+  .chart-wrap { position: relative; height: 320px; transition: height 0.2s ease, padding 0.2s ease; overflow: hidden; }
 
-/* ─── Chart ─── */
-.chart-card { background: var(--surface); border-radius: var(--r-lg); border: 1px solid var(--border); box-shadow: var(--shadow); padding: 20px 22px; }
-.chart-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
-.chart-title { font-size: 13px; font-weight: 700; color: var(--text); }
-.chart-legend { display: flex; gap: 16px; }
-.legend-item { display: flex; align-items: center; gap: 5px; font-size: 11.5px; color: var(--muted); }
-.legend-dot { width: 10px; height: 3px; border-radius: 2px; }
-.chart-wrap { position: relative; height: 340px; }
+  /* ─── Tabs ─── */
+  .tabs-card { background: var(--surface); border-radius: var(--r-lg); border: 1px solid var(--border); box-shadow: var(--shadow); overflow: hidden; }
+  .tabs-nav { display: flex; border-bottom: 1px solid var(--border); background: var(--surface2); }
+  .tab-btn {
+    flex: 1; padding: 13px 16px; font-size: 12.5px; font-weight: 600; text-align: center;
+    color: var(--muted); background: transparent; border: none; border-bottom: 2px solid transparent; cursor: pointer; transition: all 0.15s; font-family: inherit;
+  }
+  .tab-btn:hover { color: var(--text); background: white; }
+  .tab-btn.active { color: var(--magenta); border-bottom-color: var(--magenta); background: white; }
+  .tab-pane { display: none; }
+  .tab-pane.active { display: block; animation: fadeUp 0.2s; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
 
-/* ─── Tabs ─── */
-.tabs-card { background: var(--surface); border-radius: var(--r-lg); border: 1px solid var(--border); box-shadow: var(--shadow); overflow: hidden; }
-.tabs-nav { display: flex; border-bottom: 1px solid var(--border); background: var(--surface2); }
-.tab-btn {
-  flex: 1; padding: 13px 16px;
-  font-size: 12.5px; font-weight: 600; text-align: center;
-  color: var(--muted); background: transparent; border: none;
-  border-bottom: 2px solid transparent;
-  cursor: pointer; transition: all 0.15s;
-  font-family: inherit;
-}
-.tab-btn:hover { color: var(--text); background: white; }
-.tab-btn.active { color: var(--magenta); border-bottom-color: var(--magenta); background: white; }
-.tab-pane { display: none; }
-.tab-pane.active { display: block; animation: fadeUp 0.2s; }
-@keyframes fadeUp { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+  /* ─── Tables ─── */
+  .tbl-wrap { max-height: 480px; overflow-y: auto; }
+  .tbl-wrap::-webkit-scrollbar { width: 6px; }
+  .tbl-wrap::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 6px; }
+  .data-tbl { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .data-tbl th {
+    padding: 10px 14px; background: var(--surface2); border-bottom: 1px solid var(--border);
+    font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+    color: var(--muted); text-align: right; white-space: nowrap; position: sticky; top: 0; z-index: 5;
+  }
+  .data-tbl th:first-child { text-align: left; }
+  .data-tbl td { padding: 10px 14px; border-bottom: 1px solid var(--border); text-align: right; }
+  .data-tbl td:first-child { text-align: left; }
+  .data-tbl tbody tr:hover { background: #fafbfc; }
+  .data-tbl tfoot td { background: var(--surface2); font-weight: 700; border-top: 2px solid var(--border); }
+  .td-date { font-weight: 600; font-family: 'IBM Plex Mono', monospace; font-size: 12.5px; }
+  .td-fct { font-weight: 700; color: var(--blue); font-family: 'IBM Plex Mono', monospace; }
+  .td-real { font-weight: 600; font-family: 'IBM Plex Mono', monospace; }
+  .td-over { color: var(--red); font-weight: 700; font-family: 'IBM Plex Mono', monospace; }
+  .td-under { color: var(--green); font-weight: 700; font-family: 'IBM Plex Mono', monospace; }
+  .td-flag { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 4px; }
+  .td-flag.ok { background: var(--green); }
+  .td-flag.warn { background: var(--amber); }
+  .td-flag.bad { background: var(--red); }
 
-/* ─── Tables ─── */
-.tbl-wrap { max-height: 480px; overflow-y: auto; }
-.tbl-wrap::-webkit-scrollbar { width: 6px; }
-.tbl-wrap::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 6px; }
-.data-tbl { width: 100%; border-collapse: collapse; font-size: 13px; }
-.data-tbl th {
-  padding: 10px 14px;
-  background: var(--surface2);
-  border-bottom: 1px solid var(--border);
-  font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
-  color: var(--muted); text-align: right; white-space: nowrap;
-  position: sticky; top: 0; z-index: 5;
-}
-.data-tbl th:first-child { text-align: left; }
-.data-tbl td { padding: 10px 14px; border-bottom: 1px solid var(--border); text-align: right; }
-.data-tbl td:first-child { text-align: left; }
-.data-tbl tbody tr:hover { background: #fafbfc; }
-.data-tbl tfoot td { background: var(--surface2); font-weight: 700; border-top: 2px solid var(--border); }
-.td-date { font-weight: 600; font-family: 'IBM Plex Mono', monospace; font-size: 12.5px; }
-.td-fct { font-weight: 700; color: var(--blue); font-family: 'IBM Plex Mono', monospace; }
-.td-real { font-weight: 600; font-family: 'IBM Plex Mono', monospace; }
-.td-over { color: var(--red); font-weight: 700; font-family: 'IBM Plex Mono', monospace; }
-.td-under { color: var(--green); font-weight: 700; font-family: 'IBM Plex Mono', monospace; }
-.td-flag { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 4px; }
-.td-flag.ok { background: var(--green); }
-.td-flag.warn { background: var(--amber); }
-.td-flag.bad { background: var(--red); }
+  .idx-pill { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11.5px; font-weight: 700; font-family: 'IBM Plex Mono', monospace; }
+  .idx-pill.hi { background: var(--red-dim); color: var(--red); }
+  .idx-pill.lo { background: var(--green-dim); color: var(--green); }
+  .idx-pill.mid { background: var(--blue-dim); color: var(--blue); }
+  .idx-pill.norm { background: var(--bg); color: var(--muted); }
 
-/* Seasonal index cells */
-.idx-pill { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11.5px; font-weight: 700; font-family: 'IBM Plex Mono', monospace; }
-.idx-pill.hi { background: var(--red-dim); color: var(--red); }
-.idx-pill.lo { background: var(--green-dim); color: var(--green); }
-.idx-pill.mid { background: var(--blue-dim); color: var(--blue); }
-.idx-pill.norm { background: var(--bg); color: var(--muted); }
+  .detail-expand { background: var(--surface2); }
+  .detail-expand td { padding: 10px 16px; }
+  .detail-pills { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .dpill { background: white; border: 1px solid var(--border); border-radius: 5px; padding: 3px 8px; font-size: 11.5px; display: flex; gap: 5px; }
+  .dpill .dp-date { color: var(--muted); font-family: 'IBM Plex Mono', monospace; }
+  .dpill .dp-val { font-weight: 600; color: var(--text); font-family: 'IBM Plex Mono', monospace; }
+  .dpill.outlier-flag { border-color: var(--amber-dim); background: var(--amber-dim); }
+  .dpill.outlier-flag .dp-date { color: var(--amber); }
 
-.detail-expand { background: var(--surface2); }
-.detail-expand td { padding: 10px 16px; }
-.detail-pills { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
-.dpill { background: white; border: 1px solid var(--border); border-radius: 5px; padding: 3px 8px; font-size: 11.5px; display: flex; gap: 5px; }
-.dpill .dp-date { color: var(--muted); font-family: 'IBM Plex Mono', monospace; }
-.dpill .dp-val { font-weight: 600; color: var(--text); font-family: 'IBM Plex Mono', monospace; }
-.dpill.outlier-flag { border-color: var(--amber-dim); background: var(--amber-dim); }
-.dpill.outlier-flag .dp-date { color: var(--amber); }
-
-.btn-expand { background: none; border: 1px solid var(--border); color: var(--muted); cursor: pointer; border-radius: 4px; padding: 2px 6px; font-size: 13px; display: inline-flex; align-items: center; transition: all 0.1s; }
-.btn-expand:hover { background: var(--bg); color: var(--text); }
-
-/* Algorithm method display */
-.method-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 4px; }
-.method-opt {
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 8px 10px;
-  cursor: pointer;
-  transition: all 0.15s;
-  font-size: 12px;
-}
-.method-opt:hover { border-color: var(--magenta); background: var(--magenta-dim); }
-.method-opt.selected { border-color: var(--magenta); background: var(--magenta-dim); }
-.method-opt .mo-name { font-weight: 700; color: var(--text); font-size: 11px; }
-.method-opt .mo-desc { color: var(--muted); font-size: 10.5px; margin-top: 1px; }
+  .btn-expand { background: none; border: 1px solid var(--border); color: var(--muted); cursor: pointer; border-radius: 4px; padding: 2px 6px; font-size: 11px; display: inline-flex; align-items: center; justify-content: center; transition: all 0.1s; }
+  .btn-expand:hover { background: var(--bg); color: var(--text); }
+  
+  .collapsible-container { transition: max-height 0.25s ease-out, opacity 0.2s ease-out; overflow: hidden; }
+  .sub-section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--blue); padding: 12px 14px; background: #f1f5f9; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 6px;}
 </style>
 </head>
 <body>
@@ -294,7 +214,7 @@ body { font-family: 'IBM Plex Sans', 'Segoe UI', sans-serif; background: var(--b
     <div class="nav-logo"><i class="ti ti-wave-sine"></i></div>
     <div>
       <div class="nav-title">WFM Executive Forecast</div>
-      <div class="nav-subtitle">TP Chile · Predictive Engine v2</div>
+      <div class="nav-subtitle">TP Chile · Predictive Engine v2.5</div>
     </div>
   </div>
   <div class="nav-right">
@@ -313,62 +233,55 @@ body { font-family: 'IBM Plex Sans', 'Segoe UI', sans-serif; background: var(--b
 <div class="layout">
   <aside class="sidebar">
     <div class="card">
+      
       <div class="card-section">
-        <div class="section-label"><i class="ti ti-calendar-stats"></i> Ventana de Entrenamiento</div>
-        <div class="input-row">
-          <label>Desde</label>
-          <input type="date" id="filterFrom">
+        <div class="section-label">
+          <div class="section-label-left"><i class="ti ti-calendar-stats"></i> Configuración Temporal</div>
+          <button class="btn-expand" id="btnToggleSidebar" onclick="toggleContainer('sidebarCollapse', 'btnToggleSidebar')"><i class="ti ti-minus"></i></button>
         </div>
-        <div class="input-row">
-          <label>Hasta (corte)</label>
-          <input type="date" id="filterTo">
-          <div class="hint">Los datos posteriores se usan para medir precisión (WAPE).</div>
-        </div>
-        <div class="input-row">
-          <label>Ventana dinámica base (días)</label>
-          <input type="number" id="trendBaseInput" value="45" min="14" max="180">
-          <div class="hint">Días recientes desde el corte que definen el nivel base.</div>
+        
+        <div id="sidebarCollapse" class="collapsible-container">
+          <div class="input-row">
+            <label>Desde</label>
+            <input type="date" id="filterFrom">
+          </div>
+          <div class="input-row">
+            <label>Hasta (Corte de Historial)</label>
+            <input type="date" id="filterTo">
+          </div>
+          <div class="input-row">
+            <label>Proyectar Hasta (Fecha Fin)</label>
+            <input type="date" id="forecastToInput">
+            <div class="hint">Fin del forecast futuro. Se calcula de forma automática al fin de mes para evitar cortes abruptos.</div>
+          </div>
+          <div class="input-row">
+            <label>Ventana de volumen base (días)</label>
+            <input type="number" id="trendBaseInput" value="45" min="14" max="180">
+          </div>
         </div>
       </div>
 
       <div class="card-section">
-        <div class="section-label"><i class="ti ti-brain"></i> Algoritmo Base</div>
-        <div id="methodGrid" class="method-grid">
-          <div class="method-opt selected" data-method="holtwinters">
-            <div class="mo-name">Holt-Winters</div>
-            <div class="mo-desc">Tendencia + estacionalidad</div>
-          </div>
-          <div class="method-opt" data-method="ema">
-            <div class="mo-name">EMA adaptativo</div>
-            <div class="mo-desc">Suavizado exponencial</div>
-          </div>
-          <div class="method-opt" data-method="linear">
-            <div class="mo-name">Regresión lineal</div>
-            <div class="mo-desc">Tendencia extrapolada</div>
-          </div>
-          <div class="method-opt" data-method="avg">
-            <div class="mo-name">Promedio simple</div>
-            <div class="mo-desc">Bajo volumen (&lt;200/día)</div>
-          </div>
-        </div>
-        <div id="lowVolWarn" class="hint important" style="display:none;">
+        <div class="section-label"><div class="section-label-left"><i class="ti ti-brain"></i> Algoritmo Base</div></div>
+        <select id="trendMethodInput" style="width:100%; padding:8px 10px; border:1px solid var(--border-strong); border-radius:6px; font-size:13px; font-family:inherit;">
+          <option value="holtwinters">Modelamiento de Holt (Tendencia + Estacionalidad)</option>
+          <option value="ema">EMA Adaptativo (Suavizado Exponencial)</option>
+          <option value="linear">Regresión Lineal (Extrapolación Recta)</option>
+          <option value="avg">Promedio Simple Fijo</option>
+        </select>
+        <div id="lowVolWarn" class="hint important" style="display:none; margin-top:8px;">
           <i class="ti ti-alert-triangle"></i>
           <span>Volumen bajo detectado. Se recomienda <b>Promedio simple</b>.</span>
         </div>
-        <div id="hwTip" class="hint success" style="display:none; margin-top:8px;">
-          <i class="ti ti-check"></i>
-          <span>Holt-Winters activo con α, β, γ optimizados automáticamente.</span>
-        </div>
-        <input type="hidden" id="trendMethodInput" value="holtwinters">
       </div>
 
       <div class="card-section">
-        <div class="section-label"><i class="ti ti-filter-cog"></i> Limpieza de Anomalías</div>
+        <div class="section-label"><div class="section-label-left"><i class="ti ti-filter-cog"></i> Limpieza de Anomalías</div></div>
         <div class="input-row">
           <label>Excluir fecha manual</label>
           <div class="anom-row">
             <input type="date" id="anomalyDate">
-            <button class="btn-sm" id="btnAddAnomaly">+ Añadir</button>
+            <button class="btn-add btn-sm" id="btnAddAnomaly">+ Añadir</button>
           </div>
         </div>
         <div class="tag-area" id="anomalyTags"></div>
@@ -377,8 +290,7 @@ body { font-family: 'IBM Plex Sans', 'Segoe UI', sans-serif; background: var(--b
     </div>
 
     <div class="upload-zone">
-      <div class="section-label" style="margin-bottom:8px;"><i class="ti ti-upload"></i> Carga manual alternativa</div>
-      <div class="hint" style="margin-bottom:8px;">Para evaluar archivos locales o sin GitHub.</div>
+      <div class="section-label" style="margin-bottom:8px;"><div class="section-label-left"><i class="ti ti-upload"></i> Carga alternativa</div></div>
       <input type="file" id="fileInput" accept=".xlsx,.xls,.csv">
     </div>
   </aside>
@@ -411,9 +323,9 @@ body { font-family: 'IBM Plex Sans', 'Segoe UI', sans-serif; background: var(--b
           <div id="kpiAccuracyBadge" class="kpi-accent good" style="display:none;"></div>
         </div>
         <div class="kpi">
-          <div class="kpi-label">Proyección Próximos 30D</div>
+          <div class="kpi-label">Proyección Próximos Meses</div>
           <div class="kpi-value" id="kpiNext30">—</div>
-          <div class="kpi-sub">Llamadas esperadas</div>
+          <div class="kpi-sub">Llamadas totales a futuro</div>
         </div>
         <div class="kpi">
           <div class="kpi-label">Tendencia Detectada</div>
@@ -424,24 +336,28 @@ body { font-family: 'IBM Plex Sans', 'Segoe UI', sans-serif; background: var(--b
 
       <div class="chart-card">
         <div class="chart-header">
-          <span class="chart-title">Serie histórica + proyección del modelo</span>
-          <div class="chart-legend">
-            <div class="legend-item"><div class="legend-dot" style="background:#9ca3af; width:20px;"></div> Entrenamiento</div>
-            <div class="legend-item"><div class="legend-dot" style="background:#C80064; width:16px; border-style:dashed; height:2px; border-width:0 0 2px;"></div> Forecast</div>
-            <div class="legend-item"><div class="legend-dot" style="background:#1a3a78; width:20px;"></div> Real (testing)</div>
+          <span class="chart-title">
+            <button class="btn-expand" id="btnToggleChart" onclick="toggleContainer('chartWrapCollapse', 'btnToggleChart')"><i class="ti ti-minus"></i></button>
+            Serie histórica + proyección del modelo
+          </span>
+          <div class="chart-legend" id="chartLegendRef">
+            <div class="legend-item"><div class="legend-dot" style="background:#9ca3af; width:14px;"></div> Real Histórico</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#C80064; width:14px; border-style:dashed; height:2px; border-width:0 0 2px;"></div> Forecast</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#1a3a78; width:14px;"></div> Real Posterior (Prueba)</div>
           </div>
         </div>
-        <div class="chart-wrap">
-          <canvas id="mainChart" role="img" aria-label="Gráfico de serie histórica y proyección de llamadas"></canvas>
+        <div id="chartWrapCollapse" class="chart-wrap">
+          <canvas id="mainChart" role="img" aria-label="Gráfico WFM"></canvas>
         </div>
       </div>
 
       <div class="tabs-card">
         <div class="tabs-nav">
           <button class="tab-btn active" data-target="tabDeviation">Desviación Real vs FCT</button>
-          <button class="tab-btn" data-target="tabFuture">Pronóstico 30 días</button>
-          <button class="tab-btn" data-target="tabAudit">Auditoría Estacional</button>
+          <button class="tab-btn" data-target="tabFuture">Pronóstico Mensual y Diario</button>
+          <button class="tab-btn" data-target="tabAudit">Auditoría Estacional (Índices)</button>
         </div>
+        
         <div class="tab-pane active" id="tabDeviation">
           <div class="tbl-wrap">
             <table class="data-tbl" id="devTable">
@@ -451,7 +367,7 @@ body { font-family: 'IBM Plex Sans', 'Segoe UI', sans-serif; background: var(--b
                   <th style="text-align:left;">Escenario</th>
                   <th>FCT</th>
                   <th>Real</th>
-                  <th>Δ neto</th>
+                  <th>Δ Neto</th>
                   <th>% Desv.</th>
                   <th>Precisión</th>
                 </tr>
@@ -461,14 +377,29 @@ body { font-family: 'IBM Plex Sans', 'Segoe UI', sans-serif; background: var(--b
             </table>
           </div>
         </div>
+        
         <div class="tab-pane" id="tabFuture">
+          <div class="sub-section-title"><i class="ti ti-calendar-due"></i> Consolidado Mensual (Presupuesto)</div>
+          <table class="data-tbl" id="monthlySummaryTable">
+            <thead>
+              <tr>
+                <th style="text-align:left;">Mes / Año</th>
+                <th>Días Totales Proyectados</th>
+                <th>Volumen Acumulado FCT</th>
+                <th>Promedio Diario Esperado</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+
+          <div class="sub-section-title" style="margin-top: 10px;"><i class="ti ti-list-details"></i> Pronóstico Detallado Diario</div>
           <div class="tbl-wrap">
             <table class="data-tbl" id="futureTable">
               <thead>
                 <tr>
                   <th>Fecha Futura</th>
                   <th style="text-align:left;">Escenario</th>
-                  <th>FCT Esperado</th>
+                  <th>Volumen FCT Esperado</th>
                   <th>Rango Bajo (−8%)</th>
                   <th>Rango Alto (+8%)</th>
                 </tr>
@@ -477,17 +408,18 @@ body { font-family: 'IBM Plex Sans', 'Segoe UI', sans-serif; background: var(--b
             </table>
           </div>
         </div>
+        
         <div class="tab-pane" id="tabAudit">
           <div class="tbl-wrap">
             <table class="data-tbl" id="auditTable">
               <thead>
                 <tr>
-                  <th style="text-align:left;">Escenario (Día · Semana)</th>
-                  <th>Muestra</th>
-                  <th>Promedio</th>
+                  <th style="text-align:left;">Escenario (Día · Semana del Mes)</th>
+                  <th>Muestra Limpia</th>
+                  <th>Promedio Histórico</th>
+                  <th>Promedio Base del Día</th>
                   <th>Índice WoM</th>
-                  <th>Índice DoW</th>
-                  <th>Peso Final (normalizado)</th>
+                  <th>Peso Final Normalizado</th>
                 </tr>
               </thead>
               <tbody></tbody>
@@ -506,29 +438,19 @@ body { font-family: 'IBM Plex Sans', 'Segoe UI', sans-serif; background: var(--b
 let rawData = [], trainingData = [], testingData = [], futureForecast = [];
 let excludedDates = new Set();
 let seasonalIndices = {}, dowAverages = {}, overallAvg = 0;
-let autoExcluded = new Set(); // outliers detectados automáticamente
+let autoExcluded = new Set(); 
 let baseLevel = 0, hwState = null, linearSlope = 0, linearIntercept = 0;
 let chartInst = null;
 
 const DAYS = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+const MONTHS = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 const $ = id => document.getElementById(id);
 
 // ════════════════════════════════════════════════════════════
-// INICIALIZACIÓN
+// INTERFAZ Y DESPLIEGUES
 // ════════════════════════════════════════════════════════════
 window.addEventListener('DOMContentLoaded', () => {
   loadFromGitHub($('serviceSelect').value);
-
-  // Método selector visual
-  document.querySelectorAll('.method-opt').forEach(opt => {
-    opt.addEventListener('click', () => {
-      document.querySelectorAll('.method-opt').forEach(o => o.classList.remove('selected'));
-      opt.classList.add('selected');
-      $('trendMethodInput').value = opt.dataset.method;
-      $('hwTip').style.display = opt.dataset.method === 'holtwinters' ? 'flex' : 'none';
-      processModel();
-    });
-  });
 
   // Tabs
   document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -541,15 +463,26 @@ window.addEventListener('DOMContentLoaded', () => {
   });
 
   $('serviceSelect').addEventListener('change', e => loadFromGitHub(e.target.value));
-  ['filterFrom','filterTo','trendBaseInput'].forEach(id => $(id).addEventListener('change', processModel));
+  $('trendMethodInput').addEventListener('change', processModel);
+  ['filterFrom','filterTo','trendBaseInput','forecastToInput'].forEach(id => $(id).addEventListener('change', processModel));
   $('btnAddAnomaly').addEventListener('click', addAnomaly);
   $('fileInput').addEventListener('change', e => { if(e.target.files[0]) readFile(e.target.files[0]); });
-
-  $('hwTip').style.display = 'flex'; // visible por defecto (HW activo)
 });
 
+window.toggleContainer = function(containerId, btnId) {
+  const el = $(containerId);
+  const btn = $(btnId);
+  if (el.style.display === 'none') {
+    el.style.display = 'block';
+    btn.innerHTML = '<i class="ti ti-minus"></i>';
+  } else {
+    el.style.display = 'none';
+    btn.innerHTML = '<i class="ti ti-plus"></i>';
+  }
+};
+
 // ════════════════════════════════════════════════════════════
-// ANOMALY MANAGEMENT
+// ANOMALÍAS
 // ════════════════════════════════════════════════════════════
 function addAnomaly() {
   const d = $('anomalyDate').value;
@@ -572,7 +505,7 @@ function renderTags() {
 }
 
 // ════════════════════════════════════════════════════════════
-// DATA LOADING
+// LECTURA DE ARCHIVOS
 // ════════════════════════════════════════════════════════════
 async function loadFromGitHub(filename) {
   showLoader();
@@ -586,7 +519,7 @@ async function loadFromGitHub(filename) {
     hideLoader();
     $('emptyState').style.display = 'flex';
     if(window.location.protocol.includes('http'))
-      alert(`Error al cargar ${filename}:\n${e.message}`);
+      alert(`Error al cargar ${filename} desde el repositorio raíz.`);
   }
 }
 function readFile(file) {
@@ -609,27 +542,35 @@ function parseWorkbook(wb, src) {
       if(d && !isNaN(v) && v >= 0) data.push({date:d, iso:toISO(d), value:v});
     }
   });
-  if(!data.length) { alert("Formato incorrecto. Necesita columnas 'Fechas' y 'Recibidas'."); hideLoader(); $('emptyState').style.display='flex'; return; }
+  if(!data.length) { alert("Columnas requeridas: 'Fechas' y 'Recibidas'."); hideLoader(); $('emptyState').style.display='flex'; return; }
   data.sort((a,b) => a.iso.localeCompare(b.iso));
   rawData = data;
 
   const cutoff = new Date(data[data.length-1].date);
   cutoff.setDate(cutoff.getDate() - 7);
+  
+  // Calcular fin de mes a 3 meses a futuro de forma automatizada
+  const targetFuture = new Date(data[data.length-1].date);
+  targetFuture.setMonth(targetFuture.getMonth() + 3);
+  targetFuture.setMonth(targetFuture.getMonth() + 1);
+  targetFuture.setDate(0); // Último día del mes objetivo
+
   $('filterFrom').value = data[0].iso;
   $('filterTo').value = toISO(cutoff);
-  $('dataInfoAlert').innerHTML = `<i class="ti ti-circle-check" style="font-size:16px;"></i> <b>${src}</b> conectado — ${data.length} registros cargados.`;
+  $('forecastToInput').value = toISO(targetFuture);
+  
+  $('dataInfoAlert').innerHTML = `<i class="ti ti-circle-check" style="font-size:16px;"></i> Base conectada: <b>${src}</b> — ${data.length} registros indexados.`;
   processModel();
 }
 
 // ════════════════════════════════════════════════════════════
-// MOTOR PRINCIPAL
+// MOTOR MATEMÁTICO
 // ════════════════════════════════════════════════════════════
 function processModel() {
   if(!rawData.length) return;
   const from = $('filterFrom').value;
   const to   = $('filterTo').value;
 
-  // Separar train / test usando ISO string (sin timezone bugs)
   trainingData = [];
   testingData  = [];
   rawData.forEach(item => {
@@ -639,29 +580,18 @@ function processModel() {
       testingData.push(item);
     }
   });
-  if(!trainingData.length) { alert("Sin datos en el rango seleccionado."); return; }
+  if(!trainingData.length) return;
 
-  // ── Paso 1: Detección automática de outliers (IQR method) ──
   detectOutliers();
-
-  // ── Paso 2: Calcular tendencia base ──
   calcBase();
-
-  // ── Paso 3: Estacionalidad con índices normalizados ──
   calcSeasonality();
-
-  // ── Paso 4: Generar forecast ──
   generateForecast();
-
-  // ── Paso 5: Actualizar UI ──
   updateUI();
+  
   hideLoader();
   $('mainDashboard').style.display = 'flex';
 }
 
-// ────────────────────────────────────────────────────────────
-// DETECCIÓN DE OUTLIERS (IQR por día de semana)
-// ────────────────────────────────────────────────────────────
 function detectOutliers() {
   autoExcluded.clear();
   const byDow = {0:[],1:[],2:[],3:[],4:[],5:[],6:[]};
@@ -671,7 +601,7 @@ function detectOutliers() {
     const dow = item.date.getDay();
     const group = byDow[dow].map(x => x.value).sort((a,b) => a-b);
     const n = group.length;
-    if(n < 4) return true; // muestra muy pequeña, no filtrar
+    if(n < 4) return true;
     const q1 = group[Math.floor(n*0.25)];
     const q3 = group[Math.floor(n*0.75)];
     const iqr = q3 - q1;
@@ -679,31 +609,25 @@ function detectOutliers() {
     const hi = q3 + 2.0 * iqr;
     if(item.value < lo || item.value > hi) {
       autoExcluded.add(item.iso);
-      return false; // excluir del entrenamiento
+      return false;
     }
     return true;
   });
 
   const n = autoExcluded.size;
   $('autoOutlierInfo').innerHTML = n > 0
-    ? `<i class="ti ti-filter-check" style="color:var(--green); margin-right:4px;"></i> ${n} outlier(s) excluidos automáticamente del entrenamiento (IQR 2.0× por día semana).`
-    : `<i class="ti ti-check" style="color:var(--green); margin-right:4px;"></i> Sin outliers detectados en el periodo.`;
+    ? `<i class="ti ti-filter-check" style="color:var(--green); margin-right:4px;"></i> ${n} anomalía(s) descartada(s) mediante filtro IQR (2.0× por DOW).`
+    : `<i class="ti ti-check" style="color:var(--green); margin-right:4px;"></i> Serie limpia sin outliers estadísticos.`;
 }
 
-// ────────────────────────────────────────────────────────────
-// CÁLCULO DE TENDENCIA BASE
-// ────────────────────────────────────────────────────────────
 function calcBase() {
   const method = $('trendMethodInput').value;
   const winSize = Math.min(parseInt($('trendBaseInput').value) || 45, trainingData.length);
   const recent = trainingData.slice(-winSize);
   const n = recent.length;
 
-  // Promedio base
   overallAvg = recent.reduce((s,d) => s+d.value, 0) / n;
   baseLevel = overallAvg;
-
-  $('lowVolWarn').style.display = overallAvg < 200 && method !== 'avg' ? 'flex' : 'none';
 
   if(method === 'holtwinters') {
     hwState = fitHoltWinters(recent);
@@ -721,16 +645,12 @@ function calcBase() {
     linearIntercept = (sy - linearSlope*sx)/n;
     baseLevel = linearIntercept + linearSlope*(n-1);
   }
-  // avg: usa overallAvg = baseLevel (ya seteado)
 }
 
-// Holt-Winters simplificado (aditivo, periodo 7)
 function fitHoltWinters(data) {
-  // Optimización simple: probar grid de alpha/beta y tomar el de menor MSE
   let bestAlpha = 0.3, bestBeta = 0.05, bestMSE = Infinity;
   const alphas = [0.1, 0.2, 0.3, 0.4, 0.5];
   const betas  = [0.01, 0.05, 0.1, 0.2];
-
   for(const a of alphas) {
     for(const b of betas) {
       const mse = hwMSE(data, a, b);
@@ -751,11 +671,9 @@ function hwMSE(data, alpha, beta) {
 
 function runHW(data, alpha, beta) {
   const n = data.length;
-  // Inicializar con primeros 7 puntos
   let level = data.slice(0, Math.min(7, n)).reduce((s,d) => s+d.value, 0) / Math.min(7, n);
   let trend = n >= 2 ? (data[1].value - data[0].value) * 0.1 : 0;
   const forecasts = new Array(n).fill(null);
-
   for(let i=1; i<n; i++) {
     const prev_level = level;
     level = alpha * data[i].value + (1-alpha) * (level + trend);
@@ -765,29 +683,20 @@ function runHW(data, alpha, beta) {
   return { level, trend, forecasts };
 }
 
-// ────────────────────────────────────────────────────────────
-// ESTACIONALIDAD CORREGIDA (índices normalizados)
-// ────────────────────────────────────────────────────────────
 function calcSeasonality() {
-  // 1. Promedios por día de semana (DoW)
   const dowBuckets = {};
-  for(let d=0; d<7; d++) dowBuckets[d] = {sum:0, cnt:0, vals:[]};
+  for(let d=0; d<7; d++) dowBuckets[d] = {sum:0, cnt:0};
   trainingData.forEach(item => {
     const d = item.date.getDay();
     dowBuckets[d].sum += item.value;
     dowBuckets[d].cnt++;
-    dowBuckets[d].vals.push(item.value);
   });
-  dowAverages = {};
+  
+  let trainAvg = trainingData.reduce((s,i)=>s+i.value,0)/trainingData.length;
   for(let d=0; d<7; d++) {
-    dowAverages[d] = dowBuckets[d].cnt > 0 ? dowBuckets[d].sum / dowBuckets[d].cnt : overallAvg;
+    dowAverages[d] = dowBuckets[d].cnt > 0 ? dowBuckets[d].sum / dowBuckets[d].cnt : trainAvg;
   }
 
-  // 2. Índices DoW normalizados (media = 1.0)
-  const dowRawIndex = {};
-  for(let d=0; d<7; d++) dowRawIndex[d] = overallAvg > 0 ? dowAverages[d]/overallAvg : 1;
-
-  // 3. Buckets WoM × DoW
   const womBuckets = {};
   trainingData.forEach(item => {
     const w = Math.ceil(item.date.getDate() / 7);
@@ -799,48 +708,26 @@ function calcSeasonality() {
     womBuckets[key].details.push({iso: item.iso, v: item.value, outlier: autoExcluded.has(item.iso)});
   });
 
-  // 4. Índice WoM relativo al DoW, con shrinkage (ajuste por muestra pequeña)
-  // shrinkage: con < 3 muestras, pull hacia 1.0 (sin ajuste WoM)
-  // → índice_final = shrink * wom_raw + (1-shrink) * 1.0
   seasonalIndices = {};
   for(const key in womBuckets) {
     const b = womBuckets[key];
     const avgGroup = b.sum / b.cnt;
-    const dowAvg = dowAverages[b.d] || overallAvg;
+    const dowAvg = dowAverages[b.d] || trainAvg;
     const rawWoM = dowAvg > 0 ? avgGroup / dowAvg : 1;
 
-    // shrinkage factor: más muestras = más confianza
-    const shrink = Math.min(b.cnt / 6, 1.0); // confianza plena con 6+ muestras
+    const shrink = Math.min(b.cnt / 6, 1.0); 
     const smoothedWoM = shrink * rawWoM + (1-shrink) * 1.0;
+    const dowIdx = trainAvg > 0 ? dowAvg / trainAvg : 1;
 
     seasonalIndices[key] = {
-      name: `${DAYS[b.d]} – Sem ${b.w}`,
-      dowIndex: dowRawIndex[b.d],
-      womIndex: smoothedWoM,
-      rawWoM: rawWoM,
-      combined: dowRawIndex[b.d] * smoothedWoM,
-      avgGroup,
-      dowAvg,
-      samples: b.cnt,
-      shrink,
-      details: b.details
+      name: `${DAYS[b.d]} · Semana ${b.w}`,
+      combined: dowIdx * smoothedWoM,
+      avgGroup, dowAvg, samples: b.cnt, shrink, details: b.details,
+      dowIndex: dowIdx, womIndex: smoothedWoM, rawWoM
     };
-  }
-
-  // 5. Normalizar índices combinados para que su promedio global = 1.0
-  // (evita sesgo acumulativo)
-  const allKeys = Object.keys(seasonalIndices);
-  if(allKeys.length > 0) {
-    const meanCombined = allKeys.reduce((s,k) => s+seasonalIndices[k].combined, 0) / allKeys.length;
-    if(meanCombined > 0) {
-      allKeys.forEach(k => { seasonalIndices[k].combined /= meanCombined; });
-    }
   }
 }
 
-// ────────────────────────────────────────────────────────────
-// GENERACIÓN DE PRONÓSTICO
-// ────────────────────────────────────────────────────────────
 function getFCT(dateObj, step) {
   const method = $('trendMethodInput').value;
   let base = baseLevel;
@@ -856,14 +743,12 @@ function getFCT(dateObj, step) {
   const d = dateObj.getDay();
   const key = `${w}_${d}`;
 
-  // Si tenemos índice combinado, usarlo; sino degradar a solo DoW
   let factor = 1;
   if(seasonalIndices[key]) {
     factor = seasonalIndices[key].combined;
   } else {
-    // Día sin histórico → usar solo índice DoW
-    const dowIdx = overallAvg > 0 ? (dowAverages[d] || overallAvg) / overallAvg : 1;
-    factor = dowIdx;
+    let trainAvg = trainingData.reduce((s,i)=>s+i.value,0)/trainingData.length;
+    factor = trainAvg > 0 ? (dowAverages[d] || trainAvg) / trainAvg : 1;
   }
   return Math.max(0, Math.round(base * factor));
 }
@@ -873,37 +758,36 @@ function generateForecast() {
   if(!trainingData.length) return;
   const lastISO = trainingData[trainingData.length-1].iso;
   const lastDate = new Date(lastISO + 'T12:00:00');
-  const totalDays = testingData.length + 31;
+  const targetISO = $('forecastToInput').value;
 
-  for(let i=1; i<=totalDays; i++) {
+  let step = 1;
+  while(true) {
     const d = new Date(lastDate);
-    d.setDate(d.getDate() + i);
+    d.setDate(d.getDate() + step);
     const iso = toISO(d);
+    if(iso > targetISO) break;
+
     const w = Math.ceil(d.getDate()/7);
     const dow = d.getDay();
-    const fct = getFCT(d, i);
-    futureForecast.push({date:d, iso, dayName:`${DAYS[dow]} – Sem ${w}`, value:fct});
+    const fct = getFCT(d, step);
+    futureForecast.push({date:d, iso, dayName:`${DAYS[dow]} · Sem ${w}`, value:fct});
+    step++;
   }
 }
 
 // ════════════════════════════════════════════════════════════
-// ACTUALIZACIÓN DE UI
+// RENDERIZADO GENERAL
 // ════════════════════════════════════════════════════════════
 function updateUI() {
-  // Model badge
   const method = $('trendMethodInput').value;
-  const methodName = {holtwinters:'Holt-Winters', ema:'EMA', linear:'Regresión', avg:'Promedio'}[method];
-  $('modelBadge').innerHTML = `<i class="ti ti-cpu"></i> ${methodName} activo`;
-  $('modelBadge').className = 'model-badge active';
+  const methodName = {holtwinters:'Holt (Desacoplado)', ema:'EMA Adaptativo', linear:'Regresión Lineal', avg:'Promedio Simple'}[method];
+  $('modelBadge').innerHTML = `<i class="ti ti-cpu"></i> ${methodName}`;
 
-  // KPI Base
   $('kpiBase').textContent = Math.round(baseLevel).toLocaleString('es-CL');
-  $('kpiBaseSub').textContent = `Método: ${methodName} · ventana ${Math.min(parseInt($('trendBaseInput').value)||45, trainingData.length)}d`;
+  $('kpiBaseSub').textContent = `Ventana base: ${trainingData.slice(-parseInt($('trendBaseInput').value)||45).length}d`;
 
-  // KPI Accuracy
+  // WAPE & Accuracy
   let absErr = 0, actSum = 0, matchCount = 0;
-  const testIsoMap = {};
-  testingData.forEach(t => testIsoMap[t.iso] = t.value);
   const fctIsoMap = {};
   futureForecast.forEach(f => fctIsoMap[f.iso] = f.value);
 
@@ -911,70 +795,56 @@ function updateUI() {
     const fctVal = fctIsoMap[act.iso];
     if(fctVal !== undefined) {
       absErr += Math.abs(act.value - fctVal);
-      actSum += act.value;
-      matchCount++;
+      actSum += act.value; matchCount++;
     }
   });
+
   if(actSum > 0 && matchCount > 0) {
     const wape = (absErr / actSum) * 100;
     const acc = 100 - wape;
-    $('kpiAccuracy').textContent = acc.toFixed(2) + '%';
-    $('kpiAccuracy').style.color = acc >= 95 ? 'var(--green)' : acc >= 88 ? 'var(--amber)' : 'var(--red)';
+    $('kpiAccuracy').textContent = acc.toFixed(1) + '%';
+    $('kpiAccuracy').style.color = acc >= 93 ? 'var(--green)' : acc >= 85 ? 'var(--amber)' : 'var(--red)';
     const badge = $('kpiAccuracyBadge');
     badge.style.display = 'inline-block';
-    if(acc >= 95) { badge.className = 'kpi-accent good'; badge.textContent = `WAPE ${wape.toFixed(2)}% — Excelente`; }
-    else if(acc >= 88) { badge.className = 'kpi-accent warn'; badge.textContent = `WAPE ${wape.toFixed(2)}% — Bueno`; }
-    else { badge.className = 'kpi-accent bad'; badge.textContent = `WAPE ${wape.toFixed(2)}% — Mejorable`; }
+    badge.className = acc >= 93 ? 'kpi-accent good' : acc >= 85 ? 'kpi-accent warn' : 'kpi-accent bad';
+    badge.textContent = `WAPE: ${wape.toFixed(1)}%`;
   } else {
     $('kpiAccuracy').textContent = 'N/A';
-    $('kpiAccuracy').style.color = 'var(--muted)';
     $('kpiAccuracyBadge').style.display = 'none';
   }
 
-  // KPI Next30
-  const to = $('filterTo').value;
-  const fut30 = futureForecast.filter(f => f.iso > to).slice(0, 30);
-  $('kpiNext30').textContent = fut30.reduce((s,f)=>s+f.value, 0).toLocaleString('es-CL');
+  $('kpiNext30').textContent = futureForecast.reduce((s,f)=>s+f.value, 0).toLocaleString('es-CL');
 
-  // KPI Trend
-  const method2 = $('trendMethodInput').value;
-  if(method2 === 'holtwinters' && hwState) {
-    const slope = hwState.trend;
-    $('kpiDelta').textContent = (slope >= 0 ? '+' : '') + slope.toFixed(1) + '/día';
-    $('kpiDeltaSub').textContent = slope > 2 ? 'Tendencia alcista' : slope < -2 ? 'Tendencia bajista' : 'Estable';
-  } else if(method2 === 'linear') {
+  if(method === 'holtwinters' && hwState) {
+    $('kpiDelta').textContent = (hwState.trend >= 0 ? '+' : '') + hwState.trend.toFixed(1) + '/día';
+    $('kpiDeltaSub').textContent = 'Inclinación de Holt';
+  } else if(method === 'linear') {
     $('kpiDelta').textContent = (linearSlope >= 0 ? '+' : '') + linearSlope.toFixed(1) + '/día';
-    $('kpiDeltaSub').textContent = 'Regresión lineal';
+    $('kpiDeltaSub').textContent = 'Pendiente Regresión';
   } else {
-    $('kpiDelta').textContent = '∼ Plano';
-    $('kpiDeltaSub').textContent = 'Sin tendencia explícita';
+    $('kpiDelta').textContent = 'Estable';
+    $('kpiDeltaSub').textContent = 'Base plana';
   }
 
   renderChart();
   renderDeviationTable(fctIsoMap);
-  renderFutureTable(to);
+  renderFutureAndMonthlyTables();
   renderAuditTable();
 }
 
-// ────────────────────────────────────────────────────────────
-// CHART
-// ────────────────────────────────────────────────────────────
 function renderChart() {
   const ctx = $('mainChart').getContext('2d');
   const train45 = trainingData.slice(-45);
   const labels=[], hist=[], fctLine=[], realLine=[];
 
   train45.forEach((d,i) => {
-    labels.push(d.iso);
-    hist.push(d.value);
+    labels.push(d.iso); hist.push(d.value);
     fctLine.push(i === train45.length-1 ? d.value : null);
     realLine.push(null);
   });
 
   futureForecast.forEach(f => {
-    labels.push(f.iso);
-    hist.push(null);
-    fctLine.push(f.value);
+    labels.push(f.iso); hist.push(null); fctLine.push(f.value);
     const real = testingData.find(t => t.iso === f.iso);
     realLine.push(real ? real.value : null);
   });
@@ -985,43 +855,30 @@ function renderChart() {
     data: {
       labels,
       datasets: [
-        {label:'Entrenamiento', data:hist, borderColor:'#9ca3af', backgroundColor:'rgba(156,163,175,0.08)', borderWidth:1.5, pointRadius:0, fill:true, tension:0.25},
-        {label:'Forecast', data:fctLine, borderColor:'#C80064', borderDash:[5,4], borderWidth:2, pointRadius:0, tension:0.3},
-        {label:'Real (testing)', data:realLine, borderColor:'#1a3a78', backgroundColor:'rgba(26,58,120,0.15)', borderWidth:2.5, pointRadius:3, pointBackgroundColor:'#1a3a78', tension:0.2, fill:true}
+        {label:'Real Histórico', data:hist, borderColor:'#9ca3af', backgroundColor:'rgba(156,163,175,0.05)', borderWidth:1.5, pointRadius:0, fill:true, tension:0.2},
+        {label:'Forecast', data:fctLine, borderColor:'#C80064', borderDash:[4,3], borderWidth:2, pointRadius:0, tension:0.2},
+        {label:'Real Test', data:realLine, borderColor:'#1a3a78', backgroundColor:'rgba(26,58,120,0.1)', borderWidth:2, pointRadius:2.5, pointBackgroundColor:'#1a3a78', tension:0.1, fill:true}
       ]
     },
     options: {
       responsive:true, maintainAspectRatio:false,
       interaction:{mode:'index', intersect:false},
-      plugins:{
-        legend:{display:false},
-        tooltip:{
-          backgroundColor:'white', titleColor:'#0f1623', bodyColor:'#6b7585',
-          borderColor:'#e4e7ed', borderWidth:1, padding:10,
-          callbacks:{
-            label: ctx => `${ctx.dataset.label}: ${ctx.parsed.y !== null ? Math.round(ctx.parsed.y).toLocaleString('es-CL') : '—'}`
-          }
-        }
-      },
+      plugins:{legend:{display:false}},
       scales:{
-        x:{grid:{display:false}, ticks:{font:{size:10}, maxTicksLimit:12, color:'#9ba3b0'}},
-        y:{grid:{color:'#f3f4f6'}, beginAtZero:true, ticks:{font:{size:10}, color:'#9ba3b0', callback:v=>v.toLocaleString('es-CL')}}
+        x:{ticks:{font:{size:9}, maxTicksLimit:10, color:'#9ba3b0'}, grid:{display:false}},
+        y:{beginAtZero:true, ticks:{font:{size:9}, color:'#9ba3b0', callback:v=>v.toLocaleString('es-CL')}, grid:{color:'#f1f5f9'}}
       }
     }
   });
 }
 
-// ────────────────────────────────────────────────────────────
-// TABLA DESVIACIÓN
-// ────────────────────────────────────────────────────────────
 function renderDeviationTable(fctIsoMap) {
   const tbody = document.querySelector('#devTable tbody');
   const tfoot = $('devFoot');
   tbody.innerHTML = '';
   if(!testingData.length) {
-    tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:30px;color:var(--muted)">No hay datos reales posteriores al corte para comparar.</td></tr>`;
-    tfoot.innerHTML = '';
-    return;
+    tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:24px;color:var(--muted)">No hay registros reales posteriores al corte.</td></tr>`;
+    tfoot.innerHTML = ''; return;
   }
   let totFct=0, totReal=0, totAbsErr=0;
   testingData.forEach(act => {
@@ -1030,21 +887,17 @@ function renderDeviationTable(fctIsoMap) {
     const diff = act.value - fctVal;
     const pct = fctVal > 0 ? (diff/fctVal)*100 : 0;
     const absPct = Math.abs(pct);
-    const cls = diff > 0 ? 'td-over' : 'td-under';
-    const flagCls = absPct < 5 ? 'ok' : absPct < 10 ? 'warn' : 'bad';
-    const fObj = futureForecast.find(f => f.iso === act.iso);
-    const accuracyPct = 100 - absPct;
-    totFct += fctVal; totReal += act.value; totAbsErr += Math.abs(diff);
     tbody.innerHTML += `
       <tr>
         <td class="td-date">${act.iso}</td>
-        <td>${fObj ? fObj.dayName : '—'}</td>
+        <td style="text-align:left;">${DAYS[act.date.getDay()]}</td>
         <td class="td-fct">${fctVal.toLocaleString('es-CL')}</td>
         <td class="td-real">${act.value.toLocaleString('es-CL')}</td>
-        <td class="${cls}">${diff > 0 ? '+' : ''}${diff.toLocaleString('es-CL')}</td>
-        <td class="${cls}">${diff > 0 ? '+' : ''}${pct.toFixed(2)}%</td>
-        <td><span class="td-flag ${flagCls}"></span>${accuracyPct.toFixed(1)}%</td>
+        <td class="${diff > 0 ? 'td-over':'td-under'}">${diff > 0 ? '+':''}${diff.toLocaleString('es-CL')}</td>
+        <td class="${diff > 0 ? 'td-over':'td-under'}">${diff > 0 ? '+':''}${pct.toFixed(1)}%</td>
+        <td><span class="td-flag ${absPct < 6 ? 'ok' : absPct < 12 ? 'warn':'bad'}"></span>${(100-absPct).toFixed(1)}%</td>
       </tr>`;
+    totFct += fctVal; totReal += act.value; totAbsErr += Math.abs(diff);
   });
   const wape = totReal > 0 ? (totAbsErr/totReal)*100 : 0;
   tfoot.innerHTML = `
@@ -1052,45 +905,57 @@ function renderDeviationTable(fctIsoMap) {
       <td colspan="2" style="text-align:left;">TOTAL PERIODO</td>
       <td class="td-fct">${totFct.toLocaleString('es-CL')}</td>
       <td class="td-real">${totReal.toLocaleString('es-CL')}</td>
-      <td class="${totReal-totFct > 0 ? 'td-over':'td-under'}">${(totReal-totFct>0?'+':'') + (totReal-totFct).toLocaleString('es-CL')}</td>
-      <td colspan="2" style="text-align:right; color:var(--magenta);">WAPE Global: ${wape.toFixed(2)}%</td>
+      <td class="${totReal-totFct > 0 ? 'td-over':'td-under'}">${totReal-totFct > 0 ? '+':''}${(totReal-totFct).toLocaleString('es-CL')}</td>
+      <td colspan="2" style="text-align:right; color:var(--magenta); font-weight:700;">WAPE Global: ${wape.toFixed(1)}%</td>
     </tr>`;
 }
 
-// ────────────────────────────────────────────────────────────
-// TABLA FUTURO
-// ────────────────────────────────────────────────────────────
-function renderFutureTable(to) {
-  const tbody = document.querySelector('#futureTable tbody');
-  tbody.innerHTML = '';
-  futureForecast.filter(f => f.iso > to).slice(0,30).forEach(f => {
-    const lo = Math.round(f.value * 0.92);
-    const hi = Math.round(f.value * 1.08);
-    tbody.innerHTML += `
+function renderFutureAndMonthlyTables() {
+  const fBody = document.querySelector('#futureTable tbody');
+  const mBody = document.querySelector('#monthlySummaryTable tbody');
+  fBody.innerHTML = ''; mBody.innerHTML = '';
+
+  let monthGroup = {};
+  futureForecast.forEach(f => {
+    // Tabla diaria
+    fBody.innerHTML += `
       <tr>
         <td class="td-date">${f.iso}</td>
-        <td>${f.dayName}</td>
+        <td style="text-align:left;">${f.dayName}</td>
         <td class="td-fct">${f.value.toLocaleString('es-CL')}</td>
-        <td style="color:var(--muted); font-family:'IBM Plex Mono',monospace;">${lo.toLocaleString('es-CL')}</td>
-        <td style="color:var(--muted); font-family:'IBM Plex Mono',monospace;">${hi.toLocaleString('es-CL')}</td>
+        <td style="color:var(--muted); font-family:monospace;">${Math.round(f.value*0.92).toLocaleString('es-CL')}</td>
+        <td style="color:var(--muted); font-family:monospace;">${Math.round(f.value*1.08).toLocaleString('es-CL')}</td>
+      </tr>`;
+
+    // Agrupamiento mensual
+    let mKey = `${f.date.getFullYear()}-${String(f.date.getMonth()+1).padStart(2,'0')}`;
+    if(!monthGroup[mKey]) {
+      monthGroup[mKey] = { label: `${MONTHS[f.date.getMonth()]} ${f.date.getFullYear()}`, sum: 0, cnt: 0 };
+    }
+    monthGroup[mKey].sum += f.value;
+    monthGroup[mKey].cnt++;
+  });
+
+  // Renderizar consolidados mensuales
+  Object.keys(monthGroup).sort().forEach(k => {
+    let m = monthGroup[k];
+    mBody.innerHTML += `
+      <tr>
+        <td style="text-align:left; font-weight:600; color:var(--blue);">${m.label}</td>
+        <td>${m.cnt} días</td>
+        <td class="td-fct" style="font-size:14px;">${m.sum.toLocaleString('es-CL')}</td>
+        <td style="font-family:monospace; font-weight:600;">${Math.round(m.sum/m.cnt).toLocaleString('es-CL')} / día</td>
       </tr>`;
   });
 }
 
-// ────────────────────────────────────────────────────────────
-// TABLA AUDITORÍA
-// ────────────────────────────────────────────────────────────
 function renderAuditTable() {
   const tbody = document.querySelector('#auditTable tbody');
   tbody.innerHTML = '';
-  const keys = Object.keys(seasonalIndices).sort();
-  keys.forEach(key => {
+  Object.keys(seasonalIndices).sort().forEach(key => {
     const idx = seasonalIndices[key];
     const pct = idx.combined * 100;
-    let pillCls = 'norm';
-    if(pct > 115) pillCls = 'hi';
-    else if(pct < 85) pillCls = 'lo';
-    else if(pct > 103 || pct < 97) pillCls = 'mid';
+    let pillCls = pct > 115 ? 'hi' : pct < 85 ? 'lo' : 'norm';
 
     const tr = document.createElement('tr');
     tr.innerHTML = `
@@ -1098,35 +963,31 @@ function renderAuditTable() {
         <button class="btn-expand" id="btn-${key}" onclick="toggleAudit('${key}')"><i class="ti ti-plus"></i></button>
         &nbsp;${idx.name}
       </td>
-      <td>${idx.samples} días${idx.shrink < 1 ? `<span style="color:var(--amber); font-size:10.5px; margin-left:4px;" title="Shrinkage aplicado: ${(idx.shrink*100).toFixed(0)}%"> ⚠ baja muestra</span>` : ''}</td>
-      <td style="font-family:'IBM Plex Mono',monospace;">${Math.round(idx.avgGroup).toLocaleString('es-CL')}</td>
-      <td style="font-family:'IBM Plex Mono',monospace; color:var(--muted);">${(idx.dowIndex*100).toFixed(1)}%</td>
-      <td style="font-family:'IBM Plex Mono',monospace; color:var(--muted);">${(idx.womIndex*100).toFixed(1)}%</td>
+      <td>${idx.samples} d</td>
+      <td style="font-family:monospace;">${Math.round(idx.avgGroup).toLocaleString('es-CL')}</td>
+      <td style="font-family:monospace; color:var(--muted);">${Math.round(idx.dowAvg).toLocaleString('es-CL')}</td>
+      <td style="font-family:monospace; color:var(--muted);">${(idx.womIndex*100).toFixed(1)}%</td>
       <td><span class="idx-pill ${pillCls}">${pct.toFixed(1)}%</span></td>`;
     tbody.appendChild(tr);
 
     const trDet = document.createElement('tr');
     trDet.id = `det-${key}`;
-    trDet.className = 'detail-expand';
-    trDet.style.display = 'none';
-    const pills = idx.details.map(x =>
-      `<div class="dpill${x.outlier ? ' outlier-flag' : ''}">
-        <span class="dp-date">${x.iso}${x.outlier ? ' ⚠' : ''}</span>
+    trDet.className = 'detail-expand'; trDet.style.display = 'none';
+    let pills = idx.details.map(x => `
+      <div class="dpill ${x.outlier ? 'outlier-flag':''}">
+        <span class="dp-date">${x.iso}</span>
         <span class="dp-val">${x.v.toLocaleString('es-CL')}</span>
-      </div>`
-    ).join('');
+      </div>`).join('');
+    
     trDet.innerHTML = `
       <td colspan="6" style="text-align:left;">
-        <div style="font-size:11px; color:var(--muted); margin-bottom:6px; font-weight:600;">COMPOSICIÓN DEL PROMEDIO:</div>
+        <div style="font-size:10.5px; color:var(--muted); font-weight:600; margin-bottom:4px;">DIAS UTILIZADOS EN EL PROMEDIO:</div>
         <div class="detail-pills">${pills}</div>
-        <div style="font-size:10.5px; color:var(--muted); margin-top:8px;">
-          Shrinkage aplicado: <b>${(idx.shrink*100).toFixed(0)}%</b> confianza · 
-          WoM raw: <b>${(idx.rawWoM*100).toFixed(1)}%</b> → suavizado: <b>${(idx.womIndex*100).toFixed(1)}%</b>
-        </div>
       </td>`;
     tbody.appendChild(trDet);
   });
 }
+
 window.toggleAudit = function(key) {
   const det = $(`det-${key}`);
   const btn = $(`btn-${key}`);
@@ -1138,36 +999,23 @@ window.toggleAudit = function(key) {
 // ════════════════════════════════════════════════════════════
 // UTILS
 // ════════════════════════════════════════════════════════════
-function showLoader() {
-  $('emptyState').style.display = 'none';
-  $('mainDashboard').style.display = 'none';
-  $('loaderScreen').style.display = 'flex';
-}
-function hideLoader() {
-  $('loaderScreen').style.display = 'none';
-}
-function toISO(date) {
-  const y = date.getFullYear();
-  const m = String(date.getMonth()+1).padStart(2,'0');
-  const d = String(date.getDate()).padStart(2,'0');
-  return `${y}-${m}-${d}`;
-}
+function showLoader() { $('emptyState').style.display='none'; $('mainDashboard').style.display='none'; $('loaderScreen').style.display='flex'; }
+function hideLoader() { $('loaderScreen').style.display='none'; }
+function toISO(date) { return `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`; }
 function parseDate(val) {
   if(!val) return null;
   if(val instanceof Date) return isNaN(val.getTime()) ? null : val;
   if(typeof val === 'number') return new Date(Math.round((val-25569)*86400*1000));
   if(typeof val === 'string') {
-    const s = val.trim();
-    const parts = s.split(/[-\/]/);
+    const parts = val.trim().split(/[-/]/);
     if(parts.length === 3) {
       if(parts[2].length === 4) return new Date(+parts[2], +parts[1]-1, +parts[0]);
       if(parts[0].length === 4) return new Date(+parts[0], +parts[1]-1, +parts[2]);
     }
-    const d = new Date(s);
-    return isNaN(d.getTime()) ? null : d;
   }
   return null;
 }
 </script>
 </body>
+</html>
 </html>
