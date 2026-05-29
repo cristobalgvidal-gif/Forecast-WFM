@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TP Chile | WFM Executive Forecast</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  
+  :root {
+    --bg-main: #f3f4f6;
+    --bg-card: #ffffff;
+    --border: #e5e7eb;
+    --text-main: #111827;
+    --text-muted: #6b7280;
+    --tp-magenta: #C80064;
+    --tp-magenta-light: #fdf2f8;
+    --tp-blue: #1e3a8a;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --radius: 10px;
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  }
+
+  body { font-family: 'Inter', 'Segoe UI', sans-serif; background: var(--bg-main); color: var(--text-main); font-size: 14px; }
+  
+  /* Layout Ejecutivo */
+  .navbar { background: var(--bg-card); border-bottom: 2px solid var(--tp-magenta); padding: 0 30px; height: 70px; display: flex; align-items: center; justify-content: space-between; box-shadow: var(--shadow); position: sticky; top: 0; z-index: 50; }
+  .nav-brand { display: flex; align-items: center; gap: 12px; font-size: 20px; font-weight: 700; color: var(--tp-blue); }
+  .nav-brand i { color: var(--tp-magenta); font-size: 26px; }
+  
+  .service-selector { display: flex; align-items: center; gap: 15px; background: var(--bg-main); padding: 6px 16px; border-radius: 30px; border: 1px solid var(--border); }
+  .service-selector select { background: transparent; border: none; font-size: 15px; font-weight: 600; color: var(--tp-magenta); outline: none; cursor: pointer; }
+  
+  .layout { display: grid; grid-template-columns: 320px 1fr; gap: 24px; padding: 24px; max-width: 1600px; margin: 0 auto; align-items: start; }
+  
+  /* Panel Lateral (Controles) */
+  .sidebar { display: flex; flex-direction: column; gap: 20px; }
+  .control-card { background: var(--bg-card); border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow); border: 1px solid var(--border); }
+  .card-header { font-size: 12px; font-weight: 700; text-transform: uppercase; color: var(--text-muted); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; letter-spacing: 0.5px; }
+  .card-header i { font-size: 16px; color: var(--tp-magenta); }
+  
+  .input-group { margin-bottom: 16px; }
+  .input-group:last-child { margin-bottom: 0; }
+  .input-group label { display: block; font-size: 13px; font-weight: 600; color: var(--text-main); margin-bottom: 6px; }
+  .input-group input, .input-group select { width: 100%; padding: 10px 12px; border: 1px solid var(--border); border-radius: 6px; font-size: 14px; color: var(--text-main); transition: border 0.2s; }
+  .input-group input:focus, .input-group select:focus { border-color: var(--tp-magenta); outline: none; box-shadow: 0 0 0 3px var(--tp-magenta-light); }
+  .help-text { font-size: 11px; color: var(--text-muted); margin-top: 4px; display: block; }
+
+  /* Gestor de Anomalías Moderno */
+  .anomaly-manager { display: flex; gap: 8px; margin-bottom: 12px; }
+  .anomaly-manager input { flex: 1; }
+  .btn-add { background: var(--tp-magenta); color: white; border: none; border-radius: 6px; padding: 0 12px; cursor: pointer; font-weight: 600; }
+  .btn-add:hover { background: #a00050; }
+  .tags-container { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tag { background: var(--tp-magenta-light); color: var(--tp-magenta); border: 1px solid rgba(200,0,100,0.2); padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; }
+  .tag button { background: none; border: none; color: var(--tp-magenta); cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; padding: 0; }
+  .tag button:hover { color: var(--danger); }
+
+  /* Dashboard Principal */
+  .main-content { display: flex; flex-direction: column; gap: 24px; min-width: 0; }
+  
+  .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .kpi-card { background: var(--bg-card); border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow); border: 1px solid var(--border); display: flex; flex-direction: column; }
+  .kpi-title { font-size: 12px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; }
+  .kpi-value { font-size: 28px; font-weight: 800; color: var(--tp-blue); margin: 8px 0 4px 0; }
+  .kpi-subtitle { font-size: 13px; font-weight: 500; color: var(--tp-magenta); }
+
+  .chart-container { background: var(--bg-card); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow); border: 1px solid var(--border); height: 400px; }
+  
+  /* Pestañas */
+  .tabs-container { background: var(--bg-card); border-radius: var(--radius); box-shadow: var(--shadow); border: 1px solid var(--border); overflow: hidden; }
+  .tabs-header { display: flex; border-bottom: 1px solid var(--border); background: #f8fafc; }
+  .tab-btn { flex: 1; padding: 16px; text-align: center; font-weight: 600; font-size: 14px; color: var(--text-muted); background: transparent; border: none; border-bottom: 3px solid transparent; cursor: pointer; transition: all 0.2s; }
+  .tab-btn:hover { color: var(--tp-blue); background: white; }
+  .tab-btn.active { color: var(--tp-magenta); border-bottom-color: var(--tp-magenta); background: white; }
+  .tab-body { padding: 0; display: none; }
+  .tab-body.active { display: block; animation: fadeIn 0.3s; }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  /* Tablas Data Grid */
+  .data-grid { width: 100%; border-collapse: collapse; text-align: right; }
+  .data-grid th, .data-grid td { padding: 12px 16px; border-bottom: 1px solid var(--border); }
+  .data-grid th { background: #f8fafc; color: var(--text-muted); font-size: 11px; font-weight: 700; text-transform: uppercase; position: sticky; top: 0; z-index: 10; text-align: right; }
+  .data-grid th:first-child, .data-grid td:first-child { text-align: left; }
+  .data-grid tbody tr:hover { background: #f9fafb; }
+  
+  /* Celdas especiales */
+  .cell-date { font-weight: 600; color: var(--text-main); }
+  .cell-fct { font-weight: 700; color: var(--tp-blue); background: rgba(30,58,138,0.03); }
+  .cell-real { font-weight: 700; color: var(--text-main); }
+  .cell-var-pos { color: var(--danger); font-weight: 600; } /* Entró más de lo esperado (Peligro SLAs) */
+  .cell-var-neg { color: var(--success); font-weight: 600; } /* Entró menos (Holgura) */
+
+  /* Alertas y Botones */
+  .alert { padding: 12px 16px; border-radius: 6px; font-size: 13px; display: flex; align-items: center; gap: 8px; margin-bottom: 16px; font-weight: 500; }
+  .alert-info { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
+  .loader { display: none; text-align: center; padding: 40px; color: var(--tp-magenta); font-weight: 600; }
+  
+  .manual-upload { display: flex; gap: 10px; margin-top: 10px; }
+  .manual-upload input { font-size: 12px; }
+
+  /* Scrollbars */
+  .table-wrapper { max-height: 500px; overflow-y: auto; }
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <nav class="navbar">
+    <div class="nav-brand">
+      <i class="ti ti-chart-pie"></i> WFM Executive Forecast
+    </div>
+    <div class="service-selector">
+      <i class="ti ti-headset"></i>
+      <select id="serviceSelect">
+        <option value="front-chat.xlsx">Servicio: Front-Chat</option>
+        <option value="wsp.xlsx">Servicio: WhatsApp (WSP)</option>
+        <option value="correo.xlsx">Servicio: Correo Electrónico</option>
+      </select>
+    </div>
+  </nav>
+
+  <div class="layout">
+    
+    <aside class="sidebar">
+      
+      <div class="control-card">
+        <div class="card-header"><i class="ti ti-adjustments"></i> Entrenamiento del Modelo</div>
+        
+        <div class="input-group">
+          <label>Corte de Entrenamiento (Hasta)</label>
+          <input type="date" id="filterTo">
+          <span class="help-text">El modelo aprenderá tendencias y estacionalidad hasta este día. Lo posterior será usado para medir desviación (Desempeño).</span>
+        </div>
+        
+        <div class="input-group">
+          <label>Algoritmo de Base</label>
+          <select id="trendMethodInput">
+            <option value="ema">Suavizado Exponencial (ETS/EMA)</option>
+            <option value="linear">Regresión Lineal Simple</option>
+            <option value="avg">Promedio Simple Pleno</option>
+          </select>
+        </div>
+
+        <div class="input-group">
+          <label>Ventana de Memoria (Días)</label>
+          <input type="number" id="trendBaseInput" value="45" min="14" max="180">
+          <span class="help-text">Días hacia atrás desde el corte usados para definir el volumen base actual.</span>
+        </div>
+      </div>
+
+      <div class="control-card">
+        <div class="card-header"><i class="ti ti-eraser"></i> Limpieza de Anomalías</div>
+        
+        <div class="input-group">
+          <label>Excluir fechas del aprendizaje</label>
+          <div class="anomaly-manager">
+            <input type="date" id="anomalyDate">
+            <button class="btn-add" id="btnAddAnomaly">Añadir</button>
+          </div>
+          <div class="tags-container" id="anomalyTags">
+            </div>
+          <span class="help-text" style="margin-top:8px;">Feriados pasados o caídas de sistema. Sus volúmenes no afectarán las proyecciones futuras.</span>
+        </div>
+      </div>
+
+      <div class="control-card" style="background: #f8fafc; border: 1px dashed #cbd5e1; box-shadow: none;">
+        <div class="card-header" style="margin-bottom: 8px;"><i class="ti ti-upload"></i> Subida Manual Alternativa</div>
+        <span class="help-text" style="margin-bottom: 8px;">Usa esto si estás fuera de GitHub o quieres evaluar un archivo no estandarizado.</span>
+        <input type="file" id="fileInput" accept=".xlsx,.xls,.csv" style="width: 100%; font-size: 12px;">
+      </div>
+
+    </aside>
+
+    <main class="main-content">
+      
+      <div id="loader" class="loader">
+        <i class="ti ti-loader ti-spin" style="font-size: 32px; margin-bottom: 10px; display: block;"></i>
+        Procesando datos del repositorio GitHub...
+      </div>
+
+      <div id="dashboard" style="display: none; flex-direction: column; gap: 24px;">
+        
+        <div class="alert alert-info" id="dataInfoAlert">
+          <i class="ti ti-info-square-rounded"></i> <span>Datos cargados.</span>
+        </div>
+
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <span class="kpi-title">Volumen Base (Dinamico)</span>
+            <span class="kpi-value" id="kpiBase">0</span>
+            <span class="kpi-subtitle" id="kpiBaseSub">Última curva matemática</span>
+          </div>
+          <div class="kpi-card">
+            <span class="kpi-title">Precisión del Modelo (WAPE)</span>
+            <span class="kpi-value" id="kpiAccuracy">--%</span>
+            <span class="kpi-subtitle">En periodo de prueba</span>
+          </div>
+          <div class="kpi-card">
+            <span class="kpi-title">Proyección Siguientes 30D</span>
+            <span class="kpi-value" id="kpiNext30">0</span>
+            <span class="kpi-subtitle">Llamadas esperadas</span>
+          </div>
+          <div class="kpi-card">
+            <span class="kpi-title">Delta Tendencia</span>
+            <span class="kpi-value" id="kpiDelta">0%</span>
+            <span class="kpi-subtitle" id="kpiDeltaSub">Crecimiento estimado</span>
+          </div>
+        </div>
+
+        <div class="chart-container">
+          <canvas id="mainChart"></canvas>
+        </div>
+
+        <div class="tabs-container">
+          <div class="tabs-header">
+            <button class="tab-btn active" data-target="tab-deviation">Análisis de Desviación (Real vs FCT)</button>
+            <button class="tab-btn" data-target="tab-future">Pronóstico a Futuro (Diario)</button>
+            <button class="tab-btn" data-target="tab-audit">Auditoría Estacional (Índices)</button>
+          </div>
+          
+          <div class="tab-body active" id="tab-deviation">
+            <div class="table-wrapper">
+              <table class="data-grid" id="devTable">
+                <thead>
+                  <tr>
+                    <th style="text-align: left;">Fecha (Post-Entrenamiento)</th>
+                    <th style="text-align: left;">Día Semana</th>
+                    <th>Vol. Proyectado (FCT)</th>
+                    <th>Vol. Real Ingresado</th>
+                    <th>Diferencia Neta</th>
+                    <th>% Desviación</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="tab-body" id="tab-future">
+            <div class="table-wrapper">
+              <table class="data-grid" id="futureTable">
+                <thead>
+                  <tr>
+                    <th style="text-align: left;">Fecha Futura</th>
+                    <th style="text-align: left;">Escenario Estacional</th>
+                    <th>Volumen FCT Esperado</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="tab-body" id="tab-audit">
+            <div class="table-wrapper">
+              <table class="data-grid" id="indicesTable">
+                <thead>
+                  <tr>
+                    <th style="text-align: left;">Escenario (Día - Sem)</th>
+                    <th>Muestra (Días Limpios)</th>
+                    <th>Promedio Escenario</th>
+                    <th>Promedio Global del Día</th>
+                    <th>Peso Estacional (% Índice)</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </main>
+
+  </div>
+</div>
+
+<script>
+// ==========================================
+// 1. ESTADO GLOBAL DE LA APLICACIÓN
+// ==========================================
+let rawData = [];           // Todos los datos del Excel
+let trainingData = [];      // Datos <= Fecha de Corte (Para entrenar modelo)
+let testingData = [];       // Datos > Fecha de Corte (Para comparar realidad)
+let futureForecast = [];    // Datos proyectados (30 días hacia adelante del último dato real)
+
+let excludedDates = new Set(); // Set con "YYYY-MM-DD"
+let seasonalIndices = {};   
+let globalDowAverages = {}; 
+
+// Variables Matemáticas
+let baseEma = 0; let linearSlope = 0; let linearIntercept = 0; let baseFlat = 0;
+
+// Constantes
+const DAYS = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+let chartInstance = null;
+
+// ==========================================
+// 2. CONTROL DE INTERFAZ & EVENTOS
+// ==========================================
+const $ = id => document.getElementById(id);
+
+// Pestañas
+document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-body').forEach(c => c.classList.remove('active'));
+        e.target.classList.add('active');
+        $(e.target.dataset.target).classList.add('active');
+    });
+});
+
+// Selector de Servicio Automático (GitHub)
+$('serviceSelect').addEventListener('change', (e) => {
+    loadDataFromGitHub(e.target.value);
+});
+
+// Auto-Recálculo al cambiar inputs
+['filterTo', 'trendMethodInput', 'trendBaseInput'].forEach(id => {
+    $(id).addEventListener('change', processModel);
+});
+
+// Gestor de Anomalías
+$('btnAddAnomaly').addEventListener('click', () => {
+    let d = $('anomalyDate').value;
+    if(!d) return;
+    excludedDates.add(d);
+    $('anomalyDate').value = '';
+    renderAnomalyTags();
+    processModel();
+});
+
+function renderAnomalyTags() {
+    const cont = $('anomalyTags');
+    cont.innerHTML = '';
+    excludedDates.forEach(dateStr => {
+        let tag = document.createElement('div');
+        tag.className = 'tag';
+        tag.innerHTML = `${dateStr} <button onclick="removeAnomaly('${dateStr}')"><i class="ti ti-x"></i></button>`;
+        cont.appendChild(tag);
+    });
+}
+
+window.removeAnomaly = function(dateStr) {
+    excludedDates.delete(dateStr);
+    renderAnomalyTags();
+    processModel();
+}
+
+// Carga Manual (Fallback)
+$('fileInput').addEventListener('change', e => {
+    if(e.target.files[0]) readExcelFile(e.target.files[0]);
+});
+
+// ==========================================
+// 3. MOTOR DE LECTURA DE DATOS
+// ==========================================
+
+// Carga directa desde la carpeta ./datos/ en GitHub
+async function loadDataFromGitHub(filename) {
+    $('dashboard').style.display = 'none';
+    $('loader').style.display = 'block';
+    
+    try {
+        // En GitHub pages, se asume que los excel están en la carpeta "datos"
+        const response = await fetch(`./datos/${filename}`);
+        if (!response.ok) throw new Error("No se encontró el archivo en el repositorio.");
+        const arrayBuffer = await response.arrayBuffer();
+        
+        const wb = XLSX.read(arrayBuffer, {type: 'array', cellDates: true});
+        parseWorkbook(wb, filename);
+    } catch (error) {
+        $('loader').style.display = 'none';
+        alert(`Error cargando archivo: ${error.message}\n\nAsegúrate de tener la carpeta 'datos' con los archivos Excel en tu repositorio de GitHub, o usa la subida manual.`);
+    }
+}
+
+// Carga desde el input manual
+function readExcelFile(file) {
+    $('dashboard').style.display = 'none';
+    $('loader').style.display = 'block';
+    
+    const reader = new FileReader();
+    reader.onload = e => {
+        const wb = XLSX.read(e.target.result, {type:'array', cellDates:true});
+        parseWorkbook(wb, file.name);
+    };
+    reader.readAsArrayBuffer(file);
+}
+
+function parseWorkbook(wb, sourceName) {
+    const ws = wb.Sheets[wb.SheetNames[0]];
+    const raw = XLSX.utils.sheet_to_json(ws, {raw:true});
+    
+    let parsedData = [];
+    raw.forEach(row => {
+        let keys = Object.keys(row);
+        let dateKey = keys.find(k => k.toLowerCase().includes('fecha'));
+        let valKey = keys.find(k => k.toLowerCase().includes('recibida'));
+
+        if (dateKey && valKey) {
+            let d = parseSafeDate(row[dateKey]);
+            let v = parseFloat(row[valKey].toString().replace(/,/g, ''));
+            if (d && !isNaN(v)) parsedData.push({ date: d, value: v });
+        }
+    });
+
+    if(parsedData.length === 0) {
+        alert("El Excel no tiene el formato correcto. Necesita columnas 'Fechas' y 'Recibidas'.");
+        $('loader').style.display = 'none';
+        return;
+    }
+
+    parsedData.sort((a,b) => a.date - b.date);
+    rawData = parsedData;
+
+    // Sugerir fecha de corte: 7 días antes del final para tener datos de prueba (Testing)
+    let lastDate = rawData[rawData.length - 1].date;
+    let suggestedCutoff = new Date(lastDate);
+    suggestedCutoff.setDate(suggestedCutoff.getDate() - 7);
+    
+    $('filterTo').value = formatISODate(suggestedCutoff);
+    $('dataInfoAlert').innerHTML = `<i class="ti ti-table"></i> <span>Datos analizados desde <b>${sourceName}</b> (${rawData.length} días históricos encontrados).</span>`;
+    
+    processModel();
+}
+
+// ==========================================
+// 4. MOTOR MATEMÁTICO Y MODELADO
+// ==========================================
+
+function processModel() {
+    if(rawData.length === 0) return;
+
+    let cutoffDate = new Date($('filterTo').value + "T23:59:59");
+    
+    // Separar Entrenamiento vs Realidad
+    trainingData = [];
+    testingData = [];
+    
+    rawData.forEach(item => {
+        if(item.date <= cutoffDate) {
+            // Aplicar limpieza de anomalías solo al entrenamiento
+            if(!excludedDates.has(formatISODate(item.date))) {
+                trainingData.push(item);
+            }
+        } else {
+            testingData.push(item);
+        }
+    });
+
+    if(trainingData.length === 0) {
+        alert("La fecha de corte es muy antigua o excluiste todos los días.");
+        return;
+    }
+
+    calculateBaseTrends();
+    calculateSeasonality();
+    generateForecastData();
+    
+    updateDashboardUI();
+    
+    $('loader').style.display = 'none';
+    $('dashboard').style.display = 'flex';
+}
+
+function calculateBaseTrends() {
+    let windowSize = parseInt($('trendBaseInput').value) || 30;
+    let recent = trainingData.slice(-windowSize);
+    let n = recent.length;
+    
+    if(n === 0) return;
+
+    // 1. Promedio Pleno
+    baseFlat = recent.reduce((s, d) => s + d.value, 0) / n;
+
+    // 2. Regresión Lineal
+    let sumX = 0, sumY = 0, sumXY = 0, sumXX = 0;
+    for (let i = 0; i < n; i++) {
+        let x = i; let y = recent[i].value;
+        sumX += x; sumY += y; sumXY += x * y; sumXX += x * x;
+    }
+    let den = (n * sumXX - sumX * sumX);
+    linearSlope = den === 0 ? 0 : (n * sumXY - sumX * sumY) / den;
+    linearIntercept = den === 0 ? (sumY / n) : (sumY - linearSlope * sumX) / n;
+
+    // 3. ETS (Suavizado)
+    let ema = recent[0].value;
+    let alpha = 2 / (n + 1);
+    for (let i = 1; i < n; i++) ema = alpha * recent[i].value + (1 - alpha) * ema;
+    baseEma = ema;
+}
+
+function calculateSeasonality() {
+    let sumTotal = 0;
+    let dowBuckets = {0:{s:0,c:0}, 1:{s:0,c:0}, 2:{s:0,c:0}, 3:{s:0,c:0}, 4:{s:0,c:0}, 5:{s:0,c:0}, 6:{s:0,c:0}};
+    let womBuckets = {};
+
+    trainingData.forEach(item => {
+        sumTotal += item.value;
+        let w = Math.ceil(item.date.getDate() / 7);
+        let d = item.date.getDay();
+        let key = `${w}_${d}`;
+
+        dowBuckets[d].s += item.value; dowBuckets[d].c++;
+        if(!womBuckets[key]) womBuckets[key] = {s:0, c:0};
+        womBuckets[key].s += item.value; womBuckets[key].c++;
+    });
+
+    let avgOverall = sumTotal / trainingData.length;
+    globalDowAverages = {};
+    for(let d=0; d<=6; d++) {
+        globalDowAverages[d] = dowBuckets[d].c > 0 ? (dowBuckets[d].s / dowBuckets[d].c) : avgOverall;
+    }
+
+    seasonalIndices = {};
+    for(let key in womBuckets) {
+        let w = key.split('_')[0]; let d = key.split('_')[1];
+        let avgGroup = womBuckets[key].s / womBuckets[key].c;
+        let avgDow = globalDowAverages[d];
+        
+        seasonalIndices[key] = {
+            name: `${DAYS[d]} - Sem ${w}`,
+            calcPct: avgDow > 0 ? (avgGroup / avgDow) : 1,
+            avgGroup: avgGroup,
+            avgDow: avgDow,
+            samples: womBuckets[key].c
+        };
+    }
+}
+
+function getForecastValue(dateObj, stepIndex) {
+    let method = $('trendMethodInput').value;
+    let base = baseFlat;
+    
+    if (method === 'linear') {
+        let x = (trainingData.length > 0 ? Math.min(trainingData.length, parseInt($('trendBaseInput').value)) : 0) + stepIndex;
+        base = (linearSlope * x) + linearIntercept;
+    } else if (method === 'ema') {
+        base = baseEma;
+    }
+    if (base < 0) base = 0;
+
+    let w = Math.ceil(dateObj.getDate() / 7);
+    let d = dateObj.getDay();
+    let key = `${w}_${d}`;
+
+    let overallAvg = trainingData.reduce((s, i) => s + i.value, 0) / trainingData.length;
+    let dowFactor = overallAvg > 0 ? (globalDowAverages[d] / overallAverage(trainingData)) : 1;
+    let womFactor = seasonalIndices[key] ? seasonalIndices[key].calcPct : 1;
+
+    return Math.round(base * dowFactor * womFactor);
+}
+
+function overallAverage(arr) { return arr.reduce((s,i)=>s+i.value,0)/arr.length; }
+
+function generateForecastData() {
+    futureForecast = [];
+    let lastDate = new Date(trainingData[trainingData.length - 1].date);
+    
+    // Proyectar todos los días del testingData + 30 días adicionales
+    let totalDaysToProject = testingData.length + 30;
+    
+    let currentDate = new Date(lastDate);
+    currentDate.setDate(currentDate.getDate() + 1);
+
+    for(let i=0; i<totalDaysToProject; i++) {
+        let fctVal = getForecastValue(currentDate, i);
+        
+        futureForecast.push({
+            date: new Date(currentDate),
+            dayName: `${DAYS[currentDate.getDay()]} - Sem ${Math.ceil(currentDate.getDate() / 7)}`,
+            value: fctVal
+        });
+        currentDate.setDate(currentDate.getDate() + 1);
+    }
+}
+
+// ==========================================
+// 5. RENDERIZADO VISUAL Y TABLAS
+// ==========================================
+
+function updateDashboardUI() {
+    // KPI 1: Base
+    $('kpiBase').innerText = Math.round($('trendMethodInput').value === 'ema' ? baseEma : ($('trendMethodInput').value === 'linear' ? getForecastValue(new Date(), 0) : baseFlat)).toLocaleString('es-CL');
+    
+    // KPI 2: Precisión (WAPE) en testing
+    let absErrorSum = 0; let actualSum = 0;
+    testingData.forEach(act => {
+        let fct = futureForecast.find(f => f.date.getTime() === act.date.getTime());
+        if(fct) {
+            absErrorSum += Math.abs(act.value - fct.value);
+            actualSum += act.value;
+        }
+    });
+    if(actualSum > 0) {
+        let wape = (absErrorSum / actualSum) * 100;
+        let accuracy = 100 - wape;
+        $('kpiAccuracy').innerText = accuracy.toFixed(1) + "%";
+        $('kpiAccuracy').style.color = accuracy > 85 ? 'var(--success)' : (accuracy > 70 ? 'var(--warning)' : 'var(--danger)');
+    } else {
+        $('kpiAccuracy').innerText = "N/A";
+    }
+
+    // KPI 3 & 4
+    let fctOnlyFuture = futureForecast.filter(f => f.date > new Date($('filterTo').value + "T23:59:59"));
+    let next30Sum = fctOnlyFuture.slice(0, 30).reduce((s, d) => s + d.value, 0);
+    $('kpiNext30').innerText = next30Sum.toLocaleString('es-CL');
+    
+    if($('trendMethodInput').value === 'linear') {
+        $('kpiDelta').innerText = (linearSlope > 0 ? "+" : "") + linearSlope.toFixed(1) + " /día";
+    } else {
+        $('kpiDelta').innerText = "Plano";
+    }
+
+    renderChart();
+    renderDeviationTable();
+    renderFutureTable();
+    renderIndicesTable();
+}
+
+function renderChart() {
+    const ctx = document.getElementById('mainChart').getContext('2d');
+    
+    let labels = [];
+    let histPlot = [];
+    let fctPlot = [];
+    let testPlot = [];
+
+    // Graficar últimos 45 días de entrenamiento
+    let plotTrain = trainingData.slice(-45);
+    plotTrain.forEach(d => {
+        labels.push(formatISODate(d.date));
+        histPlot.push(d.value);
+        fctPlot.push(null);
+        testPlot.push(null);
+    });
+
+    // Conectar linea FCT con ultimo punto real
+    fctPlot[fctPlot.length - 1] = histPlot[histPlot.length - 1];
+
+    // Graficar Testing y Futuro
+    futureForecast.forEach(f => {
+        labels.push(formatISODate(f.date));
+        histPlot.push(null);
+        fctPlot.push(f.value);
+        
+        let actMatch = testingData.find(t => t.date.getTime() === f.date.getTime());
+        testPlot.push(actMatch ? actMatch.value : null);
+    });
+
+    if(chartInstance) chartInstance.destroy();
+
+    chartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [
+                { label: 'Entrenamiento (Histórico)', data: histPlot, borderColor: '#9ca3af', backgroundColor: 'rgba(156,163,175,0.1)', borderWidth: 2, pointRadius: 0, fill: true, tension: 0.2 },
+                { label: 'Modelo Forecast', data: fctPlot, borderColor: '#C80064', borderDash: [4, 4], borderWidth: 2, pointRadius: 1, tension: 0.2 },
+                { label: 'Realidad (Testing)', data: testPlot, borderColor: '#1e3a8a', borderWidth: 2.5, pointRadius: 3, pointBackgroundColor: '#1e3a8a', tension: 0.2 }
+            ]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            interaction: { mode: 'index', intersect: false },
+            plugins: { legend: { position: 'top', align: 'end', labels: { boxWidth: 12, usePointStyle: true } } },
+            scales: {
+                x: { grid: { display: false } },
+                y: { grid: { color: '#f3f4f6' }, beginAtZero: true }
+            }
+        }
+    });
+}
+
+function renderDeviationTable() {
+    let tbody = $('#devTable tbody');
+    tbody.innerHTML = '';
+    
+    if(testingData.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding: 30px; color: var(--text-muted);">No hay datos reales posteriores a la fecha de corte para comparar.</td></tr>`;
+        return;
+    }
+
+    testingData.forEach(act => {
+        let fct = futureForecast.find(f => f.date.getTime() === act.date.getTime());
+        if(!fct) return;
+        
+        let diff = act.value - fct.value;
+        let pct = (diff / fct.value) * 100;
+        let varClass = diff > 0 ? 'cell-var-pos' : 'cell-var-neg';
+
+        tbody.innerHTML += `
+            <tr>
+                <td class="cell-date" style="text-align: left;">${formatISODate(act.date)}</td>
+                <td style="text-align: left;">${fct.dayName}</td>
+                <td class="cell-fct">${fct.value.toLocaleString('es-CL')}</td>
+                <td class="cell-real">${act.value.toLocaleString('es-CL')}</td>
+                <td class="${varClass}">${diff > 0 ? '+'+diff.toLocaleString('es-CL') : diff.toLocaleString('es-CL')}</td>
+                <td class="${varClass}">${diff > 0 ? '+'+pct.toFixed(1) : pct.toFixed(1)}%</td>
+            </tr>
+        `;
+    });
+}
+
+function renderFutureTable() {
+    let tbody = $('#futureTable tbody');
+    tbody.innerHTML = '';
+    
+    let fctOnlyFuture = futureForecast.filter(f => f.date > new Date($('filterTo').value + "T23:59:59"));
+    
+    fctOnlyFuture.slice(0, 30).forEach(fct => {
+        tbody.innerHTML += `
+            <tr>
+                <td class="cell-date" style="text-align: left;">${formatISODate(fct.date)}</td>
+                <td style="text-align: left;">${fct.dayName}</td>
+                <td class="cell-fct" style="text-align: right;">${fct.value.toLocaleString('es-CL')}</td>
+            </tr>
+        `;
+    });
+}
+
+function renderIndicesTable() {
+    let tbody = $('#indicesTable tbody');
+    tbody.innerHTML = '';
+    
+    for(let key in seasonalIndices) {
+        let idx = seasonalIndices[key];
+        tbody.innerHTML += `
+            <tr>
+                <td style="text-align: left; font-weight: 600;">${idx.name}</td>
+                <td>${idx.samples} días</td>
+                <td>${Math.round(idx.avgGroup).toLocaleString('es-CL')}</td>
+                <td>${Math.round(idx.avgDow).toLocaleString('es-CL')}</td>
+                <td style="font-weight: 700; color: var(--tp-magenta);">${(idx.calcPct*100).toFixed(1)}%</td>
+            </tr>
+        `;
+    }
+}
+
+// Utils
+function parseSafeDate(val) {
+    if (!val) return null;
+    if (val instanceof Date) return isNaN(val.getTime()) ? null : val;
+    if (typeof val === 'number') return new Date(Math.round((val - 25569) * 86400 * 1000));
+    if (typeof val === 'string') {
+        let parts = val.trim().split(/[-/]/);
+        if (parts.length === 3) {
+            if (parts[2].length === 4) return new Date(parts[2], parts[1] - 1, parts[0]);
+            else if (parts[0].length === 4) return new Date(parts[0], parts[1] - 1, parts[2]);
+        }
+    }
+    return new Date(val);
+}
+function formatISODate(date) {
+    let d = new Date(date.getTime() - (date.getTimezoneOffset() * 60000));
+    return d.toISOString().split('T')[0];
+}
+</script>
+</body>
+</html>
