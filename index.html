@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TP Chile | WFM Executive Forecast v2.5</title>
+<title>TP Chile | WFM Executive Forecast v2.6</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -36,7 +36,7 @@
     --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
     --shadow-md: 0 4px 12px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.04);
   }
-  body { font-family: 'IBM Plex Sans', 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); font-size: 13.5px; line-height: 1.5; }
+  body { font-family: 'IBM Plex Sans', 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); font-size: 13.5px; line-height: 1.5; overflow-x: hidden; }
 
   /* ─── Navbar ─── */
   .navbar {
@@ -46,7 +46,14 @@
     display: flex; align-items: center; justify-content: space-between;
     position: sticky; top: 0; z-index: 100; box-shadow: var(--shadow);
   }
-  .nav-brand { display: flex; align-items: center; gap: 10px; }
+  .nav-brand { display: flex; align-items: center; gap: 12px; }
+  .btn-sidebar-toggle {
+    background: transparent; border: none; color: var(--text); font-size: 22px; 
+    cursor: pointer; padding: 6px; border-radius: 6px; display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+  }
+  .btn-sidebar-toggle:hover { background: var(--surface2); color: var(--magenta); }
+  
   .nav-logo {
     width: 36px; height: 36px; background: var(--magenta); border-radius: 8px;
     display: flex; align-items: center; justify-content: center; color: white; font-size: 18px;
@@ -66,8 +73,27 @@
   }
   .model-badge.active { background: var(--green-dim); color: var(--green); border-color: rgba(11,110,79,0.2); }
 
-  /* ─── Layout ─── */
-  .layout { display: grid; grid-template-columns: 300px 1fr; gap: 20px; padding: 20px 24px; max-width: 1560px; margin: 0 auto; align-items: start; }
+  /* ─── Layout Flexbox (Permite retraer suavemente) ─── */
+  .layout { 
+    display: flex; gap: 24px; padding: 24px 30px; 
+    max-width: 100%; /* Aprovecha pantallas ultra anchas */
+    margin: 0 auto; align-items: flex-start; 
+  }
+
+  /* ─── Sidebar Retráctil ─── */
+  .sidebar { 
+    display: flex; flex-direction: column; gap: 16px; 
+    width: 310px; flex-shrink: 0; 
+    transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease; 
+  }
+  .sidebar.collapsed {
+    margin-left: -334px; /* Ancho + el gap para esconderlo completamente */
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* ─── Main Content ─── */
+  .main { flex-grow: 1; min-width: 0; display: flex; flex-direction: column; gap: 18px; transition: all 0.3s ease;}
 
   /* ─── Cards base ─── */
   .card { background: var(--surface); border-radius: var(--r-lg); border: 1px solid var(--border); box-shadow: var(--shadow); }
@@ -80,8 +106,7 @@
   .section-label-left { display: flex; align-items: center; gap: 6px; }
   .section-label i { font-size: 14px; color: var(--magenta); }
 
-  /* ─── Sidebar ─── */
-  .sidebar { display: flex; flex-direction: column; gap: 16px; }
+  /* ─── Controles ─── */
   .input-row { margin-bottom: 12px; }
   .input-row:last-child { margin-bottom: 0; }
   .input-row label { display: block; font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 5px; }
@@ -114,8 +139,7 @@
   .upload-zone { border: 1.5px dashed var(--border-strong); border-radius: var(--r); padding: 14px; background: var(--surface2); }
   .upload-zone input { font-size: 12px; width: 100%; }
 
-  /* ─── Main Content ─── */
-  .main { display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+  /* State screens */
   .empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 80px 20px; gap: 14px; text-align: center; }
   .empty-state i { font-size: 52px; opacity: 0.2; color: var(--text); }
   .empty-state h3 { font-size: 17px; font-weight: 600; }
@@ -126,7 +150,6 @@
 
   .banner { border-radius: var(--r); padding: 10px 14px; font-size: 13px; display: flex; align-items: center; gap: 8px; font-weight: 500; border: 1px solid; }
   .banner.info { background: #eff6ff; color: #1d4ed8; border-color: #bfdbfe; }
-  .banner.warning { background: var(--amber-dim); color: var(--amber); border-color: rgba(146,83,10,0.2); }
 
   /* ─── KPI Grid ─── */
   .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
@@ -162,7 +185,11 @@
   @keyframes fadeUp { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
 
   /* ─── Tables ─── */
-  .tbl-wrap { max-height: 480px; overflow-y: auto; }
+  .tbl-wrap { 
+    max-height: 65vh; /* ALTURA DINÁMICA: Crece según la pantalla del monitor */
+    min-height: 400px;
+    overflow-y: auto; 
+  }
   .tbl-wrap::-webkit-scrollbar { width: 6px; }
   .tbl-wrap::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 6px; }
   .data-tbl { width: 100%; border-collapse: collapse; font-size: 13px; }
@@ -211,10 +238,11 @@
 <body>
 <nav class="navbar">
   <div class="nav-brand">
+    <button class="btn-sidebar-toggle" id="btnToggleSidebarMaster" title="Expandir/Contraer Controles"><i class="ti ti-menu-2"></i></button>
     <div class="nav-logo"><i class="ti ti-wave-sine"></i></div>
     <div>
       <div class="nav-title">WFM Executive Forecast</div>
-      <div class="nav-subtitle">TP Chile · Predictive Engine v2.5</div>
+      <div class="nav-subtitle">TP Chile · Predictive Engine v2.6</div>
     </div>
   </div>
   <div class="nav-right">
@@ -230,8 +258,8 @@
   </div>
 </nav>
 
-<div class="layout">
-  <aside class="sidebar">
+<div class="layout" id="mainLayout">
+  <aside class="sidebar" id="mainSidebar">
     <div class="card">
       
       <div class="card-section">
@@ -264,9 +292,9 @@
       <div class="card-section">
         <div class="section-label"><div class="section-label-left"><i class="ti ti-brain"></i> Algoritmo Base</div></div>
         <select id="trendMethodInput" style="width:100%; padding:8px 10px; border:1px solid var(--border-strong); border-radius:6px; font-size:13px; font-family:inherit;">
-          <option value="holtwinters">Modelamiento de Holt (Tendencia + Estacionalidad)</option>
+          <option value="holtwinters">Tendencia Lineal de Holt + Estacionalidad</option>
           <option value="ema">EMA Adaptativo (Suavizado Exponencial)</option>
-          <option value="linear">Regresión Lineal (Extrapolación Recta)</option>
+          <option value="linear">Regresión Lineal Simple (Extrapolación)</option>
           <option value="avg">Promedio Simple Fijo</option>
         </select>
         <div id="lowVolWarn" class="hint important" style="display:none; margin-top:8px;">
@@ -462,6 +490,11 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // Toggle Sidebar Master (Hamburger Menu)
+  $('btnToggleSidebarMaster').addEventListener('click', () => {
+    $('mainSidebar').classList.toggle('collapsed');
+  });
+
   $('serviceSelect').addEventListener('change', e => loadFromGitHub(e.target.value));
   $('trendMethodInput').addEventListener('change', processModel);
   ['filterFrom','filterTo','trendBaseInput','forecastToInput'].forEach(id => $(id).addEventListener('change', processModel));
@@ -549,11 +582,10 @@ function parseWorkbook(wb, src) {
   const cutoff = new Date(data[data.length-1].date);
   cutoff.setDate(cutoff.getDate() - 7);
   
-  // Calcular fin de mes a 3 meses a futuro de forma automatizada
   const targetFuture = new Date(data[data.length-1].date);
   targetFuture.setMonth(targetFuture.getMonth() + 3);
   targetFuture.setMonth(targetFuture.getMonth() + 1);
-  targetFuture.setDate(0); // Último día del mes objetivo
+  targetFuture.setDate(0); 
 
   $('filterFrom').value = data[0].iso;
   $('filterTo').value = toISO(cutoff);
@@ -1017,5 +1049,4 @@ function parseDate(val) {
 }
 </script>
 </body>
-</html>
 </html>
