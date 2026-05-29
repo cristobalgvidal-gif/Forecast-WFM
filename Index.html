@@ -121,8 +121,8 @@
     <div class="service-selector">
       <i class="ti ti-headset"></i>
       <select id="serviceSelect">
-        <option value="front-chat.xlsx">Servicio: Front-Chat</option>
-        <option value="wsp.xlsx">Servicio: WhatsApp (WSP)</option>
+        <option value="front.xlsx">Servicio: Front</option>
+        <option value="chat-wsp.xlsx">Servicio: Chat-WSP</option>
         <option value="correo.xlsx">Servicio: Correo Electrónico</option>
       </select>
     </div>
@@ -288,12 +288,12 @@
 // ==========================================
 // 1. ESTADO GLOBAL DE LA APLICACIÓN
 // ==========================================
-let rawData = [];           // Todos los datos del Excel
-let trainingData = [];      // Datos <= Fecha de Corte (Para entrenar modelo)
-let testingData = [];       // Datos > Fecha de Corte (Para comparar realidad)
-let futureForecast = [];    // Datos proyectados (30 días hacia adelante del último dato real)
+let rawData = [];           
+let trainingData = [];      
+let testingData = [];       
+let futureForecast = [];    
 
-let excludedDates = new Set(); // Set con "YYYY-MM-DD"
+let excludedDates = new Set(); 
 let seasonalIndices = {};   
 let globalDowAverages = {}; 
 
@@ -365,13 +365,11 @@ $('fileInput').addEventListener('change', e => {
 // 3. MOTOR DE LECTURA DE DATOS
 // ==========================================
 
-// Carga directa desde la carpeta ./datos/ en GitHub
 async function loadDataFromGitHub(filename) {
     $('dashboard').style.display = 'none';
     $('loader').style.display = 'block';
     
     try {
-        // En GitHub pages, se asume que los excel están en la carpeta "datos"
         const response = await fetch(`./datos/${filename}`);
         if (!response.ok) throw new Error("No se encontró el archivo en el repositorio.");
         const arrayBuffer = await response.arrayBuffer();
@@ -384,7 +382,6 @@ async function loadDataFromGitHub(filename) {
     }
 }
 
-// Carga desde el input manual
 function readExcelFile(file) {
     $('dashboard').style.display = 'none';
     $('loader').style.display = 'block';
@@ -423,7 +420,6 @@ function parseWorkbook(wb, sourceName) {
     parsedData.sort((a,b) => a.date - b.date);
     rawData = parsedData;
 
-    // Sugerir fecha de corte: 7 días antes del final para tener datos de prueba (Testing)
     let lastDate = rawData[rawData.length - 1].date;
     let suggestedCutoff = new Date(lastDate);
     suggestedCutoff.setDate(suggestedCutoff.getDate() - 7);
@@ -443,13 +439,11 @@ function processModel() {
 
     let cutoffDate = new Date($('filterTo').value + "T23:59:59");
     
-    // Separar Entrenamiento vs Realidad
     trainingData = [];
     testingData = [];
     
     rawData.forEach(item => {
         if(item.date <= cutoffDate) {
-            // Aplicar limpieza de anomalías solo al entrenamiento
             if(!excludedDates.has(formatISODate(item.date))) {
                 trainingData.push(item);
             }
@@ -480,10 +474,8 @@ function calculateBaseTrends() {
     
     if(n === 0) return;
 
-    // 1. Promedio Pleno
     baseFlat = recent.reduce((s, d) => s + d.value, 0) / n;
 
-    // 2. Regresión Lineal
     let sumX = 0, sumY = 0, sumXY = 0, sumXX = 0;
     for (let i = 0; i < n; i++) {
         let x = i; let y = recent[i].value;
@@ -493,7 +485,6 @@ function calculateBaseTrends() {
     linearSlope = den === 0 ? 0 : (n * sumXY - sumX * sumY) / den;
     linearIntercept = den === 0 ? (sumY / n) : (sumY - linearSlope * sumX) / n;
 
-    // 3. ETS (Suavizado)
     let ema = recent[0].value;
     let alpha = 2 / (n + 1);
     for (let i = 1; i < n; i++) ema = alpha * recent[i].value + (1 - alpha) * ema;
@@ -555,19 +546,16 @@ function getForecastValue(dateObj, stepIndex) {
     let key = `${w}_${d}`;
 
     let overallAvg = trainingData.reduce((s, i) => s + i.value, 0) / trainingData.length;
-    let dowFactor = overallAvg > 0 ? (globalDowAverages[d] / overallAverage(trainingData)) : 1;
+    let dowFactor = overallAvg > 0 ? (globalDowAverages[d] / overallAvg) : 1;
     let womFactor = seasonalIndices[key] ? seasonalIndices[key].calcPct : 1;
 
     return Math.round(base * dowFactor * womFactor);
 }
 
-function overallAverage(arr) { return arr.reduce((s,i)=>s+i.value,0)/arr.length; }
-
 function generateForecastData() {
     futureForecast = [];
     let lastDate = new Date(trainingData[trainingData.length - 1].date);
     
-    // Proyectar todos los días del testingData + 30 días adicionales
     let totalDaysToProject = testingData.length + 30;
     
     let currentDate = new Date(lastDate);
@@ -593,7 +581,7 @@ function updateDashboardUI() {
     // KPI 1: Base
     $('kpiBase').innerText = Math.round($('trendMethodInput').value === 'ema' ? baseEma : ($('trendMethodInput').value === 'linear' ? getForecastValue(new Date(), 0) : baseFlat)).toLocaleString('es-CL');
     
-    // KPI 2: Precisión (WAPE) en testing
+    // KPI 2: Precisión
     let absErrorSum = 0; let actualSum = 0;
     testingData.forEach(act => {
         let fct = futureForecast.find(f => f.date.getTime() === act.date.getTime());
@@ -609,6 +597,7 @@ function updateDashboardUI() {
         $('kpiAccuracy').style.color = accuracy > 85 ? 'var(--success)' : (accuracy > 70 ? 'var(--warning)' : 'var(--danger)');
     } else {
         $('kpiAccuracy').innerText = "N/A";
+        $('kpiAccuracy').style.color = 'var(--text-main)';
     }
 
     // KPI 3 & 4
@@ -636,7 +625,6 @@ function renderChart() {
     let fctPlot = [];
     let testPlot = [];
 
-    // Graficar últimos 45 días de entrenamiento
     let plotTrain = trainingData.slice(-45);
     plotTrain.forEach(d => {
         labels.push(formatISODate(d.date));
@@ -645,10 +633,8 @@ function renderChart() {
         testPlot.push(null);
     });
 
-    // Conectar linea FCT con ultimo punto real
     fctPlot[fctPlot.length - 1] = histPlot[histPlot.length - 1];
 
-    // Graficar Testing y Futuro
     futureForecast.forEach(f => {
         labels.push(formatISODate(f.date));
         histPlot.push(null);
