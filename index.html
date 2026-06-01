@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TP Chile | WFM Executive Forecast v2.6</title>
+<title>TP Chile | WFM Predictive Engine 2026</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -12,227 +12,218 @@
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --bg: #f0f2f5;
-    --surface: #ffffff;
+    --bg: #f2f4f8;
+    --surface: rgba(255, 255, 255, 0.95);
     --surface2: #f8f9fb;
-    --border: #e4e7ed;
-    --border-strong: #d0d5de;
-    --text: #0f1623;
-    --muted: #6b7585;
-    --muted2: #9ba3b0;
+    --border: #e2e8f0;
+    --border-strong: #cbd5e1;
+    --text: #0f172a;
+    --muted: #64748b;
     --magenta: #C80064;
     --magenta-dim: rgba(200,0,100,0.08);
-    --magenta-mid: rgba(200,0,100,0.15);
-    --blue: #1a3a78;
-    --blue-dim: rgba(26,58,120,0.06);
-    --green: #0b6e4f;
-    --green-dim: rgba(11,110,79,0.08);
-    --amber: #92530a;
-    --amber-dim: rgba(146,83,10,0.08);
-    --red: #c0292b;
-    --red-dim: rgba(192,41,43,0.08);
-    --r: 8px;
-    --r-lg: 12px;
-    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
-    --shadow-md: 0 4px 12px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.04);
+    --magenta-glow: rgba(200,0,100,0.3);
+    --blue: #1e293b;
+    --blue-dim: rgba(30,41,59,0.06);
+    --green: #059669;
+    --green-dim: rgba(5,150,105,0.08);
+    --amber: #d97706;
+    --amber-dim: rgba(217,119,6,0.08);
+    --red: #dc2626;
+    --red-dim: rgba(220,38,38,0.08);
+    --r: 12px;
+    --r-lg: 16px;
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+    --shadow: 0 4px 15px rgba(0,0,0,0.03), 0 1px 3px rgba(0,0,0,0.04);
+    --shadow-glow: 0 0 20px var(--magenta-glow);
+    --glass: blur(12px);
   }
   body { font-family: 'IBM Plex Sans', 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); font-size: 13.5px; line-height: 1.5; overflow-x: hidden; }
 
-  /* ─── Navbar ─── */
+  /* ─── Navbar Glassmorphism ─── */
   .navbar {
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    padding: 0 28px; height: 64px;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: var(--glass);
+    -webkit-backdrop-filter: var(--glass);
+    border-bottom: 1px solid rgba(255,255,255,0.3);
+    padding: 0 28px; height: 70px;
     display: flex; align-items: center; justify-content: space-between;
-    position: sticky; top: 0; z-index: 100; box-shadow: var(--shadow);
+    position: sticky; top: 0; z-index: 100; box-shadow: var(--shadow-sm);
   }
-  .nav-brand { display: flex; align-items: center; gap: 12px; }
+  .nav-brand { display: flex; align-items: center; gap: 14px; }
   .btn-sidebar-toggle {
-    background: transparent; border: none; color: var(--text); font-size: 22px; 
-    cursor: pointer; padding: 6px; border-radius: 6px; display: flex; align-items: center; justify-content: center;
-    transition: background 0.2s;
+    background: var(--surface2); border: 1px solid var(--border); color: var(--text); font-size: 20px; 
+    cursor: pointer; padding: 8px; border-radius: 8px; display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
-  .btn-sidebar-toggle:hover { background: var(--surface2); color: var(--magenta); }
+  .btn-sidebar-toggle:hover { background: var(--magenta-dim); color: var(--magenta); border-color: rgba(200,0,100,0.2); transform: scale(1.05); }
   
   .nav-logo {
-    width: 36px; height: 36px; background: var(--magenta); border-radius: 8px;
-    display: flex; align-items: center; justify-content: center; color: white; font-size: 18px;
+    width: 40px; height: 40px; background: linear-gradient(135deg, var(--magenta), #ff2a85); border-radius: 10px;
+    display: flex; align-items: center; justify-content: center; color: white; font-size: 20px; box-shadow: 0 4px 10px rgba(200,0,100,0.3);
   }
-  .nav-title { font-size: 15px; font-weight: 700; color: var(--blue); letter-spacing: -0.3px; }
-  .nav-subtitle { font-size: 11px; color: var(--muted); font-weight: 500; letter-spacing: 0.2px; margin-top: -1px; }
-  .nav-right { display: flex; align-items: center; gap: 12px; }
+  .nav-title { font-size: 16px; font-weight: 700; color: var(--blue); letter-spacing: -0.3px; }
+  .nav-subtitle { font-size: 11px; color: var(--muted); font-weight: 500; letter-spacing: 0.5px; margin-top: -2px; text-transform: uppercase; }
+  
+  .nav-right { display: flex; align-items: center; gap: 16px; }
   .service-pill {
-    display: flex; align-items: center; gap: 8px; background: var(--bg);
-    border: 1px solid var(--border-strong); border-radius: 24px; padding: 6px 14px 6px 10px;
+    display: flex; align-items: center; gap: 8px; background: white;
+    border: 1px solid var(--border); border-radius: 30px; padding: 6px 16px 6px 12px; box-shadow: var(--shadow-sm); transition: all 0.2s;
   }
-  .service-pill i { color: var(--magenta); font-size: 16px; }
-  .service-pill select { background: transparent; border: none; font-size: 13px; font-weight: 600; color: var(--text); outline: none; cursor: pointer; font-family: inherit; }
-  .model-badge {
-    background: var(--blue-dim); color: var(--blue); border: 1px solid rgba(26,58,120,0.15);
-    border-radius: 20px; padding: 4px 12px; font-size: 11px; font-weight: 600; display: flex; align-items: center; gap: 5px;
+  .service-pill:hover { border-color: var(--border-strong); box-shadow: var(--shadow); }
+  .service-pill i { color: var(--magenta); font-size: 18px; }
+  .service-pill select { background: transparent; border: none; font-size: 13.5px; font-weight: 600; color: var(--text); outline: none; cursor: pointer; font-family: inherit; }
+  
+  .btn-export {
+    background: linear-gradient(135deg, var(--magenta), #e6007e);
+    color: white; border: none; border-radius: 30px; padding: 8px 20px;
+    font-size: 13px; font-weight: 600; cursor: pointer; display: none; align-items: center; gap: 8px;
+    box-shadow: 0 4px 12px rgba(200,0,100,0.25); transition: all 0.3s ease; font-family: inherit;
   }
-  .model-badge.active { background: var(--green-dim); color: var(--green); border-color: rgba(11,110,79,0.2); }
+  .btn-export:hover { transform: translateY(-2px); box-shadow: var(--shadow-glow); }
 
-  /* ─── Layout Flexbox (Permite retraer suavemente) ─── */
-  .layout { 
-    display: flex; gap: 24px; padding: 24px 30px; 
-    max-width: 100%; /* Aprovecha pantallas ultra anchas */
-    margin: 0 auto; align-items: flex-start; 
-  }
+  /* ─── Layout ─── */
+  .layout { display: flex; gap: 24px; padding: 24px 30px; max-width: 100%; margin: 0 auto; align-items: flex-start; }
 
   /* ─── Sidebar Retráctil ─── */
   .sidebar { 
-    display: flex; flex-direction: column; gap: 16px; 
-    width: 310px; flex-shrink: 0; 
-    transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease; 
+    display: flex; flex-direction: column; gap: 16px; width: 320px; flex-shrink: 0; 
+    transition: margin-left 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease; 
   }
-  .sidebar.collapsed {
-    margin-left: -334px; /* Ancho + el gap para esconderlo completamente */
-    opacity: 0;
-    pointer-events: none;
-  }
+  .sidebar.collapsed { margin-left: -344px; opacity: 0; pointer-events: none; }
 
   /* ─── Main Content ─── */
-  .main { flex-grow: 1; min-width: 0; display: flex; flex-direction: column; gap: 18px; transition: all 0.3s ease;}
+  .main { flex-grow: 1; min-width: 0; display: flex; flex-direction: column; gap: 20px; transition: all 0.4s ease;}
 
   /* ─── Cards base ─── */
-  .card { background: var(--surface); border-radius: var(--r-lg); border: 1px solid var(--border); box-shadow: var(--shadow); }
-  .card-section { padding: 16px 18px; border-bottom: 1px solid var(--border); }
+  .card { background: var(--surface); border-radius: var(--r-lg); border: 1px solid rgba(255,255,255,0.5); box-shadow: var(--shadow); backdrop-filter: var(--glass); }
+  .card-section { padding: 18px 20px; border-bottom: 1px solid var(--border); }
   .card-section:last-child { border-bottom: none; }
-  .section-label {
-    font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px;
-    color: var(--muted); margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between;
-  }
-  .section-label-left { display: flex; align-items: center; gap: 6px; }
-  .section-label i { font-size: 14px; color: var(--magenta); }
+  .section-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--muted); margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between; }
+  .section-label-left { display: flex; align-items: center; gap: 8px; }
+  .section-label i { font-size: 16px; color: var(--magenta); }
 
   /* ─── Controles ─── */
-  .input-row { margin-bottom: 12px; }
+  .input-row { margin-bottom: 14px; }
   .input-row:last-child { margin-bottom: 0; }
-  .input-row label { display: block; font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 5px; }
+  .input-row label { display: block; font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 6px; }
   .input-row input, .input-row select {
-    width: 100%; padding: 8px 10px; border: 1px solid var(--border-strong); border-radius: 6px;
-    font-size: 13px; color: var(--text); font-family: inherit; background: var(--surface); transition: border 0.15s, box-shadow 0.15s;
+    width: 100%; padding: 10px 12px; border: 1px solid var(--border-strong); border-radius: 8px;
+    font-size: 13px; color: var(--text); font-family: inherit; background: var(--surface2); transition: all 0.2s;
   }
-  .input-row input:focus, .input-row select:focus { border-color: var(--magenta); outline: none; box-shadow: 0 0 0 3px var(--magenta-dim); }
-  .hint { font-size: 11px; color: var(--muted); margin-top: 4px; line-height: 1.4; }
-  .hint.important { color: var(--amber); background: var(--amber-dim); border-radius: 5px; padding: 6px 8px; margin-top: 6px; display: flex; gap: 6px; align-items: flex-start; }
-  .hint.important i { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
-  .hint.success { color: var(--green); background: var(--green-dim); border-radius: 5px; padding: 6px 8px; margin-top: 6px; display: flex; gap: 6px; align-items: flex-start; }
+  .input-row input:focus, .input-row select:focus { border-color: var(--magenta); background: white; outline: none; box-shadow: 0 0 0 4px var(--magenta-dim); }
+  .hint { font-size: 11px; color: var(--muted); margin-top: 6px; line-height: 1.4; }
+  .hint.important { color: var(--amber); background: var(--amber-dim); border-radius: 6px; padding: 8px 10px; margin-top: 8px; display: flex; gap: 8px; align-items: flex-start; }
+  .hint.important i { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
 
   /* Anomaly tags */
-  .tag-area { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .tag-area { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
   .tag {
-    background: var(--magenta-dim); color: var(--magenta); border: 1px solid var(--magenta-mid);
-    border-radius: 16px; padding: 3px 10px; font-size: 11.5px; font-weight: 600; display: inline-flex; align-items: center; gap: 5px; font-family: 'IBM Plex Mono', monospace;
+    background: white; color: var(--magenta); border: 1px solid rgba(200,0,100,0.2); box-shadow: var(--shadow-sm);
+    border-radius: 20px; padding: 4px 12px; font-size: 11.5px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; font-family: 'IBM Plex Mono', monospace; transition: all 0.2s;
   }
-  .tag button { background: none; border: none; color: inherit; cursor: pointer; padding: 0; display: flex; }
+  .tag:hover { border-color: var(--magenta); transform: translateY(-1px); }
+  .tag button { background: none; border: none; color: var(--muted); cursor: pointer; padding: 0; display: flex; transition: color 0.2s; }
   .tag button:hover { color: var(--red); }
-  .anom-row { display: flex; gap: 6px; }
+  .anom-row { display: flex; gap: 8px; }
   .anom-row input { flex: 1; }
   .btn-sm {
-    background: var(--magenta); color: white; border: none; border-radius: 6px; padding: 0 12px; cursor: pointer;
-    font-size: 13px; font-weight: 600; font-family: inherit; white-space: nowrap;
+    background: var(--surface2); color: var(--text); border: 1px solid var(--border-strong); border-radius: 8px; padding: 0 14px; cursor: pointer;
+    font-size: 13px; font-weight: 600; font-family: inherit; white-space: nowrap; transition: all 0.2s;
   }
-  .btn-sm:hover { background: #a80050; }
+  .btn-sm:hover { background: var(--magenta); color: white; border-color: var(--magenta); }
 
-  .upload-zone { border: 1.5px dashed var(--border-strong); border-radius: var(--r); padding: 14px; background: var(--surface2); }
-  .upload-zone input { font-size: 12px; width: 100%; }
+  .upload-zone { border: 2px dashed var(--border-strong); border-radius: var(--r-lg); padding: 18px; background: rgba(255,255,255,0.5); transition: all 0.2s; }
+  .upload-zone:hover { border-color: var(--magenta); background: white; }
+  .upload-zone input { font-size: 12px; width: 100%; cursor: pointer;}
 
   /* State screens */
-  .empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 80px 20px; gap: 14px; text-align: center; }
-  .empty-state i { font-size: 52px; opacity: 0.2; color: var(--text); }
-  .empty-state h3 { font-size: 17px; font-weight: 600; }
-  .empty-state p { color: var(--muted); max-width: 360px; line-height: 1.6; }
-  .loader-screen { display: none; flex-direction: column; align-items: center; justify-content: center; padding: 80px; gap: 12px; }
-  .loader-screen i { font-size: 36px; color: var(--magenta); animation: spin 0.8s linear infinite; }
+  .empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 100px 20px; gap: 16px; text-align: center; }
+  .empty-state i { font-size: 64px; color: var(--border-strong); }
+  .empty-state h3 { font-size: 20px; font-weight: 700; color: var(--blue); }
+  .empty-state p { color: var(--muted); max-width: 400px; line-height: 1.6; font-size: 14px; }
+  .loader-screen { display: none; flex-direction: column; align-items: center; justify-content: center; padding: 100px; gap: 16px; }
+  .loader-screen i { font-size: 42px; color: var(--magenta); animation: spin 0.8s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
   @keyframes spin { to { transform: rotate(360deg); } }
 
-  .banner { border-radius: var(--r); padding: 10px 14px; font-size: 13px; display: flex; align-items: center; gap: 8px; font-weight: 500; border: 1px solid; }
-  .banner.info { background: #eff6ff; color: #1d4ed8; border-color: #bfdbfe; }
+  .banner { border-radius: var(--r); padding: 12px 16px; font-size: 13.5px; display: flex; align-items: center; gap: 10px; font-weight: 500; border: 1px solid; animation: fadeDown 0.4s ease; }
+  .banner.info { background: #eff6ff; color: #1e3a8a; border-color: #bfdbfe; }
+  @keyframes fadeDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
   /* ─── KPI Grid ─── */
-  .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
-  .kpi { background: var(--surface); border-radius: var(--r-lg); border: 1px solid var(--border); padding: 16px 18px; box-shadow: var(--shadow); }
-  .kpi-label { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: var(--muted); }
-  .kpi-value { font-size: 24px; font-weight: 700; color: var(--blue); margin: 6px 0 3px; letter-spacing: -0.5px; font-family: 'IBM Plex Mono', monospace; }
+  .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .kpi { background: var(--surface); border-radius: var(--r-lg); border: 1px solid var(--border); padding: 20px; box-shadow: var(--shadow); position: relative; overflow: hidden; transition: transform 0.2s; }
+  .kpi:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+  .kpi::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--magenta); border-radius: 4px 0 0 4px; }
+  .kpi-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--muted); }
+  .kpi-value { font-size: 28px; font-weight: 700; color: var(--blue); margin: 8px 0 4px; letter-spacing: -0.5px; font-family: 'IBM Plex Mono', monospace; }
   .kpi-sub { font-size: 12px; font-weight: 500; color: var(--muted); }
-  .kpi-accent { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 700; margin-top: 4px; }
+  .kpi-accent { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 11.5px; font-weight: 700; margin-top: 6px; }
   .kpi-accent.good { background: var(--green-dim); color: var(--green); }
   .kpi-accent.warn { background: var(--amber-dim); color: var(--amber); }
   .kpi-accent.bad { background: var(--red-dim); color: var(--red); }
 
   /* ─── Chart ─── */
-  .chart-card { background: var(--surface); border-radius: var(--r-lg); border: 1px solid var(--border); box-shadow: var(--shadow); padding: 16px 20px; }
-  .chart-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
-  .chart-title { font-size: 13px; font-weight: 700; color: var(--text); display: flex; align-items: center; gap: 8px; }
+  .chart-card { background: var(--surface); border-radius: var(--r-lg); border: 1px solid var(--border); box-shadow: var(--shadow); padding: 20px 24px; }
+  .chart-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+  .chart-title { font-size: 14px; font-weight: 700; color: var(--blue); display: flex; align-items: center; gap: 10px; }
   .chart-legend { display: flex; gap: 16px; }
-  .legend-item { display: flex; align-items: center; gap: 5px; font-size: 11.5px; color: var(--muted); }
-  .legend-dot { width: 10px; height: 3px; border-radius: 2px; }
-  .chart-wrap { position: relative; height: 320px; transition: height 0.2s ease, padding 0.2s ease; overflow: hidden; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); font-weight: 500; }
+  .legend-dot { width: 12px; height: 4px; border-radius: 2px; }
+  .chart-wrap { position: relative; height: 320px; transition: height 0.3s cubic-bezier(0.4, 0, 0.2, 1); overflow: hidden; }
 
   /* ─── Tabs ─── */
-  .tabs-card { background: var(--surface); border-radius: var(--r-lg); border: 1px solid var(--border); box-shadow: var(--shadow); overflow: hidden; }
+  .tabs-card { background: var(--surface); border-radius: var(--r-lg); border: 1px solid var(--border); box-shadow: var(--shadow); overflow: hidden; display: flex; flex-direction: column; }
   .tabs-nav { display: flex; border-bottom: 1px solid var(--border); background: var(--surface2); }
   .tab-btn {
-    flex: 1; padding: 13px 16px; font-size: 12.5px; font-weight: 600; text-align: center;
-    color: var(--muted); background: transparent; border: none; border-bottom: 2px solid transparent; cursor: pointer; transition: all 0.15s; font-family: inherit;
+    flex: 1; padding: 16px; font-size: 13px; font-weight: 600; text-align: center;
+    color: var(--muted); background: transparent; border: none; border-bottom: 2px solid transparent; cursor: pointer; transition: all 0.2s; font-family: inherit; text-transform: uppercase; letter-spacing: 0.5px;
   }
-  .tab-btn:hover { color: var(--text); background: white; }
+  .tab-btn:hover { color: var(--blue); background: white; }
   .tab-btn.active { color: var(--magenta); border-bottom-color: var(--magenta); background: white; }
   .tab-pane { display: none; }
-  .tab-pane.active { display: block; animation: fadeUp 0.2s; }
-  @keyframes fadeUp { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+  .tab-pane.active { display: block; animation: fadeUp 0.3s ease; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-  /* ─── Tables ─── */
-  .tbl-wrap { 
-    max-height: 65vh; /* ALTURA DINÁMICA: Crece según la pantalla del monitor */
-    min-height: 400px;
-    overflow-y: auto; 
-  }
-  .tbl-wrap::-webkit-scrollbar { width: 6px; }
-  .tbl-wrap::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 6px; }
-  .data-tbl { width: 100%; border-collapse: collapse; font-size: 13px; }
+  /* ─── Tables (Interactive 2026 Style) ─── */
+  .tbl-wrap { max-height: 60vh; min-height: 400px; overflow-y: auto; background: white; }
+  .tbl-wrap::-webkit-scrollbar { width: 8px; }
+  .tbl-wrap::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 10px; border: 2px solid white; }
+  .data-tbl { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 13px; }
   .data-tbl th {
-    padding: 10px 14px; background: var(--surface2); border-bottom: 1px solid var(--border);
-    font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
-    color: var(--muted); text-align: right; white-space: nowrap; position: sticky; top: 0; z-index: 5;
+    padding: 12px 16px; background: var(--surface2); border-bottom: 1px solid var(--border);
+    font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px;
+    color: var(--muted); text-align: right; white-space: nowrap; position: sticky; top: 0; z-index: 10;
   }
   .data-tbl th:first-child { text-align: left; }
-  .data-tbl td { padding: 10px 14px; border-bottom: 1px solid var(--border); text-align: right; }
+  .data-tbl td { padding: 12px 16px; border-bottom: 1px solid var(--border); text-align: right; vertical-align: middle; transition: background 0.2s; }
   .data-tbl td:first-child { text-align: left; }
-  .data-tbl tbody tr:hover { background: #fafbfc; }
-  .data-tbl tfoot td { background: var(--surface2); font-weight: 700; border-top: 2px solid var(--border); }
-  .td-date { font-weight: 600; font-family: 'IBM Plex Mono', monospace; font-size: 12.5px; }
-  .td-fct { font-weight: 700; color: var(--blue); font-family: 'IBM Plex Mono', monospace; }
+  .data-tbl tbody tr:hover td { background: #f8fafc; }
+  
+  .td-date { font-weight: 600; font-family: 'IBM Plex Mono', monospace; font-size: 12.5px; color: var(--blue); }
+  .td-fct { font-weight: 700; color: var(--magenta); font-family: 'IBM Plex Mono', monospace; font-size: 14px;}
   .td-real { font-weight: 600; font-family: 'IBM Plex Mono', monospace; }
   .td-over { color: var(--red); font-weight: 700; font-family: 'IBM Plex Mono', monospace; }
   .td-under { color: var(--green); font-weight: 700; font-family: 'IBM Plex Mono', monospace; }
-  .td-flag { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 4px; }
-  .td-flag.ok { background: var(--green); }
-  .td-flag.warn { background: var(--amber); }
-  .td-flag.bad { background: var(--red); }
+  
+  /* Inputs de Ajuste Diario */
+  .input-adj {
+    width: 65px; padding: 6px 4px; border: 1px solid var(--border-strong); border-radius: 6px;
+    text-align: center; font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 600;
+    color: var(--blue); background: var(--surface2); outline: none; transition: all 0.2s;
+  }
+  .input-adj:focus { border-color: var(--magenta); background: white; box-shadow: 0 0 0 3px var(--magenta-dim); }
+  .input-adj-text { width: 140px; text-align: left; font-family: inherit; font-weight: 500;}
 
-  .idx-pill { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11.5px; font-weight: 700; font-family: 'IBM Plex Mono', monospace; }
+  .idx-pill { display: inline-flex; align-items: center; justify-content: center; padding: 4px 10px; border-radius: 12px; font-size: 11.5px; font-weight: 700; font-family: 'IBM Plex Mono', monospace; min-width: 60px; }
   .idx-pill.hi { background: var(--red-dim); color: var(--red); }
   .idx-pill.lo { background: var(--green-dim); color: var(--green); }
   .idx-pill.mid { background: var(--blue-dim); color: var(--blue); }
-  .idx-pill.norm { background: var(--bg); color: var(--muted); }
 
-  .detail-expand { background: var(--surface2); }
-  .detail-expand td { padding: 10px 16px; }
-  .detail-pills { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
-  .dpill { background: white; border: 1px solid var(--border); border-radius: 5px; padding: 3px 8px; font-size: 11.5px; display: flex; gap: 5px; }
-  .dpill .dp-date { color: var(--muted); font-family: 'IBM Plex Mono', monospace; }
-  .dpill .dp-val { font-weight: 600; color: var(--text); font-family: 'IBM Plex Mono', monospace; }
-  .dpill.outlier-flag { border-color: var(--amber-dim); background: var(--amber-dim); }
-  .dpill.outlier-flag .dp-date { color: var(--amber); }
-
-  .btn-expand { background: none; border: 1px solid var(--border); color: var(--muted); cursor: pointer; border-radius: 4px; padding: 2px 6px; font-size: 11px; display: inline-flex; align-items: center; justify-content: center; transition: all 0.1s; }
-  .btn-expand:hover { background: var(--bg); color: var(--text); }
+  .btn-expand { background: var(--surface2); border: 1px solid var(--border); color: var(--muted); cursor: pointer; border-radius: 6px; padding: 4px 8px; font-size: 12px; display: inline-flex; align-items: center; justify-content: center; transition: all 0.2s; }
+  .btn-expand:hover { background: var(--magenta-dim); color: var(--magenta); border-color: rgba(200,0,100,0.2); }
   
-  .collapsible-container { transition: max-height 0.25s ease-out, opacity 0.2s ease-out; overflow: hidden; }
-  .sub-section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--blue); padding: 12px 14px; background: #f1f5f9; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 6px;}
+  .collapsible-container { transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease; overflow: hidden; }
+  .sub-section-title { font-size: 12px; font-weight: 700; text-transform: uppercase; color: var(--blue); padding: 14px 20px; background: #f1f5f9; border-bottom: 1px solid var(--border); border-top: 1px solid var(--border); display: flex; align-items: center; gap: 8px; letter-spacing: 0.5px;}
 </style>
 </head>
 <body>
@@ -241,12 +232,12 @@
     <button class="btn-sidebar-toggle" id="btnToggleSidebarMaster" title="Expandir/Contraer Controles"><i class="ti ti-menu-2"></i></button>
     <div class="nav-logo"><i class="ti ti-wave-sine"></i></div>
     <div>
-      <div class="nav-title">WFM Executive Forecast</div>
-      <div class="nav-subtitle">TP Chile · Predictive Engine v2.6</div>
+      <div class="nav-title">WFM Executive Engine</div>
+      <div class="nav-subtitle">TP Chile · Ver. 2026</div>
     </div>
   </div>
   <div class="nav-right">
-    <span class="model-badge" id="modelBadge"><i class="ti ti-cpu"></i> Sin datos</span>
+    <span class="model-badge" id="modelBadge"><i class="ti ti-cpu"></i> Standby</span>
     <div class="service-pill">
       <i class="ti ti-headset"></i>
       <select id="serviceSelect">
@@ -255,70 +246,69 @@
         <option value="correo.xlsx">Servicio: Correo Electrónico</option>
       </select>
     </div>
+    <button class="btn-export" id="btnExport"><i class="ti ti-file-spreadsheet"></i> Exportar a Excel</button>
   </div>
 </nav>
 
 <div class="layout" id="mainLayout">
   <aside class="sidebar" id="mainSidebar">
     <div class="card">
-      
       <div class="card-section">
         <div class="section-label">
-          <div class="section-label-left"><i class="ti ti-calendar-stats"></i> Configuración Temporal</div>
+          <div class="section-label-left"><i class="ti ti-calendar-stats"></i> Ventana Temporal</div>
           <button class="btn-expand" id="btnToggleSidebar" onclick="toggleContainer('sidebarCollapse', 'btnToggleSidebar')"><i class="ti ti-minus"></i></button>
         </div>
         
         <div id="sidebarCollapse" class="collapsible-container">
           <div class="input-row">
-            <label>Desde</label>
+            <label>Desde (Inicio Histórico)</label>
             <input type="date" id="filterFrom">
           </div>
           <div class="input-row">
-            <label>Hasta (Corte de Historial)</label>
+            <label>Hasta (Corte de Entrenamiento)</label>
             <input type="date" id="filterTo">
           </div>
           <div class="input-row">
-            <label>Proyectar Hasta (Fecha Fin)</label>
+            <label>Proyectar Hasta (Fin Forecast)</label>
             <input type="date" id="forecastToInput">
-            <div class="hint">Fin del forecast futuro. Se calcula de forma automática al fin de mes para evitar cortes abruptos.</div>
           </div>
           <div class="input-row">
-            <label>Ventana de volumen base (días)</label>
+            <label>Días de memoria para Tendencia Base</label>
             <input type="number" id="trendBaseInput" value="45" min="14" max="180">
           </div>
         </div>
       </div>
 
       <div class="card-section">
-        <div class="section-label"><div class="section-label-left"><i class="ti ti-brain"></i> Algoritmo Base</div></div>
-        <select id="trendMethodInput" style="width:100%; padding:8px 10px; border:1px solid var(--border-strong); border-radius:6px; font-size:13px; font-family:inherit;">
+        <div class="section-label"><div class="section-label-left"><i class="ti ti-brain"></i> Algoritmo Matemático</div></div>
+        <select id="trendMethodInput" style="width:100%; padding:10px 12px; border:1px solid var(--border-strong); border-radius:8px; font-size:13px; font-family:inherit; font-weight: 500;">
           <option value="holtwinters">Tendencia Lineal de Holt + Estacionalidad</option>
           <option value="ema">EMA Adaptativo (Suavizado Exponencial)</option>
           <option value="linear">Regresión Lineal Simple (Extrapolación)</option>
-          <option value="avg">Promedio Simple Fijo</option>
+          <option value="avg">Promedio Simple Fijo (Cuentas Pequeñas)</option>
         </select>
-        <div id="lowVolWarn" class="hint important" style="display:none; margin-top:8px;">
+        <div id="lowVolWarn" class="hint important" style="display:none;">
           <i class="ti ti-alert-triangle"></i>
           <span>Volumen bajo detectado. Se recomienda <b>Promedio simple</b>.</span>
         </div>
       </div>
 
       <div class="card-section">
-        <div class="section-label"><div class="section-label-left"><i class="ti ti-filter-cog"></i> Limpieza de Anomalías</div></div>
+        <div class="section-label"><div class="section-label-left"><i class="ti ti-filter-cog"></i> Limpieza IQR & Anomalías</div></div>
         <div class="input-row">
-          <label>Excluir fecha manual</label>
+          <label>Excluir fecha manualmente</label>
           <div class="anom-row">
             <input type="date" id="anomalyDate">
-            <button class="btn-add btn-sm" id="btnAddAnomaly">+ Añadir</button>
+            <button class="btn-add btn-sm" id="btnAddAnomaly">Añadir</button>
           </div>
         </div>
         <div class="tag-area" id="anomalyTags"></div>
-        <div id="autoOutlierInfo" class="hint" style="margin-top:8px;"></div>
+        <div id="autoOutlierInfo" class="hint" style="margin-top:12px;"></div>
       </div>
     </div>
 
     <div class="upload-zone">
-      <div class="section-label" style="margin-bottom:8px;"><div class="section-label-left"><i class="ti ti-upload"></i> Carga alternativa</div></div>
+      <div class="section-label" style="margin-bottom:10px;"><div class="section-label-left"><i class="ti ti-upload"></i> Subida Manual Alternativa</div></div>
       <input type="file" id="fileInput" accept=".xlsx,.xls,.csv">
     </div>
   </aside>
@@ -326,16 +316,16 @@
   <main class="main">
     <div class="card loader-screen" id="loaderScreen">
       <i class="ti ti-loader-2"></i>
-      <span>Procesando y optimizando modelo...</span>
+      <span style="font-weight: 600; font-size: 15px; color: var(--blue);">Compilando modelo matemático...</span>
     </div>
 
     <div class="card empty-state" id="emptyState">
-      <i class="ti ti-chart-histogram"></i>
-      <h3>Motor Predictivo WFM</h3>
-      <p>Selecciona un servicio arriba o carga un archivo local. El modelo se entrenará automáticamente.</p>
+      <i class="ti ti-database-import"></i>
+      <h3>Motor Inactivo</h3>
+      <p>Selecciona un servicio en el menú superior o carga un archivo local para que el algoritmo comience a procesar el volumen.</p>
     </div>
 
-    <div id="mainDashboard" style="display:none; flex-direction:column; gap:18px;">
+    <div id="mainDashboard" style="display:none; flex-direction:column; gap:20px;">
       <div class="banner info" id="dataInfoAlert"></div>
 
       <div class="kpi-grid">
@@ -347,16 +337,16 @@
         <div class="kpi">
           <div class="kpi-label">Precisión del Modelo (WAPE)</div>
           <div class="kpi-value" id="kpiAccuracy">—</div>
-          <div class="kpi-sub">Periodo de validación</div>
+          <div class="kpi-sub">Periodo de prueba</div>
           <div id="kpiAccuracyBadge" class="kpi-accent good" style="display:none;"></div>
         </div>
         <div class="kpi">
-          <div class="kpi-label">Proyección Próximos Meses</div>
+          <div class="kpi-label">Volumen Total Proyectado</div>
           <div class="kpi-value" id="kpiNext30">—</div>
-          <div class="kpi-sub">Llamadas totales a futuro</div>
+          <div class="kpi-sub">En periodo de forecast</div>
         </div>
         <div class="kpi">
-          <div class="kpi-label">Tendencia Detectada</div>
+          <div class="kpi-label">Inclinación de Tendencia</div>
           <div class="kpi-value" id="kpiDelta">—</div>
           <div class="kpi-sub" id="kpiDeltaSub">Crecimiento estimado</div>
         </div>
@@ -366,73 +356,75 @@
         <div class="chart-header">
           <span class="chart-title">
             <button class="btn-expand" id="btnToggleChart" onclick="toggleContainer('chartWrapCollapse', 'btnToggleChart')"><i class="ti ti-minus"></i></button>
-            Serie histórica + proyección del modelo
+            Curva de Volumetría y Proyección Matemática
           </span>
           <div class="chart-legend" id="chartLegendRef">
-            <div class="legend-item"><div class="legend-dot" style="background:#9ca3af; width:14px;"></div> Real Histórico</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#cbd5e1; width:14px;"></div> Histórico</div>
             <div class="legend-item"><div class="legend-dot" style="background:#C80064; width:14px; border-style:dashed; height:2px; border-width:0 0 2px;"></div> Forecast</div>
-            <div class="legend-item"><div class="legend-dot" style="background:#1a3a78; width:14px;"></div> Real Posterior (Prueba)</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#1e293b; width:14px;"></div> Realidad (Desviación)</div>
           </div>
         </div>
         <div id="chartWrapCollapse" class="chart-wrap">
-          <canvas id="mainChart" role="img" aria-label="Gráfico WFM"></canvas>
+          <canvas id="mainChart" role="img"></canvas>
         </div>
       </div>
 
       <div class="tabs-card">
         <div class="tabs-nav">
-          <button class="tab-btn active" data-target="tabDeviation">Desviación Real vs FCT</button>
-          <button class="tab-btn" data-target="tabFuture">Pronóstico Mensual y Diario</button>
-          <button class="tab-btn" data-target="tabAudit">Auditoría Estacional (Índices)</button>
+          <button class="tab-btn active" data-target="tabFuture">Pronóstico Operativo Interactivo</button>
+          <button class="tab-btn" data-target="tabDeviation">Desviación (Testing Real vs FCT)</button>
+          <button class="tab-btn" data-target="tabAudit">Auditoría Estacional (Índices Bayesianos)</button>
         </div>
         
-        <div class="tab-pane active" id="tabDeviation">
-          <div class="tbl-wrap">
-            <table class="data-tbl" id="devTable">
-              <thead>
-                <tr>
-                  <th>Fecha</th>
-                  <th style="text-align:left;">Escenario</th>
-                  <th>FCT</th>
-                  <th>Real</th>
-                  <th>Δ Neto</th>
-                  <th>% Desv.</th>
-                  <th>Precisión</th>
-                </tr>
-              </thead>
-              <tbody></tbody>
-              <tfoot id="devFoot"></tfoot>
-            </table>
-          </div>
-        </div>
-        
-        <div class="tab-pane" id="tabFuture">
-          <div class="sub-section-title"><i class="ti ti-calendar-due"></i> Consolidado Mensual (Presupuesto)</div>
+        <div class="tab-pane active" id="tabFuture">
+          <div class="sub-section-title"><i class="ti ti-calendar-due"></i> Consolidado Presupuestario Mensual</div>
           <table class="data-tbl" id="monthlySummaryTable">
             <thead>
               <tr>
                 <th style="text-align:left;">Mes / Año</th>
-                <th>Días Totales Proyectados</th>
-                <th>Volumen Acumulado FCT</th>
+                <th>Días Totales</th>
+                <th>Volumen Operativo (Con Ajustes)</th>
                 <th>Promedio Diario Esperado</th>
               </tr>
             </thead>
             <tbody></tbody>
           </table>
 
-          <div class="sub-section-title" style="margin-top: 10px;"><i class="ti ti-list-details"></i> Pronóstico Detallado Diario</div>
-          <div class="tbl-wrap">
+          <div class="sub-section-title" style="border-top:none;"><i class="ti ti-edit"></i> Gestión Diaria de Modificadores (Hot-Reload)</div>
+          <div class="tbl-wrap" style="min-height: 450px;">
             <table class="data-tbl" id="futureTable">
               <thead>
                 <tr>
                   <th>Fecha Futura</th>
-                  <th style="text-align:left;">Escenario</th>
-                  <th>Volumen FCT Esperado</th>
-                  <th>Rango Bajo (−8%)</th>
-                  <th>Rango Alto (+8%)</th>
+                  <th style="text-align:left;">Día y Semana</th>
+                  <th title="Pronóstico del algoritmo sin modificadores">Volumen Base FCT</th>
+                  <th title="Ajusta el % si es feriado">% Feriado</th>
+                  <th title="Ajusta el % si hay evento">% Evento</th>
+                  <th title="Volumen final tras multiplicar por los modificadores">Pronóstico Final</th>
+                  <th style="text-align:left;">Notas / Clasificación</th>
                 </tr>
               </thead>
               <tbody></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="tab-pane" id="tabDeviation">
+          <div class="tbl-wrap">
+            <table class="data-tbl" id="devTable">
+              <thead>
+                <tr>
+                  <th>Fecha Post-Corte</th>
+                  <th style="text-align:left;">Escenario</th>
+                  <th>Proyectado (FCT)</th>
+                  <th>Ingresado (Real)</th>
+                  <th>Diferencia Neta</th>
+                  <th>% Desviación</th>
+                  <th>Nivel de Precisión</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+              <tfoot id="devFoot"></tfoot>
             </table>
           </div>
         </div>
@@ -442,12 +434,12 @@
             <table class="data-tbl" id="auditTable">
               <thead>
                 <tr>
-                  <th style="text-align:left;">Escenario (Día · Semana del Mes)</th>
+                  <th style="text-align:left;">Escenario (Día · Sem)</th>
                   <th>Muestra Limpia</th>
                   <th>Promedio Histórico</th>
-                  <th>Promedio Base del Día</th>
-                  <th>Índice WoM</th>
-                  <th>Peso Final Normalizado</th>
+                  <th>Promedio Base DoW</th>
+                  <th>Factor Estacional Bayesian (Shrinkage)</th>
+                  <th>Multiplicador Final</th>
                 </tr>
               </thead>
               <tbody></tbody>
@@ -469,6 +461,7 @@ let seasonalIndices = {}, dowAverages = {}, overallAvg = 0;
 let autoExcluded = new Set(); 
 let baseLevel = 0, hwState = null, linearSlope = 0, linearIntercept = 0;
 let chartInst = null;
+let dailyOverrides = {}; // Guarda los ajustes manuales { '2026-05-01': {f:100, e:100, n:''} }
 
 const DAYS = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
 const MONTHS = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
@@ -480,7 +473,6 @@ const $ = id => document.getElementById(id);
 window.addEventListener('DOMContentLoaded', () => {
   loadFromGitHub($('serviceSelect').value);
 
-  // Tabs
   document.querySelectorAll('.tab-btn').forEach(btn => {
     btn.addEventListener('click', e => {
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -490,12 +482,11 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Toggle Sidebar Master (Hamburger Menu)
   $('btnToggleSidebarMaster').addEventListener('click', () => {
     $('mainSidebar').classList.toggle('collapsed');
   });
 
-  $('serviceSelect').addEventListener('change', e => loadFromGitHub(e.target.value));
+  $('serviceSelect').addEventListener('change', e => { dailyOverrides = {}; loadFromGitHub(e.target.value); });
   $('trendMethodInput').addEventListener('change', processModel);
   ['filterFrom','filterTo','trendBaseInput','forecastToInput'].forEach(id => $(id).addEventListener('change', processModel));
   $('btnAddAnomaly').addEventListener('click', addAnomaly);
@@ -551,14 +542,13 @@ async function loadFromGitHub(filename) {
   } catch(e) {
     hideLoader();
     $('emptyState').style.display = 'flex';
-    if(window.location.protocol.includes('http'))
-      alert(`Error al cargar ${filename} desde el repositorio raíz.`);
+    if(window.location.protocol.includes('http')) alert(`Error al cargar ${filename} desde el repositorio.`);
   }
 }
 function readFile(file) {
   showLoader();
   const r = new FileReader();
-  r.onload = e => { const wb = XLSX.read(e.target.result, {type:'array', cellDates:true}); parseWorkbook(wb, file.name); };
+  r.onload = e => { dailyOverrides = {}; const wb = XLSX.read(e.target.result, {type:'array', cellDates:true}); parseWorkbook(wb, file.name); };
   r.readAsArrayBuffer(file);
 }
 function parseWorkbook(wb, src) {
@@ -591,7 +581,7 @@ function parseWorkbook(wb, src) {
   $('filterTo').value = toISO(cutoff);
   $('forecastToInput').value = toISO(targetFuture);
   
-  $('dataInfoAlert').innerHTML = `<i class="ti ti-circle-check" style="font-size:16px;"></i> Base conectada: <b>${src}</b> — ${data.length} registros indexados.`;
+  $('dataInfoAlert').innerHTML = `<i class="ti ti-check" style="font-size:18px;"></i> Conectado exitosamente con <b>${src}</b> (${data.length} registros).`;
   processModel();
 }
 
@@ -622,6 +612,7 @@ function processModel() {
   
   hideLoader();
   $('mainDashboard').style.display = 'flex';
+  $('btnExport').style.display = 'flex';
 }
 
 function detectOutliers() {
@@ -648,7 +639,7 @@ function detectOutliers() {
 
   const n = autoExcluded.size;
   $('autoOutlierInfo').innerHTML = n > 0
-    ? `<i class="ti ti-filter-check" style="color:var(--green); margin-right:4px;"></i> ${n} anomalía(s) descartada(s) mediante filtro IQR (2.0× por DOW).`
+    ? `<i class="ti ti-filter-check" style="color:var(--green); margin-right:4px;"></i> ${n} anomalía(s) descartada(s) por filtro estadístico IQR (2.0× por DOW).`
     : `<i class="ti ti-check" style="color:var(--green); margin-right:4px;"></i> Serie limpia sin outliers estadísticos.`;
 }
 
@@ -752,7 +743,7 @@ function calcSeasonality() {
     const dowIdx = trainAvg > 0 ? dowAvg / trainAvg : 1;
 
     seasonalIndices[key] = {
-      name: `${DAYS[b.d]} · Semana ${b.w}`,
+      name: `${DAYS[b.d]} · Sem ${b.w}`,
       combined: dowIdx * smoothedWoM,
       avgGroup, dowAvg, samples: b.cnt, shrink, details: b.details,
       dowIndex: dowIdx, womIndex: smoothedWoM, rawWoM
@@ -760,7 +751,7 @@ function calcSeasonality() {
   }
 }
 
-function getFCT(dateObj, step) {
+function getBaseFCT(dateObj, step) {
   const method = $('trendMethodInput').value;
   let base = baseLevel;
   if(method === 'holtwinters' && hwState) {
@@ -801,22 +792,30 @@ function generateForecast() {
 
     const w = Math.ceil(d.getDate()/7);
     const dow = d.getDay();
-    const fct = getFCT(d, step);
-    futureForecast.push({date:d, iso, dayName:`${DAYS[dow]} · Sem ${w}`, value:fct});
+    const baseFct = getBaseFCT(d, step);
+    
+    // Aplicar Modificadores Manuales si existen
+    const ov = dailyOverrides[iso] || {f:100, e:100, n:''};
+    const finalFct = Math.max(0, Math.round(baseFct * (ov.f/100) * (ov.e/100)));
+
+    futureForecast.push({
+      date: d, iso, dayName: `${DAYS[dow]} · Sem ${w}`, 
+      baseValue: baseFct, value: finalFct, overrides: ov
+    });
     step++;
   }
 }
 
 // ════════════════════════════════════════════════════════════
-// RENDERIZADO GENERAL
+// RENDERIZADO VISUAL
 // ════════════════════════════════════════════════════════════
 function updateUI() {
   const method = $('trendMethodInput').value;
-  const methodName = {holtwinters:'Holt (Desacoplado)', ema:'EMA Adaptativo', linear:'Regresión Lineal', avg:'Promedio Simple'}[method];
+  const methodName = {holtwinters:'Holt (Tendencia)', ema:'EMA Adaptativo', linear:'Regresión Lineal', avg:'Promedio Simple'}[method];
   $('modelBadge').innerHTML = `<i class="ti ti-cpu"></i> ${methodName}`;
 
   $('kpiBase').textContent = Math.round(baseLevel).toLocaleString('es-CL');
-  $('kpiBaseSub').textContent = `Ventana base: ${trainingData.slice(-parseInt($('trendBaseInput').value)||45).length}d`;
+  $('kpiBaseSub').textContent = `Ventana base dinámica: ${trainingData.slice(-parseInt($('trendBaseInput').value)||45).length}d`;
 
   // WAPE & Accuracy
   let absErr = 0, actSum = 0, matchCount = 0;
@@ -845,7 +844,7 @@ function updateUI() {
     $('kpiAccuracyBadge').style.display = 'none';
   }
 
-  $('kpiNext30').textContent = futureForecast.reduce((s,f)=>s+f.value, 0).toLocaleString('es-CL');
+  updateTotalFutureKPI();
 
   if(method === 'holtwinters' && hwState) {
     $('kpiDelta').textContent = (hwState.trend >= 0 ? '+' : '') + hwState.trend.toFixed(1) + '/día';
@@ -860,13 +859,20 @@ function updateUI() {
 
   renderChart();
   renderDeviationTable(fctIsoMap);
-  renderFutureAndMonthlyTables();
+  renderFutureTable();
+  renderMonthlyTable();
   renderAuditTable();
+}
+
+function updateTotalFutureKPI() {
+  const to = $('filterTo').value;
+  const futOnly = futureForecast.filter(f => f.iso > to);
+  $('kpiNext30').textContent = futOnly.reduce((s,f)=>s+f.value, 0).toLocaleString('es-CL');
 }
 
 function renderChart() {
   const ctx = $('mainChart').getContext('2d');
-  const train45 = trainingData.slice(-45);
+  const train45 = trainingData.slice(-60); // Mostrar 60 dias para mas contexto
   const labels=[], hist=[], fctLine=[], realLine=[];
 
   train45.forEach((d,i) => {
@@ -887,9 +893,9 @@ function renderChart() {
     data: {
       labels,
       datasets: [
-        {label:'Real Histórico', data:hist, borderColor:'#9ca3af', backgroundColor:'rgba(156,163,175,0.05)', borderWidth:1.5, pointRadius:0, fill:true, tension:0.2},
-        {label:'Forecast', data:fctLine, borderColor:'#C80064', borderDash:[4,3], borderWidth:2, pointRadius:0, tension:0.2},
-        {label:'Real Test', data:realLine, borderColor:'#1a3a78', backgroundColor:'rgba(26,58,120,0.1)', borderWidth:2, pointRadius:2.5, pointBackgroundColor:'#1a3a78', tension:0.1, fill:true}
+        {label:'Real Histórico', data:hist, borderColor:'#cbd5e1', backgroundColor:'rgba(203,213,225,0.2)', borderWidth:2, pointRadius:0, fill:true, tension:0.2},
+        {label:'Forecast Operativo', data:fctLine, borderColor:'#C80064', borderDash:[5,4], borderWidth:2.5, pointRadius:0, tension:0.2},
+        {label:'Testing Real', data:realLine, borderColor:'#1e293b', backgroundColor:'rgba(30,41,59,0.1)', borderWidth:2.5, pointRadius:3, pointBackgroundColor:'#1e293b', tension:0.1, fill:true}
       ]
     },
     options: {
@@ -897,10 +903,76 @@ function renderChart() {
       interaction:{mode:'index', intersect:false},
       plugins:{legend:{display:false}},
       scales:{
-        x:{ticks:{font:{size:9}, maxTicksLimit:10, color:'#9ba3b0'}, grid:{display:false}},
-        y:{beginAtZero:true, ticks:{font:{size:9}, color:'#9ba3b0', callback:v=>v.toLocaleString('es-CL')}, grid:{color:'#f1f5f9'}}
+        x:{ticks:{font:{size:9}, maxTicksLimit:12, color:'#9ba3b0'}, grid:{display:false}},
+        y:{beginAtZero:true, ticks:{font:{size:10}, color:'#9ba3b0', callback:v=>v.toLocaleString('es-CL')}, grid:{color:'#f1f5f9'}}
       }
     }
+  });
+}
+
+// ─── GESTIÓN DINÁMICA DE TABLA FUTURO (HOT-RELOAD) ───
+function renderFutureTable() {
+  const fBody = document.querySelector('#futureTable tbody');
+  fBody.innerHTML = '';
+  
+  const to = $('filterTo').value;
+  futureForecast.filter(f => f.iso > to).forEach(f => {
+    fBody.innerHTML += `
+      <tr>
+        <td class="td-date">${f.iso}</td>
+        <td style="text-align:left; color: var(--muted);">${f.dayName}</td>
+        <td style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--muted);">${f.baseValue.toLocaleString('es-CL')}</td>
+        <td><input type="number" class="input-adj" value="${f.overrides.f}" onchange="updateDailyAdj('${f.iso}', 'f', this.value)"></td>
+        <td><input type="number" class="input-adj" value="${f.overrides.e}" onchange="updateDailyAdj('${f.iso}', 'e', this.value)"></td>
+        <td class="td-fct" id="final-${f.iso}">${f.value.toLocaleString('es-CL')}</td>
+        <td style="text-align:left;"><input type="text" class="input-adj input-adj-text" value="${f.overrides.n}" placeholder="Escribe aquí..." onchange="updateDailyAdj('${f.iso}', 'n', this.value)"></td>
+      </tr>`;
+  });
+}
+
+// Activa el recálculo al vuelo cuando se cambia un % Feriado/Evento
+window.updateDailyAdj = function(iso, field, val) {
+  if(!dailyOverrides[iso]) dailyOverrides[iso] = {f:100, e:100, n:''};
+  if(field === 'n') dailyOverrides[iso].n = val;
+  else dailyOverrides[iso][field] = parseFloat(val) || 100;
+  
+  // Recalcular específicamente el arreglo para este cambio (eficiente)
+  let fctItem = futureForecast.find(f => f.iso === iso);
+  fctItem.overrides = dailyOverrides[iso];
+  fctItem.value = Math.max(0, Math.round(fctItem.baseValue * (fctItem.overrides.f/100) * (fctItem.overrides.e/100)));
+  
+  // Actualizar solo el DOM necesario
+  let finalCell = document.getElementById(`final-${iso}`);
+  if(finalCell) finalCell.textContent = fctItem.value.toLocaleString('es-CL');
+  
+  // Actualizar componentes dependientes silenciosamente
+  updateTotalFutureKPI();
+  renderChart();
+  renderMonthlyTable();
+}
+
+function renderMonthlyTable() {
+  const mBody = document.querySelector('#monthlySummaryTable tbody');
+  mBody.innerHTML = '';
+  let monthGroup = {};
+  
+  const to = $('filterTo').value;
+  futureForecast.filter(f => f.iso > to).forEach(f => {
+    let mKey = `${f.date.getFullYear()}-${String(f.date.getMonth()+1).padStart(2,'0')}`;
+    if(!monthGroup[mKey]) monthGroup[mKey] = { label: `${MONTHS[f.date.getMonth()]} ${f.date.getFullYear()}`, sum: 0, cnt: 0 };
+    monthGroup[mKey].sum += f.value;
+    monthGroup[mKey].cnt++;
+  });
+
+  Object.keys(monthGroup).sort().forEach(k => {
+    let m = monthGroup[k];
+    mBody.innerHTML += `
+      <tr>
+        <td style="text-align:left; font-weight:700; color:var(--blue);">${m.label}</td>
+        <td style="color:var(--muted);">${m.cnt} días</td>
+        <td class="td-fct" style="font-size:15px;">${m.sum.toLocaleString('es-CL')}</td>
+        <td style="font-family:'IBM Plex Mono',monospace; font-weight:600; color:var(--muted);">${Math.round(m.sum/m.cnt).toLocaleString('es-CL')} / d</td>
+      </tr>`;
   });
 }
 
@@ -909,7 +981,7 @@ function renderDeviationTable(fctIsoMap) {
   const tfoot = $('devFoot');
   tbody.innerHTML = '';
   if(!testingData.length) {
-    tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:24px;color:var(--muted)">No hay registros reales posteriores al corte.</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:30px;color:var(--muted)">No hay registros reales en la fecha de testing. Sube más datos históricos al Excel.</td></tr>`;
     tfoot.innerHTML = ''; return;
   }
   let totFct=0, totReal=0, totAbsErr=0;
@@ -922,7 +994,7 @@ function renderDeviationTable(fctIsoMap) {
     tbody.innerHTML += `
       <tr>
         <td class="td-date">${act.iso}</td>
-        <td style="text-align:left;">${DAYS[act.date.getDay()]}</td>
+        <td style="text-align:left; color:var(--muted);">${DAYS[act.date.getDay()]}</td>
         <td class="td-fct">${fctVal.toLocaleString('es-CL')}</td>
         <td class="td-real">${act.value.toLocaleString('es-CL')}</td>
         <td class="${diff > 0 ? 'td-over':'td-under'}">${diff > 0 ? '+':''}${diff.toLocaleString('es-CL')}</td>
@@ -934,51 +1006,12 @@ function renderDeviationTable(fctIsoMap) {
   const wape = totReal > 0 ? (totAbsErr/totReal)*100 : 0;
   tfoot.innerHTML = `
     <tr>
-      <td colspan="2" style="text-align:left;">TOTAL PERIODO</td>
+      <td colspan="2" style="text-align:left;">SUMA PERIODO PRUEBA</td>
       <td class="td-fct">${totFct.toLocaleString('es-CL')}</td>
       <td class="td-real">${totReal.toLocaleString('es-CL')}</td>
       <td class="${totReal-totFct > 0 ? 'td-over':'td-under'}">${totReal-totFct > 0 ? '+':''}${(totReal-totFct).toLocaleString('es-CL')}</td>
-      <td colspan="2" style="text-align:right; color:var(--magenta); font-weight:700;">WAPE Global: ${wape.toFixed(1)}%</td>
+      <td colspan="2" style="text-align:right; color:var(--magenta); font-weight:700;">WAPE Total: ${wape.toFixed(1)}%</td>
     </tr>`;
-}
-
-function renderFutureAndMonthlyTables() {
-  const fBody = document.querySelector('#futureTable tbody');
-  const mBody = document.querySelector('#monthlySummaryTable tbody');
-  fBody.innerHTML = ''; mBody.innerHTML = '';
-
-  let monthGroup = {};
-  futureForecast.forEach(f => {
-    // Tabla diaria
-    fBody.innerHTML += `
-      <tr>
-        <td class="td-date">${f.iso}</td>
-        <td style="text-align:left;">${f.dayName}</td>
-        <td class="td-fct">${f.value.toLocaleString('es-CL')}</td>
-        <td style="color:var(--muted); font-family:monospace;">${Math.round(f.value*0.92).toLocaleString('es-CL')}</td>
-        <td style="color:var(--muted); font-family:monospace;">${Math.round(f.value*1.08).toLocaleString('es-CL')}</td>
-      </tr>`;
-
-    // Agrupamiento mensual
-    let mKey = `${f.date.getFullYear()}-${String(f.date.getMonth()+1).padStart(2,'0')}`;
-    if(!monthGroup[mKey]) {
-      monthGroup[mKey] = { label: `${MONTHS[f.date.getMonth()]} ${f.date.getFullYear()}`, sum: 0, cnt: 0 };
-    }
-    monthGroup[mKey].sum += f.value;
-    monthGroup[mKey].cnt++;
-  });
-
-  // Renderizar consolidados mensuales
-  Object.keys(monthGroup).sort().forEach(k => {
-    let m = monthGroup[k];
-    mBody.innerHTML += `
-      <tr>
-        <td style="text-align:left; font-weight:600; color:var(--blue);">${m.label}</td>
-        <td>${m.cnt} días</td>
-        <td class="td-fct" style="font-size:14px;">${m.sum.toLocaleString('es-CL')}</td>
-        <td style="font-family:monospace; font-weight:600;">${Math.round(m.sum/m.cnt).toLocaleString('es-CL')} / día</td>
-      </tr>`;
-  });
 }
 
 function renderAuditTable() {
@@ -987,7 +1020,7 @@ function renderAuditTable() {
   Object.keys(seasonalIndices).sort().forEach(key => {
     const idx = seasonalIndices[key];
     const pct = idx.combined * 100;
-    let pillCls = pct > 115 ? 'hi' : pct < 85 ? 'lo' : 'norm';
+    let pillCls = pct > 115 ? 'hi' : pct < 85 ? 'lo' : 'mid';
 
     const tr = document.createElement('tr');
     tr.innerHTML = `
@@ -996,9 +1029,9 @@ function renderAuditTable() {
         &nbsp;${idx.name}
       </td>
       <td>${idx.samples} d</td>
-      <td style="font-family:monospace;">${Math.round(idx.avgGroup).toLocaleString('es-CL')}</td>
-      <td style="font-family:monospace; color:var(--muted);">${Math.round(idx.dowAvg).toLocaleString('es-CL')}</td>
-      <td style="font-family:monospace; color:var(--muted);">${(idx.womIndex*100).toFixed(1)}%</td>
+      <td style="font-family:'IBM Plex Mono',monospace; color:var(--muted);">${Math.round(idx.avgGroup).toLocaleString('es-CL')}</td>
+      <td style="font-family:'IBM Plex Mono',monospace; color:var(--muted);">${Math.round(idx.dowAvg).toLocaleString('es-CL')}</td>
+      <td style="font-family:'IBM Plex Mono',monospace; color:var(--muted);">${(idx.womIndex*100).toFixed(1)}%</td>
       <td><span class="idx-pill ${pillCls}">${pct.toFixed(1)}%</span></td>`;
     tbody.appendChild(tr);
 
@@ -1013,7 +1046,7 @@ function renderAuditTable() {
     
     trDet.innerHTML = `
       <td colspan="6" style="text-align:left;">
-        <div style="font-size:10.5px; color:var(--muted); font-weight:600; margin-bottom:4px;">DIAS UTILIZADOS EN EL PROMEDIO:</div>
+        <div style="font-size:10.5px; color:var(--muted); font-weight:700; margin-bottom:6px;">DÍAS UTILIZADOS EN EL PROMEDIO:</div>
         <div class="detail-pills">${pills}</div>
       </td>`;
     tbody.appendChild(trDet);
@@ -1029,9 +1062,27 @@ window.toggleAudit = function(key) {
 };
 
 // ════════════════════════════════════════════════════════════
-// UTILS
+// EXPORTACIÓN Y UTILS
 // ════════════════════════════════════════════════════════════
-function showLoader() { $('emptyState').style.display='none'; $('mainDashboard').style.display='none'; $('loaderScreen').style.display='flex'; }
+$('btnExport').addEventListener('click', () => {
+    const to = $('filterTo').value;
+    const exportData = futureForecast.filter(f => f.iso > to).map(f => ({
+        'Fecha Operativa': f.iso,
+        'Día y Semana': f.dayName,
+        'Volumen Algorítmico Base': f.baseValue,
+        '% Factor Feriado': f.overrides.f,
+        '% Factor Eventos': f.overrides.e,
+        'Pronóstico Operativo Final': f.value,
+        'Clasificación / Notas': f.overrides.n
+    }));
+    
+    const ws = XLSX.utils.json_to_sheet(exportData);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Forecast_WFM');
+    XLSX.writeFile(wb, `Forecast_TP_${$('serviceSelect').value.replace('.xlsx','')}_${to}.xlsx`);
+});
+
+function showLoader() { $('emptyState').style.display='none'; $('mainDashboard').style.display='none'; $('loaderScreen').style.display='flex'; $('btnExport').style.display='none'; }
 function hideLoader() { $('loaderScreen').style.display='none'; }
 function toISO(date) { return `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`; }
 function parseDate(val) {
