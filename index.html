@@ -64,7 +64,7 @@
   .nav-title { font-size: 16px; font-weight: 700; color: var(--blue); letter-spacing: -0.3px; }
   .nav-subtitle { font-size: 11px; color: var(--muted); font-weight: 500; letter-spacing: 0.5px; margin-top: -2px; text-transform: uppercase; }
   
-  .nav-right { display: flex; align-items: center; gap: 16px; }
+  .nav-right { display: flex; align-items: center; gap: 12px; }
   .service-pill {
     display: flex; align-items: center; gap: 8px; background: white;
     border: 1px solid var(--border); border-radius: 30px; padding: 6px 16px 6px 12px; box-shadow: var(--shadow-sm); transition: all 0.2s;
@@ -73,13 +73,18 @@
   .service-pill i { color: var(--magenta); font-size: 18px; }
   .service-pill select { background: transparent; border: none; font-size: 13.5px; font-weight: 600; color: var(--text); outline: none; cursor: pointer; font-family: inherit; }
   
-  .btn-export {
-    background: linear-gradient(135deg, var(--magenta), #e6007e);
-    color: white; border: none; border-radius: 30px; padding: 8px 20px;
-    font-size: 13px; font-weight: 600; cursor: pointer; display: none; align-items: center; gap: 8px;
-    box-shadow: 0 4px 12px rgba(200,0,100,0.25); transition: all 0.3s ease; font-family: inherit;
+  .btn-action {
+    background: white; color: var(--text); border: 1px solid var(--border-strong); border-radius: 30px; padding: 8px 16px;
+    font-size: 13px; font-weight: 600; cursor: pointer; display: none; align-items: center; gap: 6px;
+    box-shadow: var(--shadow-sm); transition: all 0.2s ease; font-family: inherit;
   }
-  .btn-export:hover { transform: translateY(-2px); box-shadow: var(--shadow-glow); }
+  .btn-action:hover { border-color: var(--muted); background: var(--surface2); }
+  
+  .btn-export {
+    background: linear-gradient(135deg, var(--magenta), #e6007e); color: white; border: none; 
+    box-shadow: 0 4px 12px rgba(200,0,100,0.25);
+  }
+  .btn-export:hover { transform: translateY(-2px); box-shadow: var(--shadow-glow); background: linear-gradient(135deg, #e6007e, var(--magenta)); color: white;}
 
   /* ─── Layout ─── */
   .layout { display: flex; gap: 24px; padding: 24px 30px; max-width: 100%; margin: 0 auto; align-items: flex-start; }
@@ -205,7 +210,6 @@
   .td-over { color: var(--red); font-weight: 700; font-family: 'IBM Plex Mono', monospace; }
   .td-under { color: var(--green); font-weight: 700; font-family: 'IBM Plex Mono', monospace; }
   
-  /* Inputs de Ajuste Diario */
   .input-adj {
     width: 65px; padding: 6px 4px; border: 1px solid var(--border-strong); border-radius: 6px;
     text-align: center; font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 600;
@@ -233,7 +237,7 @@
     <div class="nav-logo"><i class="ti ti-wave-sine"></i></div>
     <div>
       <div class="nav-title">WFM Executive Engine</div>
-      <div class="nav-subtitle">TP Chile · Ver. 2026</div>
+      <div class="nav-subtitle">TP Chile · Inteligencia 2026</div>
     </div>
   </div>
   <div class="nav-right">
@@ -246,7 +250,8 @@
         <option value="correo.xlsx">Servicio: Correo Electrónico</option>
       </select>
     </div>
-    <button class="btn-export" id="btnExport"><i class="ti ti-file-spreadsheet"></i> Exportar a Excel</button>
+    <button class="btn-action" id="btnClearMem" title="Borrar caché de este servicio"><i class="ti ti-eraser"></i> Limpiar Memoria</button>
+    <button class="btn-action btn-export" id="btnExport"><i class="ti ti-file-spreadsheet"></i> Exportar Final</button>
   </div>
 </nav>
 
@@ -328,6 +333,7 @@
     <div id="mainDashboard" style="display:none; flex-direction:column; gap:20px;">
       <div class="banner info" id="dataInfoAlert"></div>
 
+      <!-- KPI Grid -->
       <div class="kpi-grid">
         <div class="kpi">
           <div class="kpi-label">Volumen Base (Dinámico)</div>
@@ -352,6 +358,7 @@
         </div>
       </div>
 
+      <!-- Gráfico Ejecutivos Colapsable -->
       <div class="chart-card">
         <div class="chart-header">
           <span class="chart-title">
@@ -369,6 +376,7 @@
         </div>
       </div>
 
+      <!-- Tablas de Datos -->
       <div class="tabs-card">
         <div class="tabs-nav">
           <button class="tab-btn active" data-target="tabFuture">Pronóstico Operativo Interactivo</button>
@@ -376,7 +384,9 @@
           <button class="tab-btn" data-target="tabAudit">Auditoría Estacional (Índices Bayesianos)</button>
         </div>
         
+        <!-- Pestaña: Pronóstico Interactivo -->
         <div class="tab-pane active" id="tabFuture">
+          <!-- Resumen Mensual -->
           <div class="sub-section-title"><i class="ti ti-calendar-due"></i> Consolidado Presupuestario Mensual</div>
           <table class="data-tbl" id="monthlySummaryTable">
             <thead>
@@ -390,6 +400,7 @@
             <tbody></tbody>
           </table>
 
+          <!-- Detalle Diario Interactivo -->
           <div class="sub-section-title" style="border-top:none;"><i class="ti ti-edit"></i> Gestión Diaria de Modificadores (Hot-Reload)</div>
           <div class="tbl-wrap" style="min-height: 450px;">
             <table class="data-tbl" id="futureTable">
@@ -409,6 +420,7 @@
           </div>
         </div>
 
+        <!-- Pestaña: Desviación -->
         <div class="tab-pane" id="tabDeviation">
           <div class="tbl-wrap">
             <table class="data-tbl" id="devTable">
@@ -429,6 +441,7 @@
           </div>
         </div>
         
+        <!-- Pestaña: Auditoría Índices -->
         <div class="tab-pane" id="tabAudit">
           <div class="tbl-wrap">
             <table class="data-tbl" id="auditTable">
@@ -461,14 +474,74 @@ let seasonalIndices = {}, dowAverages = {}, overallAvg = 0;
 let autoExcluded = new Set(); 
 let baseLevel = 0, hwState = null, linearSlope = 0, linearIntercept = 0;
 let chartInst = null;
-let dailyOverrides = {}; // Guarda los ajustes manuales { '2026-05-01': {f:100, e:100, n:''} }
+let dailyOverrides = {}; 
 
 const DAYS = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
 const MONTHS = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 const $ = id => document.getElementById(id);
 
 // ════════════════════════════════════════════════════════════
-// INTERFAZ Y DESPLIEGUES
+// LOCAL STORAGE (Memoria 2026)
+// ════════════════════════════════════════════════════════════
+function getStorageKey() {
+    return 'TP_WFM_CACHE_' + $('serviceSelect').value;
+}
+
+function saveConfig() {
+    const config = {
+        filterFrom: $('filterFrom').value,
+        filterTo: $('filterTo').value,
+        forecastToInput: $('forecastToInput').value,
+        trendBaseInput: $('trendBaseInput').value,
+        trendMethodInput: $('trendMethodInput').value,
+        excludedDates: Array.from(excludedDates),
+        dailyOverrides: dailyOverrides
+    };
+    localStorage.setItem(getStorageKey(), JSON.stringify(config));
+}
+
+function loadConfig(defaultFrom, defaultTo, defaultTarget) {
+    const saved = localStorage.getItem(getStorageKey());
+    if (saved) {
+        try {
+            const config = JSON.parse(saved);
+            $('filterFrom').value = config.filterFrom || defaultFrom;
+            $('filterTo').value = config.filterTo || defaultTo;
+            $('forecastToInput').value = config.forecastToInput || defaultTarget;
+            $('trendBaseInput').value = config.trendBaseInput || 45;
+            $('trendMethodInput').value = config.trendMethodInput || 'holtwinters';
+            excludedDates = new Set(config.excludedDates || []);
+            dailyOverrides = config.dailyOverrides || {};
+        } catch (e) {
+            console.error("Cache corrupto, cargando defaults");
+            applyDefaults(defaultFrom, defaultTo, defaultTarget);
+        }
+    } else {
+        applyDefaults(defaultFrom, defaultTo, defaultTarget);
+    }
+    renderTags();
+}
+
+function applyDefaults(defaultFrom, defaultTo, defaultTarget) {
+    $('filterFrom').value = defaultFrom;
+    $('filterTo').value = defaultTo;
+    $('forecastToInput').value = defaultTarget;
+    $('trendBaseInput').value = 45;
+    $('trendMethodInput').value = 'holtwinters';
+    excludedDates = new Set();
+    dailyOverrides = {};
+}
+
+$('btnClearMem').addEventListener('click', () => {
+    if(confirm("¿Estás seguro que deseas borrar todos los ajustes manuales y anomalías guardadas para este servicio?")) {
+        localStorage.removeItem(getStorageKey());
+        loadFromGitHub($('serviceSelect').value); // Recarga como si fuera la primera vez
+    }
+});
+
+
+// ════════════════════════════════════════════════════════════
+// INTERFAZ Y EVENTOS BÁSICOS
 // ════════════════════════════════════════════════════════════
 window.addEventListener('DOMContentLoaded', () => {
   loadFromGitHub($('serviceSelect').value);
@@ -486,9 +559,17 @@ window.addEventListener('DOMContentLoaded', () => {
     $('mainSidebar').classList.toggle('collapsed');
   });
 
-  $('serviceSelect').addEventListener('change', e => { dailyOverrides = {}; loadFromGitHub(e.target.value); });
-  $('trendMethodInput').addEventListener('change', processModel);
-  ['filterFrom','filterTo','trendBaseInput','forecastToInput'].forEach(id => $(id).addEventListener('change', processModel));
+  $('serviceSelect').addEventListener('change', e => { loadFromGitHub(e.target.value); });
+  
+  // Guardado Automático en cada cambio
+  const inputsToSave = ['trendMethodInput', 'filterFrom', 'filterTo', 'trendBaseInput', 'forecastToInput'];
+  inputsToSave.forEach(id => {
+      $(id).addEventListener('change', () => {
+          saveConfig();
+          processModel();
+      });
+  });
+
   $('btnAddAnomaly').addEventListener('click', addAnomaly);
   $('fileInput').addEventListener('change', e => { if(e.target.files[0]) readFile(e.target.files[0]); });
 });
@@ -514,9 +595,10 @@ function addAnomaly() {
   excludedDates.add(d);
   $('anomalyDate').value = '';
   renderTags();
+  saveConfig();
   processModel();
 }
-window.removeAnomaly = d => { excludedDates.delete(d); renderTags(); processModel(); };
+window.removeAnomaly = d => { excludedDates.delete(d); renderTags(); saveConfig(); processModel(); };
 function renderTags() {
   const c = $('anomalyTags');
   c.innerHTML = '';
@@ -548,7 +630,7 @@ async function loadFromGitHub(filename) {
 function readFile(file) {
   showLoader();
   const r = new FileReader();
-  r.onload = e => { dailyOverrides = {}; const wb = XLSX.read(e.target.result, {type:'array', cellDates:true}); parseWorkbook(wb, file.name); };
+  r.onload = e => { const wb = XLSX.read(e.target.result, {type:'array', cellDates:true}); parseWorkbook(wb, file.name); };
   r.readAsArrayBuffer(file);
 }
 function parseWorkbook(wb, src) {
@@ -569,17 +651,20 @@ function parseWorkbook(wb, src) {
   data.sort((a,b) => a.iso.localeCompare(b.iso));
   rawData = data;
 
+  // Defaults por si no hay memoria
+  const defFrom = data[0].iso;
   const cutoff = new Date(data[data.length-1].date);
   cutoff.setDate(cutoff.getDate() - 7);
+  const defTo = toISO(cutoff);
   
   const targetFuture = new Date(data[data.length-1].date);
   targetFuture.setMonth(targetFuture.getMonth() + 3);
   targetFuture.setMonth(targetFuture.getMonth() + 1);
   targetFuture.setDate(0); 
+  const defTarget = toISO(targetFuture);
 
-  $('filterFrom').value = data[0].iso;
-  $('filterTo').value = toISO(cutoff);
-  $('forecastToInput').value = toISO(targetFuture);
+  // Cargamos la memoria del servicio seleccionado
+  loadConfig(defFrom, defTo, defTarget);
   
   $('dataInfoAlert').innerHTML = `<i class="ti ti-check" style="font-size:18px;"></i> Conectado exitosamente con <b>${src}</b> (${data.length} registros).`;
   processModel();
@@ -613,6 +698,7 @@ function processModel() {
   hideLoader();
   $('mainDashboard').style.display = 'flex';
   $('btnExport').style.display = 'flex';
+  $('btnClearMem').style.display = 'flex';
 }
 
 function detectOutliers() {
@@ -794,7 +880,7 @@ function generateForecast() {
     const dow = d.getDay();
     const baseFct = getBaseFCT(d, step);
     
-    // Aplicar Modificadores Manuales si existen
+    // Aplicar Modificadores Manuales desde Memoria
     const ov = dailyOverrides[iso] || {f:100, e:100, n:''};
     const finalFct = Math.max(0, Math.round(baseFct * (ov.f/100) * (ov.e/100)));
 
@@ -930,22 +1016,20 @@ function renderFutureTable() {
   });
 }
 
-// Activa el recálculo al vuelo cuando se cambia un % Feriado/Evento
+// Activa el recálculo al vuelo cuando se cambia un % y lo guarda en Memoria
 window.updateDailyAdj = function(iso, field, val) {
   if(!dailyOverrides[iso]) dailyOverrides[iso] = {f:100, e:100, n:''};
   if(field === 'n') dailyOverrides[iso].n = val;
   else dailyOverrides[iso][field] = parseFloat(val) || 100;
   
-  // Recalcular específicamente el arreglo para este cambio (eficiente)
   let fctItem = futureForecast.find(f => f.iso === iso);
   fctItem.overrides = dailyOverrides[iso];
   fctItem.value = Math.max(0, Math.round(fctItem.baseValue * (fctItem.overrides.f/100) * (fctItem.overrides.e/100)));
   
-  // Actualizar solo el DOM necesario
   let finalCell = document.getElementById(`final-${iso}`);
   if(finalCell) finalCell.textContent = fctItem.value.toLocaleString('es-CL');
   
-  // Actualizar componentes dependientes silenciosamente
+  saveConfig(); // <-- Auto Guardado
   updateTotalFutureKPI();
   renderChart();
   renderMonthlyTable();
@@ -1082,7 +1166,7 @@ $('btnExport').addEventListener('click', () => {
     XLSX.writeFile(wb, `Forecast_TP_${$('serviceSelect').value.replace('.xlsx','')}_${to}.xlsx`);
 });
 
-function showLoader() { $('emptyState').style.display='none'; $('mainDashboard').style.display='none'; $('loaderScreen').style.display='flex'; $('btnExport').style.display='none'; }
+function showLoader() { $('emptyState').style.display='none'; $('mainDashboard').style.display='none'; $('loaderScreen').style.display='flex'; $('btnExport').style.display='none'; $('btnClearMem').style.display='none';}
 function hideLoader() { $('loaderScreen').style.display='none'; }
 function toISO(date) { return `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`; }
 function parseDate(val) {
