@@ -39,14 +39,11 @@
   }
   body { font-family: 'IBM Plex Sans', 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); font-size: 13.5px; line-height: 1.5; overflow-x: hidden; }
 
+  /* ─── Navbar Glassmorphism ─── */
   .navbar {
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: var(--glass);
-    -webkit-backdrop-filter: var(--glass);
-    border-bottom: 1px solid rgba(255,255,255,0.3);
-    padding: 0 28px; height: 70px;
-    display: flex; align-items: center; justify-content: space-between;
-    position: sticky; top: 0; z-index: 100; box-shadow: var(--shadow-sm);
+    background: rgba(255, 255, 255, 0.85); backdrop-filter: var(--glass); -webkit-backdrop-filter: var(--glass);
+    border-bottom: 1px solid rgba(255,255,255,0.3); padding: 0 28px; height: 70px;
+    display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; box-shadow: var(--shadow-sm);
   }
   .nav-brand { display: flex; align-items: center; gap: 14px; }
   .btn-sidebar-toggle {
@@ -55,39 +52,26 @@
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
   .btn-sidebar-toggle:hover { background: var(--magenta-dim); color: var(--magenta); border-color: rgba(200,0,100,0.2); transform: scale(1.05); }
-  .nav-logo {
-    width: 40px; height: 40px; background: linear-gradient(135deg, var(--magenta), #ff2a85); border-radius: 10px;
-    display: flex; align-items: center; justify-content: center; color: white; font-size: 20px; box-shadow: 0 4px 10px rgba(200,0,100,0.3);
-  }
+  .nav-logo { width: 40px; height: 40px; background: linear-gradient(135deg, var(--magenta), #ff2a85); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-size: 20px; box-shadow: 0 4px 10px rgba(200,0,100,0.3); }
   .nav-title { font-size: 16px; font-weight: 700; color: var(--blue); letter-spacing: -0.3px; }
   .nav-subtitle { font-size: 11px; color: var(--muted); font-weight: 500; letter-spacing: 0.5px; margin-top: -2px; text-transform: uppercase; }
   .nav-right { display: flex; align-items: center; gap: 12px; }
   .model-badge { display: flex; align-items: center; gap: 6px; background: var(--blue); color: white; border-radius: 20px; padding: 5px 12px; font-size: 11.5px; font-weight: 600; letter-spacing: 0.3px; }
   .model-badge i { font-size: 14px; }
   .service-pill {
-    display: flex; align-items: center; gap: 8px; background: white;
-    border: 1px solid var(--border); border-radius: 30px; padding: 6px 16px 6px 12px; box-shadow: var(--shadow-sm); transition: all 0.2s;
+    display: flex; align-items: center; gap: 8px; background: white; border: 1px solid var(--border); border-radius: 30px; padding: 6px 16px 6px 12px; box-shadow: var(--shadow-sm); transition: all 0.2s;
   }
   .service-pill:hover { border-color: var(--border-strong); box-shadow: var(--shadow); }
   .service-pill i { color: var(--magenta); font-size: 18px; }
   .service-pill select { background: transparent; border: none; font-size: 13.5px; font-weight: 600; color: var(--text); outline: none; cursor: pointer; font-family: inherit; }
-  .btn-action {
-    background: white; color: var(--text); border: 1px solid var(--border-strong); border-radius: 30px; padding: 8px 16px;
-    font-size: 13px; font-weight: 600; cursor: pointer; display: none; align-items: center; gap: 6px;
-    box-shadow: var(--shadow-sm); transition: all 0.2s ease; font-family: inherit;
-  }
+  .btn-action { background: white; color: var(--text); border: 1px solid var(--border-strong); border-radius: 30px; padding: 8px 16px; font-size: 13px; font-weight: 600; cursor: pointer; display: none; align-items: center; gap: 6px; box-shadow: var(--shadow-sm); transition: all 0.2s ease; font-family: inherit; }
   .btn-action:hover { border-color: var(--muted); background: var(--surface2); }
-  .btn-export {
-    background: linear-gradient(135deg, var(--magenta), #e6007e); color: white; border: none; 
-    box-shadow: 0 4px 12px rgba(200,0,100,0.25);
-  }
+  .btn-export { background: linear-gradient(135deg, var(--magenta), #e6007e); color: white; border: none; box-shadow: 0 4px 12px rgba(200,0,100,0.25); }
   .btn-export:hover { transform: translateY(-2px); box-shadow: var(--shadow-glow); background: linear-gradient(135deg, #e6007e, var(--magenta)); color: white;}
 
+  /* ─── Layout ─── */
   .layout { display: flex; gap: 24px; padding: 24px 30px; max-width: 100%; margin: 0 auto; align-items: flex-start; }
-  .sidebar { 
-    display: flex; flex-direction: column; gap: 16px; width: 320px; flex-shrink: 0; 
-    transition: margin-left 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease; 
-  }
+  .sidebar { display: flex; flex-direction: column; gap: 16px; width: 320px; flex-shrink: 0; transition: margin-left 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease; }
   .sidebar.collapsed { margin-left: -344px; opacity: 0; pointer-events: none; }
   .main { flex-grow: 1; min-width: 0; display: flex; flex-direction: column; gap: 20px; transition: all 0.4s ease;}
   .card { background: var(--surface); border-radius: var(--r-lg); border: 1px solid rgba(255,255,255,0.5); box-shadow: var(--shadow); backdrop-filter: var(--glass); }
@@ -100,10 +84,7 @@
   .input-row { margin-bottom: 14px; }
   .input-row:last-child { margin-bottom: 0; }
   .input-row label { display: block; font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 6px; }
-  .input-row input, .input-row select {
-    width: 100%; padding: 10px 12px; border: 1px solid var(--border-strong); border-radius: 8px;
-    font-size: 13px; color: var(--text); font-family: inherit; background: var(--surface2); transition: all 0.2s;
-  }
+  .input-row input, .input-row select { width: 100%; padding: 10px 12px; border: 1px solid var(--border-strong); border-radius: 8px; font-size: 13px; color: var(--text); font-family: inherit; background: var(--surface2); transition: all 0.2s; }
   .input-row input:focus, .input-row select:focus { border-color: var(--magenta); background: white; outline: none; box-shadow: 0 0 0 4px var(--magenta-dim); }
   .hint { font-size: 11px; color: var(--muted); margin-top: 6px; line-height: 1.4; }
   .hint.important { color: var(--amber); background: var(--amber-dim); border-radius: 6px; padding: 8px 10px; margin-top: 8px; display: flex; gap: 8px; align-items: flex-start; }
@@ -112,19 +93,13 @@
   .hint.info-box i { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
 
   .tag-area { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
-  .tag {
-    background: white; color: var(--magenta); border: 1px solid rgba(200,0,100,0.2); box-shadow: var(--shadow-sm);
-    border-radius: 20px; padding: 4px 12px; font-size: 11.5px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; font-family: 'IBM Plex Mono', monospace; transition: all 0.2s;
-  }
+  .tag { background: white; color: var(--magenta); border: 1px solid rgba(200,0,100,0.2); box-shadow: var(--shadow-sm); border-radius: 20px; padding: 4px 12px; font-size: 11.5px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; font-family: 'IBM Plex Mono', monospace; transition: all 0.2s; }
   .tag:hover { border-color: var(--magenta); transform: translateY(-1px); }
   .tag button { background: none; border: none; color: var(--muted); cursor: pointer; padding: 0; display: flex; transition: color 0.2s; }
   .tag button:hover { color: var(--red); }
   .anom-row { display: flex; gap: 8px; }
   .anom-row input { flex: 1; }
-  .btn-sm {
-    background: var(--surface2); color: var(--text); border: 1px solid var(--border-strong); border-radius: 8px; padding: 0 14px; cursor: pointer;
-    font-size: 13px; font-weight: 600; font-family: inherit; white-space: nowrap; transition: all 0.2s;
-  }
+  .btn-sm { background: var(--surface2); color: var(--text); border: 1px solid var(--border-strong); border-radius: 8px; padding: 0 14px; cursor: pointer; font-size: 13px; font-weight: 600; font-family: inherit; white-space: nowrap; transition: all 0.2s; }
   .btn-sm:hover { background: var(--magenta); color: white; border-color: var(--magenta); }
 
   .upload-zone { border: 2px dashed var(--border-strong); border-radius: var(--r-lg); padding: 18px; background: rgba(255,255,255,0.5); transition: all 0.2s; }
@@ -165,10 +140,7 @@
 
   .tabs-card { background: var(--surface); border-radius: var(--r-lg); border: 1px solid var(--border); box-shadow: var(--shadow); overflow: hidden; display: flex; flex-direction: column; }
   .tabs-nav { display: flex; border-bottom: 1px solid var(--border); background: var(--surface2); }
-  .tab-btn {
-    flex: 1; padding: 16px; font-size: 13px; font-weight: 600; text-align: center;
-    color: var(--muted); background: transparent; border: none; border-bottom: 2px solid transparent; cursor: pointer; transition: all 0.2s; font-family: inherit; text-transform: uppercase; letter-spacing: 0.5px;
-  }
+  .tab-btn { flex: 1; padding: 16px; font-size: 13px; font-weight: 600; text-align: center; color: var(--muted); background: transparent; border: none; border-bottom: 2px solid transparent; cursor: pointer; transition: all 0.2s; font-family: inherit; text-transform: uppercase; letter-spacing: 0.5px; }
   .tab-btn:hover { color: var(--blue); background: white; }
   .tab-btn.active { color: var(--magenta); border-bottom-color: var(--magenta); background: white; }
   .tab-pane { display: none; }
@@ -179,11 +151,7 @@
   .tbl-wrap::-webkit-scrollbar { width: 8px; }
   .tbl-wrap::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 10px; border: 2px solid white; }
   .data-tbl { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 13px; }
-  .data-tbl th {
-    padding: 12px 16px; background: var(--surface2); border-bottom: 1px solid var(--border);
-    font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px;
-    color: var(--muted); text-align: right; white-space: nowrap; position: sticky; top: 0; z-index: 10;
-  }
+  .data-tbl th { padding: 12px 16px; background: var(--surface2); border-bottom: 1px solid var(--border); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--muted); text-align: right; white-space: nowrap; position: sticky; top: 0; z-index: 10; }
   .data-tbl th:first-child { text-align: left; }
   .data-tbl td { padding: 12px 16px; border-bottom: 1px solid var(--border); text-align: right; vertical-align: middle; transition: background 0.2s; }
   .data-tbl td:first-child { text-align: left; }
@@ -193,11 +161,7 @@
   .td-real { font-weight: 600; font-family: 'IBM Plex Mono', monospace; }
   .td-over { color: var(--red); font-weight: 700; font-family: 'IBM Plex Mono', monospace; }
   .td-under { color: var(--green); font-weight: 700; font-family: 'IBM Plex Mono', monospace; }
-  .input-adj {
-    width: 65px; padding: 6px 4px; border: 1px solid var(--border-strong); border-radius: 6px;
-    text-align: center; font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 600;
-    color: var(--blue); background: var(--surface2); outline: none; transition: all 0.2s;
-  }
+  .input-adj { width: 65px; padding: 6px 4px; border: 1px solid var(--border-strong); border-radius: 6px; text-align: center; font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 600; color: var(--blue); background: var(--surface2); outline: none; transition: all 0.2s; }
   .input-adj:focus { border-color: var(--magenta); background: white; box-shadow: 0 0 0 3px var(--magenta-dim); }
   .input-adj-text { width: 140px; text-align: left; font-family: inherit; font-weight: 500;}
   .idx-pill { display: inline-flex; align-items: center; justify-content: center; padding: 4px 10px; border-radius: 12px; font-size: 11.5px; font-weight: 700; font-family: 'IBM Plex Mono', monospace; min-width: 60px; }
@@ -217,7 +181,7 @@
   .audit-card { display: flex; flex-direction: column; gap: 10px; padding: 16px; border: 1px solid var(--border); border-radius: var(--r); background: white; margin-bottom: 16px; }
   .audit-header { font-size: 13px; font-weight: 700; color: var(--magenta); display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--border-strong); padding-bottom: 8px;}
   .weight-bar-container { width: 100%; height: 24px; background: var(--surface2); border-radius: 12px; overflow: hidden; display: flex; margin-top: 8px;}
-  .weight-bar { height: 100%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: white; transition: width 0.5s ease;}
+  .weight-bar { height: 100%; display: flex; align-items: center; justify-content: center; font-size: 10.5px; font-weight: 700; color: white; transition: width 0.5s ease;}
 </style>
 </head>
 <body>
@@ -285,7 +249,7 @@
           <option value="similar_days">Días Similares Recientes (Weighted)</option>
           <option value="avg">Promedio Simple Fijo</option>
         </select>
-        <div class="hint" style="margin-top:8px;"><b>Ensemble</b> combina múltiples algoritmos (Holt, Regresión, Días Similares) ponderándolos según su precisión en las últimas 2 semanas. Además aplica Triple Estacionalidad.</div>
+        <div class="hint" style="margin-top:8px;"><b>Ensemble</b> combina múltiples algoritmos ponderándolos según su precisión reciente.</div>
         <div id="lowVolWarn" class="hint important" style="display:none;">
           <i class="ti ti-alert-triangle"></i>
           <span>Volumen bajo detectado. Se recomienda <b>Promedio simple</b>.</span>
@@ -446,24 +410,29 @@
           <div style="padding: 20px; background: white;">
               
               <div class="audit-card">
-                  <div class="audit-header"><i class="ti ti-brain"></i> Composición del Ensemble (Backtesting)</div>
+                  <div class="audit-header"><i class="ti ti-brain"></i> Composición del Ensemble (Pesos del Motor)</div>
                   <div style="font-size: 13px; color: var(--muted);">El modelo evaluó automáticamente la precisión en los últimos 14 días y asignó los siguientes pesos para el pronóstico base:</div>
                   <div id="ensembleWeightsContainer"></div>
               </div>
 
               <div class="audit-card">
-                  <div class="audit-header"><i class="ti ti-calendar-stats"></i> Multiplicadores de Triple Estacionalidad</div>
-                  <div style="font-size: 13px; color: var(--muted); margin-bottom: 10px;">Factores aislados que el modelo aplica sobre la tendencia base (1.000 = Promedio neutral).</div>
-                  <table class="data-tbl" id="auditSeasonalityTable" style="border: 1px solid var(--border); border-radius: 8px; overflow: hidden;">
-                      <thead>
-                          <tr>
-                              <th style="text-align: left;">Tipo de Estacionalidad</th>
-                              <th style="text-align: left;">Dimensión</th>
-                              <th>Factor Multiplicador</th>
-                          </tr>
-                      </thead>
-                      <tbody></tbody>
-                  </table>
+                  <div class="audit-header"><i class="ti ti-calendar-stats"></i> Estacionalidad por Día y Semana del Mes</div>
+                  <div style="font-size: 13px; color: var(--muted); margin-bottom: 10px;">Composición del multiplicador estacional aplicando Shrinkage Bayesiano para días con poca muestra.</div>
+                  <div class="tbl-wrap" style="min-height: auto; max-height: 400px; border: 1px solid var(--border); border-radius: 8px;">
+                      <table class="data-tbl" id="auditSeasonalityTable">
+                          <thead>
+                            <tr>
+                              <th style="text-align:left;">Escenario (Día · Sem)</th>
+                              <th>Muestra Limpia</th>
+                              <th>Promedio Histórico</th>
+                              <th>Promedio Base DoW</th>
+                              <th>Factor WoM (Bayesian Shrinkage)</th>
+                              <th>Multiplicador Final</th>
+                            </tr>
+                          </thead>
+                          <tbody></tbody>
+                      </table>
+                  </div>
               </div>
 
           </div>
@@ -487,10 +456,9 @@ let detectedBreakpoint = null;
 let regimeWeights = null;
 let ensembleModels = {};
 
-// Triple Estacionalidad
+// Triple Estacionalidad Clásica (WoM + DoW)
 let dowAverages = {};
-let domFactors = {};
-let monthFactors = {};
+let seasonalIndices = {};
 let overallAvg = 0;
 
 const DAYS   = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
@@ -652,7 +620,7 @@ function parseWorkbook(wb, src) {
 }
 
 // ════════════════════════════════════════════════════════════
-// MOTOR MATEMÁTICO (ENSEMBLE + TRIPLE ESTACIONALIDAD)
+// MOTOR MATEMÁTICO (ENSEMBLE + ESTACIONALIDAD WoM+DoW)
 // ════════════════════════════════════════════════════════════
 function processModel() {
   if(!rawData.length) return;
@@ -873,35 +841,57 @@ function predictOneModel(modelName, trainData, step, targetDate) {
   return Math.max(0, base);
 }
 
-// ─── TRIPLE ESTACIONALIDAD PONDERADA ───
+// ─── ESTACIONALIDAD (WoM + DoW) ───
 function calcSeasonality() {
   let totalWSum = 0, totalWVSum = 0;
   trainingData.forEach((item, i) => {
     const w = regimeWeights[i] || 1;
     totalWSum  += w; totalWVSum += getHolidayAdjustedValue(item) * w;
   });
-  const trainAvg = totalWSum > 0 ? totalWVSum / totalWSum : 1;
-  overallAvg = trainAvg;
+  overallAvg = totalWSum > 0 ? totalWVSum / totalWSum : 1;
 
   const dowBuckets = {}; for(let d=0;d<7;d++) dowBuckets[d] = {wsum:0, wcnt:0};
-  const domBuckets = {}; for(let d=1;d<=31;d++) domBuckets[d] = {wsum:0, wcnt:0};
-  const monthBuckets = {}; for(let m=0;m<12;m++) monthBuckets[m] = {wsum:0, wcnt:0};
+  const womBuckets = {};
 
   trainingData.forEach((item, i) => {
     const w = regimeWeights[i] || 1;
     const val = getHolidayAdjustedValue(item);
-    const d = item.date.getDay(), dom = item.date.getDate(), m = item.date.getMonth();
+    const d = item.date.getDay();
+    const wk = Math.ceil(item.date.getDate() / 7);
+    const key = `${wk}_${d}`;
     
-    dowBuckets[d].wsum += val * w; dowBuckets[d].wcnt += w;
-    domBuckets[dom].wsum += val * w; domBuckets[dom].wcnt += w;
-    monthBuckets[m].wsum += val * w; monthBuckets[m].wcnt += w;
+    dowBuckets[d].wsum += val * w; 
+    dowBuckets[d].wcnt += w;
+
+    if(!womBuckets[key]) womBuckets[key] = {wsum:0, wcnt:0, details:[], wk, d};
+    womBuckets[key].wsum += val * w;
+    womBuckets[key].wcnt += w;
+    womBuckets[key].details.push({iso:item.iso, v:item.value, outlier:autoExcluded.has(item.iso)});
   });
 
-  dowAverages = {}; domFactors = {}; monthFactors = {};
-  
-  for(let d=0; d<7; d++) dowAverages[d] = dowBuckets[d].wcnt > 0 ? dowBuckets[d].wsum / dowBuckets[d].wcnt : trainAvg;
-  for(let d=1; d<=31; d++) domFactors[d] = domBuckets[d].wcnt >= 1.5 ? (domBuckets[d].wsum / domBuckets[d].wcnt) / trainAvg : 1.0;
-  for(let m=0; m<12; m++) monthFactors[m] = monthBuckets[m].wcnt >= 3 ? (monthBuckets[m].wsum / monthBuckets[m].wcnt) / trainAvg : 1.0;
+  dowAverages = {};
+  for(let d=0; d<7; d++) dowAverages[d] = dowBuckets[d].wcnt > 0 ? dowBuckets[d].wsum / dowBuckets[d].wcnt : overallAvg;
+
+  seasonalIndices = {};
+  for(const key in womBuckets) {
+    const b = womBuckets[key];
+    const avgGroup = b.wcnt > 0 ? b.wsum / b.wcnt : overallAvg;
+    const dowAvg   = dowAverages[b.d] || overallAvg;
+    const rawWoM   = dowAvg > 0 ? avgGroup / dowAvg : 1;
+    
+    const effectiveSamples = b.details.length;
+    const shrink = Math.min(effectiveSamples / 5.0, 1.0);
+    const smoothedWoM = shrink * rawWoM + (1-shrink) * 1.0;
+    const dowIdx = overallAvg > 0 ? dowAvg / overallAvg : 1;
+    
+    const combined = Math.max(0.20, Math.min(3.0, dowIdx * smoothedWoM));
+    
+    seasonalIndices[key] = {
+      name: `${DAYS[b.d]} · Sem ${b.wk}`,
+      combined, avgGroup, dowAvg, samples: effectiveSamples, shrink,
+      details: b.details, dowIndex: dowIdx, womIndex: smoothedWoM, rawWoM
+    };
+  }
 }
 
 function getBaseFCT(dateObj, step) {
@@ -917,10 +907,16 @@ function getBaseFCT(dateObj, step) {
     base = predictOneModel(method, trainingData, step, dateObj);
   }
 
-  // Multiplicadores de Triple Estacionalidad
-  const dow = dateObj.getDay(), dom = dateObj.getDate(), month = dateObj.getMonth();
-  const dowFactor = overallAvg > 0 ? (dowAverages[dow] || overallAvg) / overallAvg : 1;
-  const factor = dowFactor * (domFactors[dom] || 1) * (monthFactors[month] || 1);
+  const wk = Math.ceil(dateObj.getDate() / 7);
+  const d = dateObj.getDay();
+  const key = `${wk}_${d}`;
+  
+  let factor = 1;
+  if(seasonalIndices[key]) {
+    factor = seasonalIndices[key].combined;
+  } else {
+    factor = overallAvg > 0 ? (dowAverages[d] || overallAvg) / overallAvg : 1;
+  }
 
   return Math.max(0, Math.round(base * factor));
 }
@@ -985,7 +981,10 @@ function updateUI() {
     $('kpiAccuracy').style.color = acc>=95?'var(--green)':acc>=88?'var(--amber)':'var(--red)';
     const badge = $('kpiAccuracyBadge'); badge.style.display = 'inline-block';
     badge.className = acc>=95?'kpi-accent good':acc>=88?'kpi-accent warn':'kpi-accent bad'; badge.textContent = `WAPE: ${wape.toFixed(1)}%`;
-  } else { $('kpiAccuracy').textContent = 'N/A'; $('kpiAccuracyBadge').style.display = 'none'; }
+  } else {
+    $('kpiAccuracy').textContent = 'N/A';
+    $('kpiAccuracyBadge').style.display = 'none';
+  }
 
   updateTotalFutureKPI();
 
@@ -1020,7 +1019,7 @@ function renderChart() {
     type:'line',
     data:{ labels, datasets:[
       {label:'Histórico', data:hist, borderColor:'#cbd5e1', backgroundColor:'rgba(203,213,225,0.2)', borderWidth:2, pointRadius:0, fill:true, tension:0.2},
-      {label:'Forecast', data:fctLine, borderColor:'#C80064', borderDash:[5,4], borderWidth:2.5, pointRadius:0, tension:0.2},
+      {label:'Forecast Operativo', data:fctLine, borderColor:'#C80064', borderDash:[5,4], borderWidth:2.5, pointRadius:0, tension:0.2},
       {label:'Testing Real', data:realLine, borderColor:'#1e293b', backgroundColor:'rgba(30,41,59,0.1)', borderWidth:2.5, pointRadius:3, pointBackgroundColor:'#1e293b', tension:0.1, fill:true}
     ]},
     options:{ responsive:true, maintainAspectRatio:false, interaction:{mode:'index',intersect:false}, plugins:{legend:{display:false}}, scales:{ x:{ticks:{font:{size:9},maxTicksLimit:12,color:'#9ba3b0'},grid:{display:false}}, y:{beginAtZero:true,ticks:{font:{size:10},color:'#9ba3b0',callback:v=>v.toLocaleString('es-CL')},grid:{color:'#f1f5f9'}} } }
@@ -1084,9 +1083,8 @@ function renderDeviationTable(fctIsoMap) {
   tfoot.innerHTML = `<tr><td colspan="2" style="text-align:left;">SUMA PERIODO PRUEBA</td><td class="td-fct">${totFct.toLocaleString('es-CL')}</td><td class="td-real">${totReal.toLocaleString('es-CL')}</td><td class="${totReal-totFct>0?'td-over':'td-under'}">${totReal-totFct>0?'+':''}${(totReal-totFct).toLocaleString('es-CL')}</td><td colspan="2" style="text-align:right;color:var(--magenta);font-weight:700;">WAPE Total: ${wape.toFixed(1)}%</td></tr>`;
 }
 
-// ─── AUDITORÍA ENSEMBLE Y TRIPLE ESTACIONALIDAD ───
 function renderAuditTable() {
-  // Weights de Ensemble
+  // Ensemble Weights
   const wContainer = $('ensembleWeightsContainer');
   wContainer.innerHTML = '';
   if($('trendMethodInput').value === 'ensemble' && ensembleModels._weights) {
@@ -1102,25 +1100,50 @@ function renderAuditTable() {
       wContainer.innerHTML = '<span style="color:var(--muted); font-size:12px;">El motor Ensemble no está activo.</span>';
   }
 
-  // Factores Estacionales
+  // Seasonal Indices
   const tbody = document.querySelector('#auditSeasonalityTable tbody');
   tbody.innerHTML = '';
-  
-  for(let d=0; d<7; d++) {
-    const f = overallAvg > 0 ? (dowAverages[d] || overallAvg) / overallAvg : 1;
-    tbody.innerHTML += `<tr><td style="text-align:left; font-weight:600; color:var(--magenta);"><i class="ti ti-calendar-event"></i> Día de la Semana</td><td style="text-align:left;">${DAYS[d]}</td><td style="font-family:'IBM Plex Mono',monospace; font-weight:600;">${f.toFixed(3)}x</td></tr>`;
-  }
-  for(let d=1; d<=31; d++) {
-    if(domFactors[d] && Math.abs(domFactors[d] - 1) > 0.02) {
-        tbody.innerHTML += `<tr><td style="text-align:left; font-weight:600; color:var(--blue);"><i class="ti ti-calendar-month"></i> Día del Mes</td><td style="text-align:left;">Día ${d}</td><td style="font-family:'IBM Plex Mono',monospace; font-weight:600;">${domFactors[d].toFixed(3)}x</td></tr>`;
-    }
-  }
-  for(let m=0; m<12; m++) {
-    if(monthFactors[m] && Math.abs(monthFactors[m] - 1) > 0.02) {
-        tbody.innerHTML += `<tr><td style="text-align:left; font-weight:600; color:var(--green);"><i class="ti ti-calendar"></i> Estacionalidad Mensual</td><td style="text-align:left;">${MONTHS[m]}</td><td style="font-family:'IBM Plex Mono',monospace; font-weight:600;">${monthFactors[m].toFixed(3)}x</td></tr>`;
-    }
-  }
+  Object.keys(seasonalIndices).sort().forEach(key => {
+    const idx = seasonalIndices[key];
+    const pct = idx.combined * 100;
+    const pillCls = pct > 115 ? 'hi' : pct < 85 ? 'lo' : 'mid';
+
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td style="text-align:left; font-weight:600;">
+        <button class="btn-expand" id="btn-${key}" onclick="toggleAudit('${key}')"><i class="ti ti-plus"></i></button>
+        &nbsp;${idx.name}
+      </td>
+      <td>${idx.samples} d</td>
+      <td style="font-family:'IBM Plex Mono',monospace; color:var(--muted);">${Math.round(idx.avgGroup).toLocaleString('es-CL')}</td>
+      <td style="font-family:'IBM Plex Mono',monospace; color:var(--muted);">${Math.round(idx.dowAvg).toLocaleString('es-CL')}</td>
+      <td style="font-family:'IBM Plex Mono',monospace; color:var(--muted);">${(idx.womIndex*100).toFixed(1)}%</td>
+      <td><span class="idx-pill ${pillCls}">${pct.toFixed(1)}%</span></td>`;
+    tbody.appendChild(tr);
+
+    const trDet = document.createElement('tr');
+    trDet.id = `det-${key}`; trDet.className = 'detail-expand'; trDet.style.display = 'none';
+    let pills = idx.details.map(x => `
+      <div class="dpill ${x.outlier ? 'outlier-flag':''}">
+        <span class="dp-date">${x.iso}</span>
+        <span class="dp-val">${x.v.toLocaleString('es-CL')}</span>
+      </div>`).join('');
+    
+    trDet.innerHTML = `
+      <td colspan="6" style="text-align:left;">
+        <div style="font-size:10.5px; color:var(--muted); font-weight:700; margin-bottom:6px;">DÍAS UTILIZADOS:</div>
+        <div class="detail-pills">${pills}</div>
+      </td>`;
+    tbody.appendChild(trDet);
+  });
 }
+
+window.toggleAudit = function(key) {
+  const det = $(`det-${key}`), btn = $(`btn-${key}`);
+  const open = det.style.display === 'none';
+  det.style.display = open ? 'table-row' : 'none';
+  btn.innerHTML = open ? '<i class="ti ti-minus"></i>' : '<i class="ti ti-plus"></i>';
+};
 
 // ════════════════════════════════════════════════════════════
 // EXPORTAR
