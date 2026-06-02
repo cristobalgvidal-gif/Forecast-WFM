@@ -39,7 +39,6 @@
   }
   body { font-family: 'IBM Plex Sans', 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); font-size: 13.5px; line-height: 1.5; overflow-x: hidden; }
 
-  /* ─── Navbar Glassmorphism ─── */
   .navbar {
     background: rgba(255, 255, 255, 0.85);
     backdrop-filter: var(--glass);
@@ -56,15 +55,15 @@
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
   .btn-sidebar-toggle:hover { background: var(--magenta-dim); color: var(--magenta); border-color: rgba(200,0,100,0.2); transform: scale(1.05); }
-  
   .nav-logo {
     width: 40px; height: 40px; background: linear-gradient(135deg, var(--magenta), #ff2a85); border-radius: 10px;
     display: flex; align-items: center; justify-content: center; color: white; font-size: 20px; box-shadow: 0 4px 10px rgba(200,0,100,0.3);
   }
   .nav-title { font-size: 16px; font-weight: 700; color: var(--blue); letter-spacing: -0.3px; }
   .nav-subtitle { font-size: 11px; color: var(--muted); font-weight: 500; letter-spacing: 0.5px; margin-top: -2px; text-transform: uppercase; }
-  
   .nav-right { display: flex; align-items: center; gap: 12px; }
+  .model-badge { display: flex; align-items: center; gap: 6px; background: var(--blue); color: white; border-radius: 20px; padding: 5px 12px; font-size: 11.5px; font-weight: 600; letter-spacing: 0.3px; }
+  .model-badge i { font-size: 14px; }
   .service-pill {
     display: flex; align-items: center; gap: 8px; background: white;
     border: 1px solid var(--border); border-radius: 30px; padding: 6px 16px 6px 12px; box-shadow: var(--shadow-sm); transition: all 0.2s;
@@ -72,34 +71,25 @@
   .service-pill:hover { border-color: var(--border-strong); box-shadow: var(--shadow); }
   .service-pill i { color: var(--magenta); font-size: 18px; }
   .service-pill select { background: transparent; border: none; font-size: 13.5px; font-weight: 600; color: var(--text); outline: none; cursor: pointer; font-family: inherit; }
-  
   .btn-action {
     background: white; color: var(--text); border: 1px solid var(--border-strong); border-radius: 30px; padding: 8px 16px;
     font-size: 13px; font-weight: 600; cursor: pointer; display: none; align-items: center; gap: 6px;
     box-shadow: var(--shadow-sm); transition: all 0.2s ease; font-family: inherit;
   }
   .btn-action:hover { border-color: var(--muted); background: var(--surface2); }
-  
   .btn-export {
     background: linear-gradient(135deg, var(--magenta), #e6007e); color: white; border: none; 
     box-shadow: 0 4px 12px rgba(200,0,100,0.25);
   }
   .btn-export:hover { transform: translateY(-2px); box-shadow: var(--shadow-glow); background: linear-gradient(135deg, #e6007e, var(--magenta)); color: white;}
 
-  /* ─── Layout ─── */
   .layout { display: flex; gap: 24px; padding: 24px 30px; max-width: 100%; margin: 0 auto; align-items: flex-start; }
-
-  /* ─── Sidebar Retráctil ─── */
   .sidebar { 
     display: flex; flex-direction: column; gap: 16px; width: 320px; flex-shrink: 0; 
     transition: margin-left 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease; 
   }
   .sidebar.collapsed { margin-left: -344px; opacity: 0; pointer-events: none; }
-
-  /* ─── Main Content ─── */
   .main { flex-grow: 1; min-width: 0; display: flex; flex-direction: column; gap: 20px; transition: all 0.4s ease;}
-
-  /* ─── Cards base ─── */
   .card { background: var(--surface); border-radius: var(--r-lg); border: 1px solid rgba(255,255,255,0.5); box-shadow: var(--shadow); backdrop-filter: var(--glass); }
   .card-section { padding: 18px 20px; border-bottom: 1px solid var(--border); }
   .card-section:last-child { border-bottom: none; }
@@ -107,7 +97,6 @@
   .section-label-left { display: flex; align-items: center; gap: 8px; }
   .section-label i { font-size: 16px; color: var(--magenta); }
 
-  /* ─── Controles ─── */
   .input-row { margin-bottom: 14px; }
   .input-row:last-child { margin-bottom: 0; }
   .input-row label { display: block; font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 6px; }
@@ -119,8 +108,9 @@
   .hint { font-size: 11px; color: var(--muted); margin-top: 6px; line-height: 1.4; }
   .hint.important { color: var(--amber); background: var(--amber-dim); border-radius: 6px; padding: 8px 10px; margin-top: 8px; display: flex; gap: 8px; align-items: flex-start; }
   .hint.important i { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+  .hint.info-box { color: var(--blue); background: var(--blue-dim); border-radius: 6px; padding: 8px 10px; margin-top: 8px; display: flex; gap: 8px; align-items: flex-start; border: 1px solid rgba(30,41,59,0.12); }
+  .hint.info-box i { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
 
-  /* Anomaly tags */
   .tag-area { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
   .tag {
     background: white; color: var(--magenta); border: 1px solid rgba(200,0,100,0.2); box-shadow: var(--shadow-sm);
@@ -141,7 +131,6 @@
   .upload-zone:hover { border-color: var(--magenta); background: white; }
   .upload-zone input { font-size: 12px; width: 100%; cursor: pointer;}
 
-  /* State screens */
   .empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 100px 20px; gap: 16px; text-align: center; }
   .empty-state i { font-size: 64px; color: var(--border-strong); }
   .empty-state h3 { font-size: 20px; font-weight: 700; color: var(--blue); }
@@ -154,10 +143,9 @@
   .banner.info { background: #eff6ff; color: #1e3a8a; border-color: #bfdbfe; }
   @keyframes fadeDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
-  /* ─── KPI Grid ─── */
   .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
   .kpi { background: var(--surface); border-radius: var(--r-lg); border: 1px solid var(--border); padding: 20px; box-shadow: var(--shadow); position: relative; overflow: hidden; transition: transform 0.2s; }
-  .kpi:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+  .kpi:hover { transform: translateY(-2px); }
   .kpi::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--magenta); border-radius: 4px 0 0 4px; }
   .kpi-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--muted); }
   .kpi-value { font-size: 28px; font-weight: 700; color: var(--blue); margin: 8px 0 4px; letter-spacing: -0.5px; font-family: 'IBM Plex Mono', monospace; }
@@ -167,16 +155,14 @@
   .kpi-accent.warn { background: var(--amber-dim); color: var(--amber); }
   .kpi-accent.bad { background: var(--red-dim); color: var(--red); }
 
-  /* ─── Chart ─── */
   .chart-card { background: var(--surface); border-radius: var(--r-lg); border: 1px solid var(--border); box-shadow: var(--shadow); padding: 20px 24px; }
   .chart-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
   .chart-title { font-size: 14px; font-weight: 700; color: var(--blue); display: flex; align-items: center; gap: 10px; }
   .chart-legend { display: flex; gap: 16px; }
   .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); font-weight: 500; }
   .legend-dot { width: 12px; height: 4px; border-radius: 2px; }
-  .chart-wrap { position: relative; height: 320px; transition: height 0.3s cubic-bezier(0.4, 0, 0.2, 1); overflow: hidden; }
+  .chart-wrap { position: relative; height: 320px; overflow: hidden; }
 
-  /* ─── Tabs ─── */
   .tabs-card { background: var(--surface); border-radius: var(--r-lg); border: 1px solid var(--border); box-shadow: var(--shadow); overflow: hidden; display: flex; flex-direction: column; }
   .tabs-nav { display: flex; border-bottom: 1px solid var(--border); background: var(--surface2); }
   .tab-btn {
@@ -189,7 +175,6 @@
   .tab-pane.active { display: block; animation: fadeUp 0.3s ease; }
   @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-  /* ─── Tables (Interactive 2026 Style) ─── */
   .tbl-wrap { max-height: 60vh; min-height: 400px; overflow-y: auto; background: white; }
   .tbl-wrap::-webkit-scrollbar { width: 8px; }
   .tbl-wrap::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 10px; border: 2px solid white; }
@@ -203,13 +188,11 @@
   .data-tbl td { padding: 12px 16px; border-bottom: 1px solid var(--border); text-align: right; vertical-align: middle; transition: background 0.2s; }
   .data-tbl td:first-child { text-align: left; }
   .data-tbl tbody tr:hover td { background: #f8fafc; }
-  
   .td-date { font-weight: 600; font-family: 'IBM Plex Mono', monospace; font-size: 12.5px; color: var(--blue); }
   .td-fct { font-weight: 700; color: var(--magenta); font-family: 'IBM Plex Mono', monospace; font-size: 14px;}
   .td-real { font-weight: 600; font-family: 'IBM Plex Mono', monospace; }
   .td-over { color: var(--red); font-weight: 700; font-family: 'IBM Plex Mono', monospace; }
   .td-under { color: var(--green); font-weight: 700; font-family: 'IBM Plex Mono', monospace; }
-  
   .input-adj {
     width: 65px; padding: 6px 4px; border: 1px solid var(--border-strong); border-radius: 6px;
     text-align: center; font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 600;
@@ -217,17 +200,24 @@
   }
   .input-adj:focus { border-color: var(--magenta); background: white; box-shadow: 0 0 0 3px var(--magenta-dim); }
   .input-adj-text { width: 140px; text-align: left; font-family: inherit; font-weight: 500;}
-
   .idx-pill { display: inline-flex; align-items: center; justify-content: center; padding: 4px 10px; border-radius: 12px; font-size: 11.5px; font-weight: 700; font-family: 'IBM Plex Mono', monospace; min-width: 60px; }
   .idx-pill.hi { background: var(--red-dim); color: var(--red); }
   .idx-pill.lo { background: var(--green-dim); color: var(--green); }
   .idx-pill.mid { background: var(--blue-dim); color: var(--blue); }
-
   .btn-expand { background: var(--surface2); border: 1px solid var(--border); color: var(--muted); cursor: pointer; border-radius: 6px; padding: 4px 8px; font-size: 12px; display: inline-flex; align-items: center; justify-content: center; transition: all 0.2s; }
   .btn-expand:hover { background: var(--magenta-dim); color: var(--magenta); border-color: rgba(200,0,100,0.2); }
-  
   .collapsible-container { transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease; overflow: hidden; }
   .sub-section-title { font-size: 12px; font-weight: 700; text-transform: uppercase; color: var(--blue); padding: 14px 20px; background: #f1f5f9; border-bottom: 1px solid var(--border); border-top: 1px solid var(--border); display: flex; align-items: center; gap: 8px; letter-spacing: 0.5px;}
+  .detail-pills { display: flex; flex-wrap: wrap; gap: 6px; padding: 8px 0 12px; }
+  .dpill { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 4px 10px; font-size: 11px; display: flex; gap: 8px; }
+  .dpill.outlier-flag { border-color: var(--amber); background: var(--amber-dim); }
+  .dp-date { color: var(--muted); font-family: 'IBM Plex Mono', monospace; }
+  .dp-val { font-weight: 700; font-family: 'IBM Plex Mono', monospace; color: var(--blue); }
+
+  .audit-card { display: flex; flex-direction: column; gap: 10px; padding: 16px; border: 1px solid var(--border); border-radius: var(--r); background: white; margin-bottom: 16px; }
+  .audit-header { font-size: 13px; font-weight: 700; color: var(--magenta); display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--border-strong); padding-bottom: 8px;}
+  .weight-bar-container { width: 100%; height: 24px; background: var(--surface2); border-radius: 12px; overflow: hidden; display: flex; margin-top: 8px;}
+  .weight-bar { height: 100%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: white; transition: width 0.5s ease;}
 </style>
 </head>
 <body>
@@ -237,7 +227,7 @@
     <div class="nav-logo"><i class="ti ti-wave-sine"></i></div>
     <div>
       <div class="nav-title">WFM Executive Engine</div>
-      <div class="nav-subtitle">TP Chile · Inteligencia 2026</div>
+      <div class="nav-subtitle">TP Chile · AI Ensemble 2026</div>
     </div>
   </div>
   <div class="nav-right">
@@ -287,11 +277,15 @@
       <div class="card-section">
         <div class="section-label"><div class="section-label-left"><i class="ti ti-brain"></i> Algoritmo Matemático</div></div>
         <select id="trendMethodInput" style="width:100%; padding:10px 12px; border:1px solid var(--border-strong); border-radius:8px; font-size:13px; font-family:inherit; font-weight: 500;">
-          <option value="holtwinters">Tendencia Lineal de Holt + Estacionalidad</option>
+          <option value="ensemble">★ AI Ensemble (Backtesting Dinámico)</option>
+          <option value="holtwinters">Tendencia Lineal de Holt</option>
+          <option value="damped_hw">Holt Amortiguado (Damped)</option>
           <option value="ema">EMA Adaptativo (Suavizado Exponencial)</option>
-          <option value="linear">Regresión Lineal Simple (Extrapolación)</option>
-          <option value="avg">Promedio Simple Fijo (Cuentas Pequeñas)</option>
+          <option value="linear">Regresión Lineal Simple</option>
+          <option value="similar_days">Días Similares Recientes (Weighted)</option>
+          <option value="avg">Promedio Simple Fijo</option>
         </select>
+        <div class="hint" style="margin-top:8px;"><b>Ensemble</b> combina múltiples algoritmos (Holt, Regresión, Días Similares) ponderándolos según su precisión en las últimas 2 semanas. Además aplica Triple Estacionalidad.</div>
         <div id="lowVolWarn" class="hint important" style="display:none;">
           <i class="ti ti-alert-triangle"></i>
           <span>Volumen bajo detectado. Se recomienda <b>Promedio simple</b>.</span>
@@ -299,12 +293,26 @@
       </div>
 
       <div class="card-section">
+        <div class="section-label"><div class="section-label-left"><i class="ti ti-chart-bar"></i> Detector de Quiebres (Breakpoints)</div></div>
+        <div class="input-row">
+          <label>Sensibilidad (Días de ventana corta)</label>
+          <input type="number" id="breakpointWindow" value="21" min="7" max="60">
+        </div>
+        <div id="breakpointInfo" class="hint info-box" style="display:none;">
+          <i class="ti ti-radar"></i>
+          <span id="breakpointText"></span>
+        </div>
+        <div class="hint" style="margin-top:8px;">Detecta incidencias prolongadas y ajusta los pesos temporales automáticamente.</div>
+      </div>
+
+      <div class="card-section">
         <div class="section-label"><div class="section-label-left"><i class="ti ti-filter-cog"></i> Limpieza IQR & Anomalías</div></div>
         <div class="input-row">
-          <label>Excluir fecha manualmente</label>
+          <label>Excluir fechas o rangos manualmente</label>
           <div class="anom-row">
-            <input type="date" id="anomalyDate">
-            <button class="btn-add btn-sm" id="btnAddAnomaly">Añadir</button>
+            <input type="date" id="anomalyDate" style="width: 42%; padding:8px 4px;" title="Desde">
+            <input type="date" id="anomalyDateTo" style="width: 42%; padding:8px 4px;" title="Hasta (Opcional)">
+            <button class="btn-add btn-sm" id="btnAddAnomaly" style="width: 16%; padding:0;">+</button>
           </div>
         </div>
         <div class="tag-area" id="anomalyTags"></div>
@@ -321,7 +329,7 @@
   <main class="main">
     <div class="card loader-screen" id="loaderScreen">
       <i class="ti ti-loader-2"></i>
-      <span style="font-weight: 600; font-size: 15px; color: var(--blue);">Compilando modelo matemático...</span>
+      <span style="font-weight: 600; font-size: 15px; color: var(--blue);">Entrenando Red de Algoritmos...</span>
     </div>
 
     <div class="card empty-state" id="emptyState">
@@ -333,10 +341,9 @@
     <div id="mainDashboard" style="display:none; flex-direction:column; gap:20px;">
       <div class="banner info" id="dataInfoAlert"></div>
 
-      <!-- KPI Grid -->
       <div class="kpi-grid">
         <div class="kpi">
-          <div class="kpi-label">Volumen Base (Dinámico)</div>
+          <div class="kpi-label">Volumen Base (Ponderado)</div>
           <div class="kpi-value" id="kpiBase">—</div>
           <div class="kpi-sub" id="kpiBaseSub">Nivel estimado</div>
         </div>
@@ -352,13 +359,12 @@
           <div class="kpi-sub">En periodo de forecast</div>
         </div>
         <div class="kpi">
-          <div class="kpi-label">Inclinación de Tendencia</div>
+          <div class="kpi-label">Tendencia Diaria</div>
           <div class="kpi-value" id="kpiDelta">—</div>
           <div class="kpi-sub" id="kpiDeltaSub">Crecimiento estimado</div>
         </div>
       </div>
 
-      <!-- Gráfico Ejecutivos Colapsable -->
       <div class="chart-card">
         <div class="chart-header">
           <span class="chart-title">
@@ -368,7 +374,7 @@
           <div class="chart-legend" id="chartLegendRef">
             <div class="legend-item"><div class="legend-dot" style="background:#cbd5e1; width:14px;"></div> Histórico</div>
             <div class="legend-item"><div class="legend-dot" style="background:#C80064; width:14px; border-style:dashed; height:2px; border-width:0 0 2px;"></div> Forecast</div>
-            <div class="legend-item"><div class="legend-dot" style="background:#1e293b; width:14px;"></div> Realidad (Desviación)</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#1e293b; width:14px;"></div> Testing Real</div>
           </div>
         </div>
         <div id="chartWrapCollapse" class="chart-wrap">
@@ -376,17 +382,14 @@
         </div>
       </div>
 
-      <!-- Tablas de Datos -->
       <div class="tabs-card">
         <div class="tabs-nav">
           <button class="tab-btn active" data-target="tabFuture">Pronóstico Operativo Interactivo</button>
           <button class="tab-btn" data-target="tabDeviation">Desviación (Testing Real vs FCT)</button>
-          <button class="tab-btn" data-target="tabAudit">Auditoría Estacional (Índices Bayesianos)</button>
+          <button class="tab-btn" data-target="tabAudit">Auditoría Motor AI</button>
         </div>
         
-        <!-- Pestaña: Pronóstico Interactivo -->
         <div class="tab-pane active" id="tabFuture">
-          <!-- Resumen Mensual -->
           <div class="sub-section-title"><i class="ti ti-calendar-due"></i> Consolidado Presupuestario Mensual</div>
           <table class="data-tbl" id="monthlySummaryTable">
             <thead>
@@ -400,7 +403,6 @@
             <tbody></tbody>
           </table>
 
-          <!-- Detalle Diario Interactivo -->
           <div class="sub-section-title" style="border-top:none;"><i class="ti ti-edit"></i> Gestión Diaria de Modificadores (Hot-Reload)</div>
           <div class="tbl-wrap" style="min-height: 450px;">
             <table class="data-tbl" id="futureTable">
@@ -408,10 +410,10 @@
                 <tr>
                   <th>Fecha Futura</th>
                   <th style="text-align:left;">Día y Semana</th>
-                  <th title="Pronóstico del algoritmo sin modificadores">Volumen Base FCT</th>
-                  <th title="Ajusta el % si es feriado">% Feriado</th>
-                  <th title="Ajusta el % si hay evento">% Evento</th>
-                  <th title="Volumen final tras multiplicar por los modificadores">Pronóstico Final</th>
+                  <th title="Pronóstico algorítmico base">Vol. FCT</th>
+                  <th title="Ajuste porcentual de Feriados">% Feriado</th>
+                  <th title="Ajuste porcentual de Eventos">% Evento</th>
+                  <th title="Volumen final tras ajustes">Pronóstico Final</th>
                   <th style="text-align:left;">Notas / Clasificación</th>
                 </tr>
               </thead>
@@ -420,14 +422,13 @@
           </div>
         </div>
 
-        <!-- Pestaña: Desviación -->
         <div class="tab-pane" id="tabDeviation">
           <div class="tbl-wrap">
             <table class="data-tbl" id="devTable">
               <thead>
                 <tr>
                   <th>Fecha Post-Corte</th>
-                  <th style="text-align:left;">Escenario</th>
+                  <th style="text-align:left;">Día de la Semana</th>
                   <th>Proyectado (FCT)</th>
                   <th>Ingresado (Real)</th>
                   <th>Diferencia Neta</th>
@@ -441,22 +442,30 @@
           </div>
         </div>
         
-        <!-- Pestaña: Auditoría Índices -->
         <div class="tab-pane" id="tabAudit">
-          <div class="tbl-wrap">
-            <table class="data-tbl" id="auditTable">
-              <thead>
-                <tr>
-                  <th style="text-align:left;">Escenario (Día · Sem)</th>
-                  <th>Muestra Limpia</th>
-                  <th>Promedio Histórico</th>
-                  <th>Promedio Base DoW</th>
-                  <th>Factor Estacional Bayesian (Shrinkage)</th>
-                  <th>Multiplicador Final</th>
-                </tr>
-              </thead>
-              <tbody></tbody>
-            </table>
+          <div style="padding: 20px; background: white;">
+              
+              <div class="audit-card">
+                  <div class="audit-header"><i class="ti ti-brain"></i> Composición del Ensemble (Backtesting)</div>
+                  <div style="font-size: 13px; color: var(--muted);">El modelo evaluó automáticamente la precisión en los últimos 14 días y asignó los siguientes pesos para el pronóstico base:</div>
+                  <div id="ensembleWeightsContainer"></div>
+              </div>
+
+              <div class="audit-card">
+                  <div class="audit-header"><i class="ti ti-calendar-stats"></i> Multiplicadores de Triple Estacionalidad</div>
+                  <div style="font-size: 13px; color: var(--muted); margin-bottom: 10px;">Factores aislados que el modelo aplica sobre la tendencia base (1.000 = Promedio neutral).</div>
+                  <table class="data-tbl" id="auditSeasonalityTable" style="border: 1px solid var(--border); border-radius: 8px; overflow: hidden;">
+                      <thead>
+                          <tr>
+                              <th style="text-align: left;">Tipo de Estacionalidad</th>
+                              <th style="text-align: left;">Dimensión</th>
+                              <th>Factor Multiplicador</th>
+                          </tr>
+                      </thead>
+                      <tbody></tbody>
+                  </table>
+              </div>
+
           </div>
         </div>
       </div>
@@ -470,141 +479,125 @@
 // ════════════════════════════════════════════════════════════
 let rawData = [], trainingData = [], testingData = [], futureForecast = [];
 let excludedDates = new Set();
-let seasonalIndices = {}, dowAverages = {}, overallAvg = 0;
-let autoExcluded = new Set(); 
+let autoExcluded = new Set();
 let baseLevel = 0, hwState = null, linearSlope = 0, linearIntercept = 0;
 let chartInst = null;
-let dailyOverrides = {}; 
+let dailyOverrides = {};
+let detectedBreakpoint = null;
+let regimeWeights = null;
+let ensembleModels = {};
 
-const DAYS = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+// Triple Estacionalidad
+let dowAverages = {};
+let domFactors = {};
+let monthFactors = {};
+let overallAvg = 0;
+
+const DAYS   = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
 const MONTHS = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 const $ = id => document.getElementById(id);
 
-// ════════════════════════════════════════════════════════════
-// LOCAL STORAGE (Memoria 2026)
-// ════════════════════════════════════════════════════════════
-function getStorageKey() {
-    return 'TP_WFM_CACHE_' + $('serviceSelect').value;
-}
+// ─── FERIADOS CHILE 2024-2026 ───────────────────────────────
+const CHILE_HOLIDAYS = {
+  '2024-01-01': {factor:0.10, label:'Año Nuevo'}, '2024-03-29': {factor:0.30, label:'Viernes Santo'}, '2024-03-30': {factor:0.20, label:'Sábado Santo'},
+  '2024-05-01': {factor:0.15, label:'Día del Trabajador'}, '2024-05-21': {factor:0.40, label:'Glorias Navales'}, '2024-06-20': {factor:0.50, label:'Día del Pueblo Indígena'},
+  '2024-06-29': {factor:0.50, label:'San Pedro y San Pablo'}, '2024-07-16': {factor:0.50, label:'Virgen del Carmen'}, '2024-08-15': {factor:0.40, label:'Asunción de la Virgen'},
+  '2024-09-18': {factor:0.10, label:'Fiestas Patrias'}, '2024-09-19': {factor:0.10, label:'Glorias del Ejército'}, '2024-09-20': {factor:0.20, label:'Feriado Puente 18'},
+  '2024-10-12': {factor:0.50, label:'Día de la Hispanidad'}, '2024-10-31': {factor:0.60, label:'Día de las Iglesias Evangélicas'}, '2024-11-01': {factor:0.40, label:'Todos los Santos'},
+  '2024-12-08': {factor:0.40, label:'Inmaculada Concepción'}, '2024-12-25': {factor:0.05, label:'Navidad'}, '2024-12-31': {factor:0.30, label:'Víspera Año Nuevo'},
+  '2025-01-01': {factor:0.10, label:'Año Nuevo'}, '2025-04-18': {factor:0.30, label:'Viernes Santo'}, '2025-04-19': {factor:0.20, label:'Sábado Santo'},
+  '2025-05-01': {factor:0.15, label:'Día del Trabajador'}, '2025-05-21': {factor:0.40, label:'Glorias Navales'}, '2025-06-20': {factor:0.50, label:'Día del Pueblo Indígena'},
+  '2025-06-29': {factor:0.50, label:'San Pedro y San Pablo'}, '2025-07-16': {factor:0.50, label:'Virgen del Carmen'}, '2025-08-15': {factor:0.40, label:'Asunción de la Virgen'},
+  '2025-09-18': {factor:0.10, label:'Fiestas Patrias'}, '2025-09-19': {factor:0.10, label:'Glorias del Ejército'}, '2025-10-12': {factor:0.50, label:'Día de la Hispanidad'},
+  '2025-10-31': {factor:0.60, label:'Día de las Iglesias Evangélicas'}, '2025-11-01': {factor:0.40, label:'Todos los Santos'}, '2025-12-08': {factor:0.40, label:'Inmaculada Concepción'},
+  '2025-12-25': {factor:0.05, label:'Navidad'}, '2025-12-31': {factor:0.30, label:'Víspera Año Nuevo'},
+  '2026-01-01': {factor:0.10, label:'Año Nuevo'}, '2026-04-03': {factor:0.30, label:'Viernes Santo'}, '2026-04-04': {factor:0.20, label:'Sábado Santo'},
+  '2026-05-01': {factor:0.15, label:'Día del Trabajador'}, '2026-05-21': {factor:0.40, label:'Glorias Navales'}, '2026-06-21': {factor:0.50, label:'Día del Pueblo Indígena'},
+  '2026-06-29': {factor:0.50, label:'San Pedro y San Pablo'}, '2026-07-16': {factor:0.50, label:'Virgen del Carmen'}, '2026-08-15': {factor:0.40, label:'Asunción de la Virgen'},
+  '2026-09-18': {factor:0.10, label:'Fiestas Patrias'}, '2026-09-19': {factor:0.10, label:'Glorias del Ejército'}, '2026-09-20': {factor:0.20, label:'Feriado Puente 18'},
+  '2026-10-12': {factor:0.50, label:'Día de la Hispanidad'}, '2026-10-31': {factor:0.60, label:'Día de las Iglesias Evangélicas'}, '2026-11-01': {factor:0.40, label:'Todos los Santos'},
+  '2026-12-08': {factor:0.40, label:'Inmaculada Concepción'}, '2026-12-25': {factor:0.05, label:'Navidad'}, '2026-12-31': {factor:0.30, label:'Víspera Año Nuevo'}
+};
 
+// ════════════════════════════════════════════════════════════
+// LOCAL STORAGE
+// ════════════════════════════════════════════════════════════
+function getStorageKey() { return 'TP_WFM_CACHE_V3_' + $('serviceSelect').value; }
 function saveConfig() {
-    const config = {
-        filterFrom: $('filterFrom').value,
-        filterTo: $('filterTo').value,
-        forecastToInput: $('forecastToInput').value,
-        trendBaseInput: $('trendBaseInput').value,
-        trendMethodInput: $('trendMethodInput').value,
-        excludedDates: Array.from(excludedDates),
-        dailyOverrides: dailyOverrides
-    };
-    localStorage.setItem(getStorageKey(), JSON.stringify(config));
+  const config = {
+    filterFrom: $('filterFrom').value, filterTo: $('filterTo').value, forecastToInput: $('forecastToInput').value,
+    trendBaseInput: $('trendBaseInput').value, trendMethodInput: $('trendMethodInput').value,
+    breakpointWindow: $('breakpointWindow').value, excludedDates: Array.from(excludedDates), dailyOverrides
+  };
+  localStorage.setItem(getStorageKey(), JSON.stringify(config));
 }
-
-function loadConfig(defaultFrom, defaultTo, defaultTarget) {
-    const saved = localStorage.getItem(getStorageKey());
-    if (saved) {
-        try {
-            const config = JSON.parse(saved);
-            $('filterFrom').value = config.filterFrom || defaultFrom;
-            $('filterTo').value = config.filterTo || defaultTo;
-            $('forecastToInput').value = config.forecastToInput || defaultTarget;
-            $('trendBaseInput').value = config.trendBaseInput || 45;
-            $('trendMethodInput').value = config.trendMethodInput || 'holtwinters';
-            excludedDates = new Set(config.excludedDates || []);
-            dailyOverrides = config.dailyOverrides || {};
-        } catch (e) {
-            console.error("Cache corrupto, cargando defaults");
-            applyDefaults(defaultFrom, defaultTo, defaultTarget);
-        }
-    } else {
-        applyDefaults(defaultFrom, defaultTo, defaultTarget);
-    }
-    renderTags();
+function loadConfig(dFrom, dTo, dTarget) {
+  const saved = localStorage.getItem(getStorageKey());
+  if (saved) {
+    try {
+      const c = JSON.parse(saved);
+      $('filterFrom').value = c.filterFrom || dFrom; $('filterTo').value = c.filterTo || dTo;
+      $('forecastToInput').value = c.forecastToInput || dTarget; $('trendBaseInput').value = c.trendBaseInput || 45;
+      $('trendMethodInput').value = c.trendMethodInput || 'ensemble'; $('breakpointWindow').value = c.breakpointWindow || 21;
+      excludedDates = new Set(c.excludedDates || []); dailyOverrides = c.dailyOverrides || {};
+    } catch(e) { applyDefaults(dFrom, dTo, dTarget); }
+  } else { applyDefaults(dFrom, dTo, dTarget); }
+  renderTags();
 }
-
-function applyDefaults(defaultFrom, defaultTo, defaultTarget) {
-    $('filterFrom').value = defaultFrom;
-    $('filterTo').value = defaultTo;
-    $('forecastToInput').value = defaultTarget;
-    $('trendBaseInput').value = 45;
-    $('trendMethodInput').value = 'holtwinters';
-    excludedDates = new Set();
-    dailyOverrides = {};
+function applyDefaults(f, t, tgt) {
+  $('filterFrom').value = f; $('filterTo').value = t; $('forecastToInput').value = tgt;
+  $('trendBaseInput').value = 45; $('trendMethodInput').value = 'ensemble'; $('breakpointWindow').value = 21;
+  excludedDates = new Set(); dailyOverrides = {};
 }
-
 $('btnClearMem').addEventListener('click', () => {
-    if(confirm("¿Estás seguro que deseas borrar todos los ajustes manuales y anomalías guardadas para este servicio?")) {
-        localStorage.removeItem(getStorageKey());
-        loadFromGitHub($('serviceSelect').value); // Recarga como si fuera la primera vez
-    }
+  if(confirm('¿Borrar todos los ajustes manuales y anomalías guardadas para este servicio?')) {
+    localStorage.removeItem(getStorageKey()); loadFromGitHub($('serviceSelect').value);
+  }
 });
 
-
 // ════════════════════════════════════════════════════════════
-// INTERFAZ Y EVENTOS BÁSICOS
+// INTERFAZ
 // ════════════════════════════════════════════════════════════
 window.addEventListener('DOMContentLoaded', () => {
   loadFromGitHub($('serviceSelect').value);
-
   document.querySelectorAll('.tab-btn').forEach(btn => {
-    btn.addEventListener('click', e => {
+    btn.addEventListener('click', () => {
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
-      btn.classList.add('active');
-      $(btn.dataset.target).classList.add('active');
+      btn.classList.add('active'); $(btn.dataset.target).classList.add('active');
     });
   });
-
-  $('btnToggleSidebarMaster').addEventListener('click', () => {
-    $('mainSidebar').classList.toggle('collapsed');
+  $('btnToggleSidebarMaster').addEventListener('click', () => $('mainSidebar').classList.toggle('collapsed'));
+  $('serviceSelect').addEventListener('change', e => loadFromGitHub(e.target.value));
+  ['trendMethodInput','filterFrom','filterTo','trendBaseInput','forecastToInput','breakpointWindow'].forEach(id => {
+    $(id).addEventListener('change', () => { saveConfig(); processModel(); });
   });
-
-  $('serviceSelect').addEventListener('change', e => { loadFromGitHub(e.target.value); });
-  
-  // Guardado Automático en cada cambio
-  const inputsToSave = ['trendMethodInput', 'filterFrom', 'filterTo', 'trendBaseInput', 'forecastToInput'];
-  inputsToSave.forEach(id => {
-      $(id).addEventListener('change', () => {
-          saveConfig();
-          processModel();
-      });
-  });
-
   $('btnAddAnomaly').addEventListener('click', addAnomaly);
   $('fileInput').addEventListener('change', e => { if(e.target.files[0]) readFile(e.target.files[0]); });
 });
-
-window.toggleContainer = function(containerId, btnId) {
-  const el = $(containerId);
-  const btn = $(btnId);
-  if (el.style.display === 'none') {
-    el.style.display = 'block';
-    btn.innerHTML = '<i class="ti ti-minus"></i>';
-  } else {
-    el.style.display = 'none';
-    btn.innerHTML = '<i class="ti ti-plus"></i>';
-  }
+window.toggleContainer = function(cId, bId) {
+  const el = $(cId), btn = $(bId);
+  const hidden = el.style.display === 'none';
+  el.style.display = hidden ? 'block' : 'none'; btn.innerHTML = hidden ? '<i class="ti ti-minus"></i>' : '<i class="ti ti-plus"></i>';
 };
 
 // ════════════════════════════════════════════════════════════
 // ANOMALÍAS
 // ════════════════════════════════════════════════════════════
 function addAnomaly() {
-  const d = $('anomalyDate').value;
-  if(!d) return;
-  excludedDates.add(d);
-  $('anomalyDate').value = '';
-  renderTags();
-  saveConfig();
-  processModel();
+  const dFrom = $('anomalyDate').value, dTo = $('anomalyDateTo').value;
+  if(!dFrom) return;
+  let start = new Date(dFrom + 'T12:00:00'), end = dTo ? new Date(dTo + 'T12:00:00') : new Date(dFrom + 'T12:00:00');
+  if(end < start) { alert("La fecha 'Hasta' no puede ser menor que 'Desde'"); return; }
+  while(start <= end) { excludedDates.add(toISO(start)); start.setDate(start.getDate() + 1); }
+  $('anomalyDate').value = ''; $('anomalyDateTo').value = '';
+  renderTags(); saveConfig(); processModel();
 }
 window.removeAnomaly = d => { excludedDates.delete(d); renderTags(); saveConfig(); processModel(); };
 function renderTags() {
-  const c = $('anomalyTags');
-  c.innerHTML = '';
+  const c = $('anomalyTags'); c.innerHTML = '';
   excludedDates.forEach(d => {
-    const t = document.createElement('div');
-    t.className = 'tag';
+    const t = document.createElement('div'); t.className = 'tag';
     t.innerHTML = `${d} <button onclick="removeAnomaly('${d}')"><i class="ti ti-x"></i></button>`;
     c.appendChild(t);
   });
@@ -618,19 +611,15 @@ async function loadFromGitHub(filename) {
   try {
     const res = await fetch(filename);
     if(!res.ok) throw new Error(`HTTP ${res.status}`);
-    const buf = await res.arrayBuffer();
-    const wb = XLSX.read(buf, {type:'array', cellDates:true});
-    parseWorkbook(wb, filename);
+    parseWorkbook(XLSX.read(await res.arrayBuffer(), {type:'array', cellDates:true}), filename);
   } catch(e) {
-    hideLoader();
-    $('emptyState').style.display = 'flex';
-    if(window.location.protocol.includes('http')) alert(`Error al cargar ${filename} desde el repositorio.`);
+    hideLoader(); $('emptyState').style.display = 'flex';
+    if(window.location.protocol.includes('http')) alert(`Error al cargar ${filename}.`);
   }
 }
 function readFile(file) {
-  showLoader();
-  const r = new FileReader();
-  r.onload = e => { const wb = XLSX.read(e.target.result, {type:'array', cellDates:true}); parseWorkbook(wb, file.name); };
+  showLoader(); const r = new FileReader();
+  r.onload = e => parseWorkbook(XLSX.read(e.target.result, {type:'array', cellDates:true}), file.name);
   r.readAsArrayBuffer(file);
 }
 function parseWorkbook(wb, src) {
@@ -642,8 +631,7 @@ function parseWorkbook(wb, src) {
     const dKey = keys.find(k => k.toLowerCase().includes('fecha'));
     const vKey = keys.find(k => k.toLowerCase().includes('recibida'));
     if(dKey && vKey) {
-      const d = parseDate(row[dKey]);
-      const v = parseFloat(String(row[vKey]).replace(/,/g, ''));
+      const d = parseDate(row[dKey]); const v = parseFloat(String(row[vKey]).replace(/,/g,''));
       if(d && !isNaN(v) && v >= 0) data.push({date:d, iso:toISO(d), value:v});
     }
   });
@@ -651,54 +639,41 @@ function parseWorkbook(wb, src) {
   data.sort((a,b) => a.iso.localeCompare(b.iso));
   rawData = data;
 
-  // Defaults por si no hay memoria
   const defFrom = data[0].iso;
-  const cutoff = new Date(data[data.length-1].date);
-  cutoff.setDate(cutoff.getDate() - 7);
-  const defTo = toISO(cutoff);
-  
+  const cutoff  = new Date(data[data.length-1].date); cutoff.setDate(cutoff.getDate()-7);
+  const defTo   = toISO(cutoff);
   const targetFuture = new Date(data[data.length-1].date);
-  targetFuture.setMonth(targetFuture.getMonth() + 3);
-  targetFuture.setMonth(targetFuture.getMonth() + 1);
-  targetFuture.setDate(0); 
+  targetFuture.setMonth(targetFuture.getMonth()+4); targetFuture.setDate(0);
   const defTarget = toISO(targetFuture);
 
-  // Cargamos la memoria del servicio seleccionado
   loadConfig(defFrom, defTo, defTarget);
-  
-  $('dataInfoAlert').innerHTML = `<i class="ti ti-check" style="font-size:18px;"></i> Conectado exitosamente con <b>${src}</b> (${data.length} registros).`;
+  $('dataInfoAlert').innerHTML = `<i class="ti ti-check" style="font-size:18px;"></i> Conectado con <b>${src}</b> (${data.length} registros).`;
   processModel();
 }
 
 // ════════════════════════════════════════════════════════════
-// MOTOR MATEMÁTICO
+// MOTOR MATEMÁTICO (ENSEMBLE + TRIPLE ESTACIONALIDAD)
 // ════════════════════════════════════════════════════════════
 function processModel() {
   if(!rawData.length) return;
-  const from = $('filterFrom').value;
-  const to   = $('filterTo').value;
+  const from = $('filterFrom').value, to = $('filterTo').value;
 
-  trainingData = [];
-  testingData  = [];
+  trainingData = []; testingData  = [];
   rawData.forEach(item => {
-    if(item.iso >= from && item.iso <= to) {
-      if(!excludedDates.has(item.iso)) trainingData.push(item);
-    } else if(item.iso > to) {
-      testingData.push(item);
-    }
+    if(item.iso >= from && item.iso <= to) { if(!excludedDates.has(item.iso)) trainingData.push(item); } 
+    else if(item.iso > to) { testingData.push(item); }
   });
   if(!trainingData.length) return;
 
   detectOutliers();
+  detectBreakpoint();
+  buildTemporalWeights();
   calcBase();
-  calcSeasonality();
+  calcSeasonality(); 
   generateForecast();
   updateUI();
   
-  hideLoader();
-  $('mainDashboard').style.display = 'flex';
-  $('btnExport').style.display = 'flex';
-  $('btnClearMem').style.display = 'flex';
+  hideLoader(); $('mainDashboard').style.display = 'flex'; $('btnExport').style.display = 'flex'; $('btnClearMem').style.display = 'flex';
 }
 
 function detectOutliers() {
@@ -707,186 +682,274 @@ function detectOutliers() {
   trainingData.forEach(d => byDow[d.date.getDay()].push(d));
 
   trainingData = trainingData.filter(item => {
+    if(CHILE_HOLIDAYS[item.iso]) return true; // Ignorar feriados en IQR
     const dow = item.date.getDay();
-    const group = byDow[dow].map(x => x.value).sort((a,b) => a-b);
+    const group = byDow[dow].map(x => x.value).sort((a,b)=>a-b);
     const n = group.length;
     if(n < 4) return true;
-    const q1 = group[Math.floor(n*0.25)];
-    const q3 = group[Math.floor(n*0.75)];
-    const iqr = q3 - q1;
-    const lo = q1 - 2.0 * iqr;
-    const hi = q3 + 2.0 * iqr;
-    if(item.value < lo || item.value > hi) {
-      autoExcluded.add(item.iso);
-      return false;
-    }
+    const q1 = group[Math.floor(n*0.25)], q3 = group[Math.floor(n*0.75)], iqr = q3 - q1;
+    const lo = q1 - 2.2*iqr, hi = q3 + 2.2*iqr;
+    if(item.value < lo || item.value > hi) { autoExcluded.add(item.iso); return false; }
     return true;
   });
-
   const n = autoExcluded.size;
   $('autoOutlierInfo').innerHTML = n > 0
-    ? `<i class="ti ti-filter-check" style="color:var(--green); margin-right:4px;"></i> ${n} anomalía(s) descartada(s) por filtro estadístico IQR (2.0× por DOW).`
+    ? `<i class="ti ti-filter-check" style="color:var(--green); margin-right:4px;"></i> ${n} anomalía(s) descartadas por IQR (2.2× DoW).`
     : `<i class="ti ti-check" style="color:var(--green); margin-right:4px;"></i> Serie limpia sin outliers estadísticos.`;
+}
+
+function detectBreakpoint() {
+  detectedBreakpoint = null;
+  const win = parseInt($('breakpointWindow').value) || 21;
+  const n = trainingData.length;
+  if(n < win*2) { $('breakpointInfo').style.display = 'none'; return; }
+
+  const byDow = {0:[],1:[],2:[],3:[],4:[],5:[],6:[]};
+  trainingData.forEach(d => byDow[d.date.getDay()].push(d.value));
+  const dowMed = {};
+  for(let d=0;d<7;d++) { const arr = byDow[d].sort((a,b)=>a-b); dowMed[d] = arr.length ? arr[Math.floor(arr.length/2)] : 1; }
+  
+  const normalized = trainingData.map(d => ({ iso: d.iso, normVal: dowMed[d.date.getDay()] > 0 ? d.value / dowMed[d.date.getDay()] : 1 }));
+
+  let maxScore = 0, bpIdx = -1;
+  for(let i=win; i<=n-win; i++) {
+    const left  = normalized.slice(i-win, i).map(x=>x.normVal), right = normalized.slice(i, i+win).map(x=>x.normVal);
+    const meanL = left.reduce((s,v)=>s+v,0)/win, meanR = right.reduce((s,v)=>s+v,0)/win;
+    const stdL  = Math.sqrt(left.reduce((s,v)=>s+(v-meanL)**2,0)/win), stdR  = Math.sqrt(right.reduce((s,v)=>s+(v-meanR)**2,0)/win);
+    const pooledStd = Math.sqrt((stdL**2 + stdR**2)/2) || 0.01;
+    const score = Math.abs(meanR - meanL) / pooledStd;
+    if(score > maxScore) { maxScore = score; bpIdx = i; }
+  }
+
+  if(maxScore > 0.5 && bpIdx > 0) {
+    detectedBreakpoint = normalized[bpIdx].iso;
+    $('breakpointInfo').style.display = 'flex';
+    $('breakpointText').textContent = `Cambio de régimen detectado el ${detectedBreakpoint}. Penalizando data previa.`;
+  } else { $('breakpointInfo').style.display = 'none'; }
+}
+
+function buildTemporalWeights() {
+  const n = trainingData.length;
+  regimeWeights = new Array(n).fill(1);
+  const lambda = Math.log(2) / 60; // Half-life 60 days
+  const lastDate = new Date(trainingData[n-1].iso + 'T12:00:00');
+
+  trainingData.forEach((item, i) => {
+    const daysDiff = (lastDate - new Date(item.iso + 'T12:00:00')) / (1000*60*60*24);
+    let w = Math.exp(-lambda * daysDiff);
+    if(detectedBreakpoint && item.iso < detectedBreakpoint) w *= 0.25;
+    regimeWeights[i] = w;
+  });
+}
+
+function getHolidayAdjustedValue(item) {
+  const h = CHILE_HOLIDAYS[item.iso];
+  return (h && h.factor > 0) ? (item.value / h.factor) : item.value;
+}
+
+// ─── MODELOS MATEMÁTICOS BASE ───
+function fitHoltWinters(data, damped = false) {
+  let bestAlpha = 0.3, bestBeta = 0.05, bestPhi = 0.9, bestMSE = Infinity;
+  const alphas = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.8];
+  const betas  = [0.01, 0.05, 0.1, 0.2, 0.3];
+  const phis   = damped ? [0.8, 0.9, 0.95] : [1.0];
+
+  for(const a of alphas) for(const b of betas) for(const phi of phis) {
+    const mse = hwMSE(data, a, b, phi, damped);
+    if(mse < bestMSE) { bestMSE=mse; bestAlpha=a; bestBeta=b; bestPhi=phi; }
+  }
+  return runHW(data, bestAlpha, bestBeta, bestPhi, damped);
+}
+function hwMSE(data, alpha, beta, phi, damped) {
+  const {forecasts} = runHW(data, alpha, beta, phi, damped);
+  let err=0, cnt=0;
+  for(let i=1;i<data.length;i++) { if(forecasts[i]!==null) { err+=(data[i].value-forecasts[i])**2; cnt++; } }
+  return cnt>0 ? err/cnt : Infinity;
+}
+function runHW(data, alpha, beta, phi, damped) {
+  const n = data.length;
+  let level = data.slice(0, Math.min(7,n)).reduce((s,d)=>s+d.value,0) / Math.min(7,n);
+  let trend = n>=2 ? (data[Math.min(3,n-1)].value - data[0].value) / Math.min(3,n-1) * 0.1 : 0;
+  const forecasts = new Array(n).fill(null);
+  for(let i=1;i<n;i++) {
+    const prev_level = level;
+    level = alpha * data[i].value + (1-alpha) * (level + (damped ? phi*trend : trend));
+    trend = beta * (level - prev_level) + (1-beta) * (damped ? phi*trend : trend);
+    if(i < n-1) forecasts[i+1] = level + (damped ? phi*trend : trend);
+  }
+  return { level, trend, phi: phi||1, forecasts };
+}
+function fitEMA(data) {
+  const ns = [7, 14, 21, 30, 45];
+  let bestAlpha = 0.2, bestMSE = Infinity;
+  for(const nw of ns) {
+    const alpha = 2/(nw+1); let ema = data[0].value, mse = 0;
+    for(let i=1;i<data.length;i++) { mse += (data[i].value - ema)**2; ema = alpha*data[i].value + (1-alpha)*ema; }
+    if(mse < bestMSE) { bestMSE=mse; bestAlpha=alpha; }
+  }
+  let ema = data[0].value;
+  for(let i=1;i<data.length;i++) ema = bestAlpha*data[i].value + (1-bestAlpha)*ema;
+  return { level: ema };
+}
+function fitLinear(data) {
+  const n = data.length; let sx=0,sy=0,sxy=0,sxx=0;
+  data.forEach((d,i) => { sx+=i; sy+=d.value; sxy+=i*d.value; sxx+=i*i; });
+  const den = n*sxx-sx*sx; const slope = den===0 ? 0 : (n*sxy-sx*sy)/den;
+  return { slope, intercept: (sy-slope*sx)/n, level: slope*(n-1)+(sy-slope*sx)/n };
+}
+function weightedSimilarDays(targetDate, data) {
+  const dow = targetDate.getDay();
+  const candidates = data.filter(x => x.date.getDay() === dow).slice(-12);
+  if(candidates.length === 0) return overallAvg;
+  let tW = 0, tV = 0;
+  candidates.forEach((row, i) => { const w = i + 1; tW += w; tV += getHolidayAdjustedValue(row) * w; });
+  return tV / tW;
 }
 
 function calcBase() {
   const method = $('trendMethodInput').value;
   const winSize = Math.min(parseInt($('trendBaseInput').value) || 45, trainingData.length);
-  const recent = trainingData.slice(-winSize);
-  const n = recent.length;
-
-  overallAvg = recent.reduce((s,d) => s+d.value, 0) / n;
-  baseLevel = overallAvg;
-
-  if(method === 'holtwinters') {
-    hwState = fitHoltWinters(recent);
-    baseLevel = hwState.level;
-  } else if(method === 'ema') {
-    const alpha = 2 / (n + 1);
-    let ema = recent[0].value;
-    for(let i=1; i<n; i++) ema = alpha*recent[i].value + (1-alpha)*ema;
-    baseLevel = ema;
-  } else if(method === 'linear') {
-    let sx=0, sy=0, sxy=0, sxx=0;
-    for(let i=0; i<n; i++) { sx+=i; sy+=recent[i].value; sxy+=i*recent[i].value; sxx+=i*i; }
-    const den = n*sxx - sx*sx;
-    linearSlope = den===0 ? 0 : (n*sxy - sx*sy)/den;
-    linearIntercept = (sy - linearSlope*sx)/n;
-    baseLevel = linearIntercept + linearSlope*(n-1);
+  
+  let workingData = trainingData;
+  if(detectedBreakpoint) {
+    const postBP = trainingData.filter(d => d.iso >= detectedBreakpoint);
+    if(postBP.length >= 14) workingData = postBP;
   }
-}
+  const recent = workingData.slice(-winSize);
 
-function fitHoltWinters(data) {
-  let bestAlpha = 0.3, bestBeta = 0.05, bestMSE = Infinity;
-  const alphas = [0.1, 0.2, 0.3, 0.4, 0.5];
-  const betas  = [0.01, 0.05, 0.1, 0.2];
-  for(const a of alphas) {
-    for(const b of betas) {
-      const mse = hwMSE(data, a, b);
-      if(mse < bestMSE) { bestMSE = mse; bestAlpha = a; bestBeta = b; }
+  let wSum = 0, wVSum = 0;
+  recent.forEach((d,i) => { const w = Math.exp(-Math.log(2)/30 * (recent.length-1-i)); wSum += w; wVSum += d.value * w; });
+  overallAvg = wVSum / wSum;
+  baseLevel  = overallAvg;
+
+  ensembleModels = {};
+  if(method === 'ensemble' || method === 'holtwinters') { const hw = fitHoltWinters(recent, false); hwState = hw; ensembleModels.holtwinters = hw; if(method==='holtwinters') baseLevel=hw.level;}
+  if(method === 'ensemble' || method === 'damped_hw') { const dhw = fitHoltWinters(recent, true); ensembleModels.damped_hw = dhw; if(method==='damped_hw') {hwState=dhw; baseLevel=dhw.level;} }
+  if(method === 'ensemble' || method === 'ema') { const ema = fitEMA(recent); ensembleModels.ema = ema; if(method==='ema') baseLevel=ema.level;}
+  if(method === 'ensemble' || method === 'linear') { const lin = fitLinear(recent); linearSlope=lin.slope; linearIntercept=lin.intercept; ensembleModels.linear = lin; if(method==='linear') baseLevel=lin.level;}
+  if(method === 'ensemble' || method === 'similar_days') { ensembleModels.similar_days = { level: overallAvg }; if(method==='similar_days') baseLevel=overallAvg;}
+
+  // ENSEMBLE BACKTESTING
+  if(method === 'ensemble') {
+    const backTestWindow = Math.min(14, Math.floor(recent.length * 0.3));
+    if(backTestWindow >= 3) {
+      const trainBack  = recent.slice(0, recent.length - backTestWindow);
+      const testBack   = recent.slice(recent.length - backTestWindow);
+      const wapeScores = {};
+
+      for(const [name, _] of Object.entries(ensembleModels)) {
+        let absErr = 0, actSum = 0;
+        testBack.forEach((item, step) => {
+          const pred = predictOneModel(name, trainBack, step+1, item.date);
+          absErr += Math.abs(item.value - pred); actSum += item.value;
+        });
+        wapeScores[name] = actSum > 0 ? absErr/actSum : 1;
+      }
+
+      let scoreSum = 0; const rawWeights = {};
+      for(const [name, wape] of Object.entries(wapeScores)) { rawWeights[name] = Math.exp(-5 * wape); scoreSum += rawWeights[name]; }
+      for(const name in rawWeights) rawWeights[name] /= scoreSum;
+      ensembleModels._weights = rawWeights;
+    } else {
+      const names = Object.keys(ensembleModels); const eq = 1 / names.length;
+      ensembleModels._weights = {}; names.forEach(n => ensembleModels._weights[n] = eq);
     }
   }
-  return runHW(data, bestAlpha, bestBeta);
 }
 
-function hwMSE(data, alpha, beta) {
-  const {forecasts} = runHW(data, alpha, beta);
-  let err = 0, cnt = 0;
-  for(let i=1; i<data.length; i++) {
-    if(forecasts[i] !== null) { err += (data[i].value - forecasts[i])**2; cnt++; }
-  }
-  return cnt > 0 ? err/cnt : Infinity;
-}
+function predictOneModel(modelName, trainData, step, targetDate) {
+  const m = ensembleModels[modelName];
+  if(!m) return overallAvg;
+  let base = m.level || overallAvg;
 
-function runHW(data, alpha, beta) {
-  const n = data.length;
-  let level = data.slice(0, Math.min(7, n)).reduce((s,d) => s+d.value, 0) / Math.min(7, n);
-  let trend = n >= 2 ? (data[1].value - data[0].value) * 0.1 : 0;
-  const forecasts = new Array(n).fill(null);
-  for(let i=1; i<n; i++) {
-    const prev_level = level;
-    level = alpha * data[i].value + (1-alpha) * (level + trend);
-    trend = beta * (level - prev_level) + (1-beta) * trend;
-    if(i < n-1) forecasts[i+1] = level + trend;
-  }
-  return { level, trend, forecasts };
-}
-
-function calcSeasonality() {
-  const dowBuckets = {};
-  for(let d=0; d<7; d++) dowBuckets[d] = {sum:0, cnt:0};
-  trainingData.forEach(item => {
-    const d = item.date.getDay();
-    dowBuckets[d].sum += item.value;
-    dowBuckets[d].cnt++;
-  });
+  if(modelName === 'holtwinters' && m.trend !== undefined) base = m.level + m.trend * step;
+  else if(modelName === 'damped_hw' && m.trend !== undefined) {
+    const phi = m.phi || 0.9;
+    base = m.level + (m.trend * phi * (1 - Math.pow(phi, step)) / (1 - phi));
+  } 
+  else if(modelName === 'linear' && m.slope !== undefined) base = m.slope * (trainData.length + step) + m.intercept;
+  else if(modelName === 'similar_days') base = weightedSimilarDays(targetDate, trainData);
   
-  let trainAvg = trainingData.reduce((s,i)=>s+i.value,0)/trainingData.length;
-  for(let d=0; d<7; d++) {
-    dowAverages[d] = dowBuckets[d].cnt > 0 ? dowBuckets[d].sum / dowBuckets[d].cnt : trainAvg;
-  }
+  return Math.max(0, base);
+}
 
-  const womBuckets = {};
-  trainingData.forEach(item => {
-    const w = Math.ceil(item.date.getDate() / 7);
-    const d = item.date.getDay();
-    const key = `${w}_${d}`;
-    if(!womBuckets[key]) womBuckets[key] = {sum:0, cnt:0, details:[], w, d};
-    womBuckets[key].sum += item.value;
-    womBuckets[key].cnt++;
-    womBuckets[key].details.push({iso: item.iso, v: item.value, outlier: autoExcluded.has(item.iso)});
+// ─── TRIPLE ESTACIONALIDAD PONDERADA ───
+function calcSeasonality() {
+  let totalWSum = 0, totalWVSum = 0;
+  trainingData.forEach((item, i) => {
+    const w = regimeWeights[i] || 1;
+    totalWSum  += w; totalWVSum += getHolidayAdjustedValue(item) * w;
+  });
+  const trainAvg = totalWSum > 0 ? totalWVSum / totalWSum : 1;
+  overallAvg = trainAvg;
+
+  const dowBuckets = {}; for(let d=0;d<7;d++) dowBuckets[d] = {wsum:0, wcnt:0};
+  const domBuckets = {}; for(let d=1;d<=31;d++) domBuckets[d] = {wsum:0, wcnt:0};
+  const monthBuckets = {}; for(let m=0;m<12;m++) monthBuckets[m] = {wsum:0, wcnt:0};
+
+  trainingData.forEach((item, i) => {
+    const w = regimeWeights[i] || 1;
+    const val = getHolidayAdjustedValue(item);
+    const d = item.date.getDay(), dom = item.date.getDate(), m = item.date.getMonth();
+    
+    dowBuckets[d].wsum += val * w; dowBuckets[d].wcnt += w;
+    domBuckets[dom].wsum += val * w; domBuckets[dom].wcnt += w;
+    monthBuckets[m].wsum += val * w; monthBuckets[m].wcnt += w;
   });
 
-  seasonalIndices = {};
-  for(const key in womBuckets) {
-    const b = womBuckets[key];
-    const avgGroup = b.sum / b.cnt;
-    const dowAvg = dowAverages[b.d] || trainAvg;
-    const rawWoM = dowAvg > 0 ? avgGroup / dowAvg : 1;
-
-    const shrink = Math.min(b.cnt / 6, 1.0); 
-    const smoothedWoM = shrink * rawWoM + (1-shrink) * 1.0;
-    const dowIdx = trainAvg > 0 ? dowAvg / trainAvg : 1;
-
-    seasonalIndices[key] = {
-      name: `${DAYS[b.d]} · Sem ${b.w}`,
-      combined: dowIdx * smoothedWoM,
-      avgGroup, dowAvg, samples: b.cnt, shrink, details: b.details,
-      dowIndex: dowIdx, womIndex: smoothedWoM, rawWoM
-    };
-  }
+  dowAverages = {}; domFactors = {}; monthFactors = {};
+  
+  for(let d=0; d<7; d++) dowAverages[d] = dowBuckets[d].wcnt > 0 ? dowBuckets[d].wsum / dowBuckets[d].wcnt : trainAvg;
+  for(let d=1; d<=31; d++) domFactors[d] = domBuckets[d].wcnt >= 1.5 ? (domBuckets[d].wsum / domBuckets[d].wcnt) / trainAvg : 1.0;
+  for(let m=0; m<12; m++) monthFactors[m] = monthBuckets[m].wcnt >= 3 ? (monthBuckets[m].wsum / monthBuckets[m].wcnt) / trainAvg : 1.0;
 }
 
 function getBaseFCT(dateObj, step) {
   const method = $('trendMethodInput').value;
   let base = baseLevel;
-  if(method === 'holtwinters' && hwState) {
-    base = hwState.level + hwState.trend * step;
-  } else if(method === 'linear') {
-    const x = (parseInt($('trendBaseInput').value) || 45) + step;
-    base = linearSlope * x + linearIntercept;
-  }
-  if(base < 0) base = 0;
 
-  const w = Math.ceil(dateObj.getDate() / 7);
-  const d = dateObj.getDay();
-  const key = `${w}_${d}`;
-
-  let factor = 1;
-  if(seasonalIndices[key]) {
-    factor = seasonalIndices[key].combined;
+  if(method === 'ensemble') {
+    const weights = ensembleModels._weights || {};
+    let bSum = 0;
+    for(const [name, w] of Object.entries(weights)) { bSum += predictOneModel(name, trainingData, step, dateObj) * w; }
+    base = bSum || baseLevel;
   } else {
-    let trainAvg = trainingData.reduce((s,i)=>s+i.value,0)/trainingData.length;
-    factor = trainAvg > 0 ? (dowAverages[d] || trainAvg) / trainAvg : 1;
+    base = predictOneModel(method, trainingData, step, dateObj);
   }
+
+  // Multiplicadores de Triple Estacionalidad
+  const dow = dateObj.getDay(), dom = dateObj.getDate(), month = dateObj.getMonth();
+  const dowFactor = overallAvg > 0 ? (dowAverages[dow] || overallAvg) / overallAvg : 1;
+  const factor = dowFactor * (domFactors[dom] || 1) * (monthFactors[month] || 1);
+
   return Math.max(0, Math.round(base * factor));
 }
 
 function generateForecast() {
   futureForecast = [];
   if(!trainingData.length) return;
-  const lastISO = trainingData[trainingData.length-1].iso;
-  const lastDate = new Date(lastISO + 'T12:00:00');
+  const lastDate = new Date(trainingData[trainingData.length-1].iso + 'T12:00:00');
   const targetISO = $('forecastToInput').value;
 
   let step = 1;
   while(true) {
-    const d = new Date(lastDate);
-    d.setDate(d.getDate() + step);
+    const d = new Date(lastDate); d.setDate(d.getDate() + step);
     const iso = toISO(d);
     if(iso > targetISO) break;
 
-    const w = Math.ceil(d.getDate()/7);
-    const dow = d.getDay();
+    const w = Math.ceil(d.getDate()/7), dow = d.getDay();
     const baseFct = getBaseFCT(d, step);
     
-    // Aplicar Modificadores Manuales desde Memoria
     const ov = dailyOverrides[iso] || {f:100, e:100, n:''};
-    const finalFct = Math.max(0, Math.round(baseFct * (ov.f/100) * (ov.e/100)));
+    const h = CHILE_HOLIDAYS[iso];
+    const effectiveF = (dailyOverrides[iso] && dailyOverrides[iso]._userSet) ? ov.f : (h ? Math.round(h.factor*100) : 100);
+
+    const finalFct = Math.max(0, Math.round(baseFct * (effectiveF/100) * (ov.e/100)));
 
     futureForecast.push({
-      date: d, iso, dayName: `${DAYS[dow]} · Sem ${w}`, 
-      baseValue: baseFct, value: finalFct, overrides: ov
+      date: d, iso, dayName: `${DAYS[dow]} · Sem ${w}`,
+      baseValue: baseFct, value: finalFct, overrides: {...ov, f: effectiveF},
+      isHoliday: !!h, holidayLabel: h ? h.label : ''
     });
     step++;
   }
@@ -897,289 +960,188 @@ function generateForecast() {
 // ════════════════════════════════════════════════════════════
 function updateUI() {
   const method = $('trendMethodInput').value;
-  const methodName = {holtwinters:'Holt (Tendencia)', ema:'EMA Adaptativo', linear:'Regresión Lineal', avg:'Promedio Simple'}[method];
-  $('modelBadge').innerHTML = `<i class="ti ti-cpu"></i> ${methodName}`;
-
-  $('kpiBase').textContent = Math.round(baseLevel).toLocaleString('es-CL');
-  $('kpiBaseSub').textContent = `Ventana base dinámica: ${trainingData.slice(-parseInt($('trendBaseInput').value)||45).length}d`;
-
-  // WAPE & Accuracy
-  let absErr = 0, actSum = 0, matchCount = 0;
-  const fctIsoMap = {};
-  futureForecast.forEach(f => fctIsoMap[f.iso] = f.value);
-
-  testingData.forEach(act => {
-    const fctVal = fctIsoMap[act.iso];
-    if(fctVal !== undefined) {
-      absErr += Math.abs(act.value - fctVal);
-      actSum += act.value; matchCount++;
-    }
-  });
-
-  if(actSum > 0 && matchCount > 0) {
-    const wape = (absErr / actSum) * 100;
-    const acc = 100 - wape;
-    $('kpiAccuracy').textContent = acc.toFixed(1) + '%';
-    $('kpiAccuracy').style.color = acc >= 93 ? 'var(--green)' : acc >= 85 ? 'var(--amber)' : 'var(--red)';
-    const badge = $('kpiAccuracyBadge');
-    badge.style.display = 'inline-block';
-    badge.className = acc >= 93 ? 'kpi-accent good' : acc >= 85 ? 'kpi-accent warn' : 'kpi-accent bad';
-    badge.textContent = `WAPE: ${wape.toFixed(1)}%`;
-  } else {
-    $('kpiAccuracy').textContent = 'N/A';
-    $('kpiAccuracyBadge').style.display = 'none';
+  const methodNames = { ensemble:'AI Ensemble', damped_hw:'Holt-Winters Amortiguado', holtwinters:'Holt Lineal', ema:'EMA Adaptativo', linear:'Regresión Lineal', similar_days:'Días Similares', avg:'Promedio Simple'};
+  $('modelBadge').innerHTML = `<i class="ti ti-cpu"></i> ${methodNames[method]||method}`;
+  
+  // Calcular nivel base del ensemble actual
+  let currentBase = baseLevel;
+  if(method === 'ensemble' && ensembleModels._weights) {
+      let bSum = 0;
+      for(const [name, w] of Object.entries(ensembleModels._weights)) { bSum += (ensembleModels[name]?.level || overallAvg) * w; }
+      currentBase = bSum;
   }
+  $('kpiBase').textContent = Math.round(currentBase).toLocaleString('es-CL');
+  $('kpiBaseSub').textContent = `Ventana ponderada activa`;
+
+  let absErr=0, actSum=0, matchCount=0;
+  const fctIsoMap = {}; futureForecast.forEach(f => fctIsoMap[f.iso] = f.value);
+  testingData.forEach(act => {
+    const fv = fctIsoMap[act.iso];
+    if(fv!==undefined) { absErr+=Math.abs(act.value-fv); actSum+=act.value; matchCount++; }
+  });
+  if(actSum>0 && matchCount>0) {
+    const wape = (absErr/actSum)*100, acc = 100-wape;
+    $('kpiAccuracy').textContent = acc.toFixed(1)+'%';
+    $('kpiAccuracy').style.color = acc>=95?'var(--green)':acc>=88?'var(--amber)':'var(--red)';
+    const badge = $('kpiAccuracyBadge'); badge.style.display = 'inline-block';
+    badge.className = acc>=95?'kpi-accent good':acc>=88?'kpi-accent warn':'kpi-accent bad'; badge.textContent = `WAPE: ${wape.toFixed(1)}%`;
+  } else { $('kpiAccuracy').textContent = 'N/A'; $('kpiAccuracyBadge').style.display = 'none'; }
 
   updateTotalFutureKPI();
 
-  if(method === 'holtwinters' && hwState) {
-    $('kpiDelta').textContent = (hwState.trend >= 0 ? '+' : '') + hwState.trend.toFixed(1) + '/día';
-    $('kpiDeltaSub').textContent = 'Inclinación de Holt';
-  } else if(method === 'linear') {
-    $('kpiDelta').textContent = (linearSlope >= 0 ? '+' : '') + linearSlope.toFixed(1) + '/día';
+  if((method==='ensemble'||method==='holtwinters'||method==='damped_hw') && hwState) {
+    $('kpiDelta').textContent = (hwState.trend>=0?'+':'')+hwState.trend.toFixed(1)+'/día';
+    $('kpiDeltaSub').textContent = 'Inclinación Algorítmica';
+  } else if(method==='linear') {
+    $('kpiDelta').textContent = (linearSlope>=0?'+':'')+linearSlope.toFixed(1)+'/día';
     $('kpiDeltaSub').textContent = 'Pendiente Regresión';
   } else {
-    $('kpiDelta').textContent = 'Estable';
-    $('kpiDeltaSub').textContent = 'Base plana';
+    $('kpiDelta').textContent = 'Estable'; $('kpiDeltaSub').textContent = 'Curva adaptativa';
   }
 
-  renderChart();
-  renderDeviationTable(fctIsoMap);
-  renderFutureTable();
-  renderMonthlyTable();
-  renderAuditTable();
+  renderChart(); renderFutureTable(); renderMonthlyTable(); renderDeviationTable(fctIsoMap); renderAuditTable();
+  $('lowVolWarn').style.display = (trainingData.reduce((s,d)=>s+d.value,0)/trainingData.length)<50 ? 'flex' : 'none';
 }
 
 function updateTotalFutureKPI() {
   const to = $('filterTo').value;
-  const futOnly = futureForecast.filter(f => f.iso > to);
-  $('kpiNext30').textContent = futOnly.reduce((s,f)=>s+f.value, 0).toLocaleString('es-CL');
+  $('kpiNext30').textContent = futureForecast.filter(f=>f.iso>to).reduce((s,f)=>s+f.value,0).toLocaleString('es-CL');
 }
 
 function renderChart() {
   const ctx = $('mainChart').getContext('2d');
-  const train45 = trainingData.slice(-60); // Mostrar 60 dias para mas contexto
+  const train60 = trainingData.slice(-60);
   const labels=[], hist=[], fctLine=[], realLine=[];
-
-  train45.forEach((d,i) => {
-    labels.push(d.iso); hist.push(d.value);
-    fctLine.push(i === train45.length-1 ? d.value : null);
-    realLine.push(null);
-  });
-
-  futureForecast.forEach(f => {
-    labels.push(f.iso); hist.push(null); fctLine.push(f.value);
-    const real = testingData.find(t => t.iso === f.iso);
-    realLine.push(real ? real.value : null);
-  });
+  train60.forEach((d,i) => { labels.push(d.iso); hist.push(d.value); fctLine.push(i===train60.length-1?d.value:null); realLine.push(null); });
+  futureForecast.forEach(f => { labels.push(f.iso); hist.push(null); fctLine.push(f.value); const real = testingData.find(t=>t.iso===f.iso); realLine.push(real?real.value:null); });
 
   if(chartInst) chartInst.destroy();
   chartInst = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels,
-      datasets: [
-        {label:'Real Histórico', data:hist, borderColor:'#cbd5e1', backgroundColor:'rgba(203,213,225,0.2)', borderWidth:2, pointRadius:0, fill:true, tension:0.2},
-        {label:'Forecast Operativo', data:fctLine, borderColor:'#C80064', borderDash:[5,4], borderWidth:2.5, pointRadius:0, tension:0.2},
-        {label:'Testing Real', data:realLine, borderColor:'#1e293b', backgroundColor:'rgba(30,41,59,0.1)', borderWidth:2.5, pointRadius:3, pointBackgroundColor:'#1e293b', tension:0.1, fill:true}
-      ]
-    },
-    options: {
-      responsive:true, maintainAspectRatio:false,
-      interaction:{mode:'index', intersect:false},
-      plugins:{legend:{display:false}},
-      scales:{
-        x:{ticks:{font:{size:9}, maxTicksLimit:12, color:'#9ba3b0'}, grid:{display:false}},
-        y:{beginAtZero:true, ticks:{font:{size:10}, color:'#9ba3b0', callback:v=>v.toLocaleString('es-CL')}, grid:{color:'#f1f5f9'}}
-      }
-    }
+    type:'line',
+    data:{ labels, datasets:[
+      {label:'Histórico', data:hist, borderColor:'#cbd5e1', backgroundColor:'rgba(203,213,225,0.2)', borderWidth:2, pointRadius:0, fill:true, tension:0.2},
+      {label:'Forecast', data:fctLine, borderColor:'#C80064', borderDash:[5,4], borderWidth:2.5, pointRadius:0, tension:0.2},
+      {label:'Testing Real', data:realLine, borderColor:'#1e293b', backgroundColor:'rgba(30,41,59,0.1)', borderWidth:2.5, pointRadius:3, pointBackgroundColor:'#1e293b', tension:0.1, fill:true}
+    ]},
+    options:{ responsive:true, maintainAspectRatio:false, interaction:{mode:'index',intersect:false}, plugins:{legend:{display:false}}, scales:{ x:{ticks:{font:{size:9},maxTicksLimit:12,color:'#9ba3b0'},grid:{display:false}}, y:{beginAtZero:true,ticks:{font:{size:10},color:'#9ba3b0',callback:v=>v.toLocaleString('es-CL')},grid:{color:'#f1f5f9'}} } }
   });
 }
 
-// ─── GESTIÓN DINÁMICA DE TABLA FUTURO (HOT-RELOAD) ───
 function renderFutureTable() {
-  const fBody = document.querySelector('#futureTable tbody');
-  fBody.innerHTML = '';
-  
+  const fBody = document.querySelector('#futureTable tbody'); fBody.innerHTML = '';
   const to = $('filterTo').value;
-  futureForecast.filter(f => f.iso > to).forEach(f => {
+  futureForecast.filter(f=>f.iso>to).forEach(f => {
+    const hStyle = f.isHoliday ? 'background:var(--amber-dim);' : '';
+    const hBadge = f.isHoliday ? `<span style="font-size:10px;color:var(--amber);font-weight:600;margin-left:6px;">🎌 ${f.holidayLabel}</span>` : '';
     fBody.innerHTML += `
-      <tr>
+      <tr style="${hStyle}">
         <td class="td-date">${f.iso}</td>
-        <td style="text-align:left; color: var(--muted);">${f.dayName}</td>
-        <td style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--muted);">${f.baseValue.toLocaleString('es-CL')}</td>
-        <td><input type="number" class="input-adj" value="${f.overrides.f}" onchange="updateDailyAdj('${f.iso}', 'f', this.value)"></td>
-        <td><input type="number" class="input-adj" value="${f.overrides.e}" onchange="updateDailyAdj('${f.iso}', 'e', this.value)"></td>
+        <td style="text-align:left; color:var(--muted);">${f.dayName}${hBadge}</td>
+        <td style="font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--muted);">${f.baseValue.toLocaleString('es-CL')}</td>
+        <td><input type="number" class="input-adj" value="${f.overrides.f}" onchange="updateDailyAdj('${f.iso}','f',this.value)"></td>
+        <td><input type="number" class="input-adj" value="${f.overrides.e}" onchange="updateDailyAdj('${f.iso}','e',this.value)"></td>
         <td class="td-fct" id="final-${f.iso}">${f.value.toLocaleString('es-CL')}</td>
-        <td style="text-align:left;"><input type="text" class="input-adj input-adj-text" value="${f.overrides.n}" placeholder="Escribe aquí..." onchange="updateDailyAdj('${f.iso}', 'n', this.value)"></td>
+        <td style="text-align:left;"><input type="text" class="input-adj input-adj-text" value="${f.overrides.n}" placeholder="${f.isHoliday?f.holidayLabel:'Escribe aquí...'}" onchange="updateDailyAdj('${f.iso}','n',this.value)"></td>
       </tr>`;
   });
 }
 
-// Activa el recálculo al vuelo cuando se cambia un % y lo guarda en Memoria
 window.updateDailyAdj = function(iso, field, val) {
-  if(!dailyOverrides[iso]) dailyOverrides[iso] = {f:100, e:100, n:''};
-  if(field === 'n') dailyOverrides[iso].n = val;
-  else dailyOverrides[iso][field] = parseFloat(val) || 100;
-  
-  let fctItem = futureForecast.find(f => f.iso === iso);
+  if(!dailyOverrides[iso]) dailyOverrides[iso] = {f:100, e:100, n:'', _userSet:false};
+  if(field==='n') dailyOverrides[iso].n = val; else { dailyOverrides[iso][field] = parseFloat(val)||100; dailyOverrides[iso]._userSet = true; }
+  const fctItem = futureForecast.find(f=>f.iso===iso);
   fctItem.overrides = dailyOverrides[iso];
   fctItem.value = Math.max(0, Math.round(fctItem.baseValue * (fctItem.overrides.f/100) * (fctItem.overrides.e/100)));
-  
-  let finalCell = document.getElementById(`final-${iso}`);
-  if(finalCell) finalCell.textContent = fctItem.value.toLocaleString('es-CL');
-  
-  saveConfig(); // <-- Auto Guardado
-  updateTotalFutureKPI();
-  renderChart();
-  renderMonthlyTable();
-}
+  const cell = document.getElementById(`final-${iso}`); if(cell) cell.textContent = fctItem.value.toLocaleString('es-CL');
+  saveConfig(); updateTotalFutureKPI(); renderChart(); renderMonthlyTable();
+};
 
 function renderMonthlyTable() {
-  const mBody = document.querySelector('#monthlySummaryTable tbody');
-  mBody.innerHTML = '';
-  let monthGroup = {};
-  
-  const to = $('filterTo').value;
-  futureForecast.filter(f => f.iso > to).forEach(f => {
-    let mKey = `${f.date.getFullYear()}-${String(f.date.getMonth()+1).padStart(2,'0')}`;
-    if(!monthGroup[mKey]) monthGroup[mKey] = { label: `${MONTHS[f.date.getMonth()]} ${f.date.getFullYear()}`, sum: 0, cnt: 0 };
-    monthGroup[mKey].sum += f.value;
-    monthGroup[mKey].cnt++;
+  const mBody = document.querySelector('#monthlySummaryTable tbody'); mBody.innerHTML = '';
+  const monthGroup = {}; const to = $('filterTo').value;
+  futureForecast.filter(f=>f.iso>to).forEach(f => {
+    const mKey = `${f.date.getFullYear()}-${String(f.date.getMonth()+1).padStart(2,'0')}`;
+    if(!monthGroup[mKey]) monthGroup[mKey] = {label:`${MONTHS[f.date.getMonth()]} ${f.date.getFullYear()}`, sum:0, cnt:0};
+    monthGroup[mKey].sum += f.value; monthGroup[mKey].cnt++;
   });
-
   Object.keys(monthGroup).sort().forEach(k => {
-    let m = monthGroup[k];
-    mBody.innerHTML += `
-      <tr>
-        <td style="text-align:left; font-weight:700; color:var(--blue);">${m.label}</td>
-        <td style="color:var(--muted);">${m.cnt} días</td>
-        <td class="td-fct" style="font-size:15px;">${m.sum.toLocaleString('es-CL')}</td>
-        <td style="font-family:'IBM Plex Mono',monospace; font-weight:600; color:var(--muted);">${Math.round(m.sum/m.cnt).toLocaleString('es-CL')} / d</td>
-      </tr>`;
+    const m = monthGroup[k];
+    mBody.innerHTML += `<tr><td style="text-align:left;font-weight:700;color:var(--blue);">${m.label}</td><td style="color:var(--muted);">${m.cnt} días</td><td class="td-fct" style="font-size:15px;">${m.sum.toLocaleString('es-CL')}</td><td style="font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--muted);">${Math.round(m.sum/m.cnt).toLocaleString('es-CL')} / d</td></tr>`;
   });
 }
 
 function renderDeviationTable(fctIsoMap) {
-  const tbody = document.querySelector('#devTable tbody');
-  const tfoot = $('devFoot');
-  tbody.innerHTML = '';
-  if(!testingData.length) {
-    tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:30px;color:var(--muted)">No hay registros reales en la fecha de testing. Sube más datos históricos al Excel.</td></tr>`;
-    tfoot.innerHTML = ''; return;
-  }
+  const tbody = document.querySelector('#devTable tbody'), tfoot = $('devFoot'); tbody.innerHTML = '';
+  if(!testingData.length) { tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:30px;color:var(--muted)">Sin datos de testing.</td></tr>`; tfoot.innerHTML=''; return; }
   let totFct=0, totReal=0, totAbsErr=0;
   testingData.forEach(act => {
-    const fctVal = fctIsoMap[act.iso];
-    if(fctVal === undefined) return;
-    const diff = act.value - fctVal;
-    const pct = fctVal > 0 ? (diff/fctVal)*100 : 0;
-    const absPct = Math.abs(pct);
-    tbody.innerHTML += `
-      <tr>
-        <td class="td-date">${act.iso}</td>
-        <td style="text-align:left; color:var(--muted);">${DAYS[act.date.getDay()]}</td>
-        <td class="td-fct">${fctVal.toLocaleString('es-CL')}</td>
-        <td class="td-real">${act.value.toLocaleString('es-CL')}</td>
-        <td class="${diff > 0 ? 'td-over':'td-under'}">${diff > 0 ? '+':''}${diff.toLocaleString('es-CL')}</td>
-        <td class="${diff > 0 ? 'td-over':'td-under'}">${diff > 0 ? '+':''}${pct.toFixed(1)}%</td>
-        <td><span class="td-flag ${absPct < 6 ? 'ok' : absPct < 12 ? 'warn':'bad'}"></span>${(100-absPct).toFixed(1)}%</td>
-      </tr>`;
-    totFct += fctVal; totReal += act.value; totAbsErr += Math.abs(diff);
+    const fv = fctIsoMap[act.iso]; if(fv===undefined) return;
+    const diff=act.value-fv, pct=fv>0?(diff/fv)*100:0, absPct=Math.abs(pct);
+    tbody.innerHTML += `<tr><td class="td-date">${act.iso}</td><td style="text-align:left;color:var(--muted);">${DAYS[act.date.getDay()]}</td><td class="td-fct">${fv.toLocaleString('es-CL')}</td><td class="td-real">${act.value.toLocaleString('es-CL')}</td><td class="${diff>0?'td-over':'td-under'}">${diff>0?'+':''}${diff.toLocaleString('es-CL')}</td><td class="${diff>0?'td-over':'td-under'}">${diff>0?'+':''}${pct.toFixed(1)}%</td><td>${(100-absPct).toFixed(1)}%</td></tr>`;
+    totFct+=fv; totReal+=act.value; totAbsErr+=Math.abs(diff);
   });
-  const wape = totReal > 0 ? (totAbsErr/totReal)*100 : 0;
-  tfoot.innerHTML = `
-    <tr>
-      <td colspan="2" style="text-align:left;">SUMA PERIODO PRUEBA</td>
-      <td class="td-fct">${totFct.toLocaleString('es-CL')}</td>
-      <td class="td-real">${totReal.toLocaleString('es-CL')}</td>
-      <td class="${totReal-totFct > 0 ? 'td-over':'td-under'}">${totReal-totFct > 0 ? '+':''}${(totReal-totFct).toLocaleString('es-CL')}</td>
-      <td colspan="2" style="text-align:right; color:var(--magenta); font-weight:700;">WAPE Total: ${wape.toFixed(1)}%</td>
-    </tr>`;
+  const wape = totReal>0?(totAbsErr/totReal)*100:0;
+  tfoot.innerHTML = `<tr><td colspan="2" style="text-align:left;">SUMA PERIODO PRUEBA</td><td class="td-fct">${totFct.toLocaleString('es-CL')}</td><td class="td-real">${totReal.toLocaleString('es-CL')}</td><td class="${totReal-totFct>0?'td-over':'td-under'}">${totReal-totFct>0?'+':''}${(totReal-totFct).toLocaleString('es-CL')}</td><td colspan="2" style="text-align:right;color:var(--magenta);font-weight:700;">WAPE Total: ${wape.toFixed(1)}%</td></tr>`;
 }
 
+// ─── AUDITORÍA ENSEMBLE Y TRIPLE ESTACIONALIDAD ───
 function renderAuditTable() {
-  const tbody = document.querySelector('#auditTable tbody');
+  // Weights de Ensemble
+  const wContainer = $('ensembleWeightsContainer');
+  wContainer.innerHTML = '';
+  if($('trendMethodInput').value === 'ensemble' && ensembleModels._weights) {
+      let html = '<div class="weight-bar-container">';
+      const colors = {holtwinters:'#C80064', damped_hw:'#e6007e', ema:'#1a3a78', linear:'#059669', similar_days:'#d97706'};
+      const labels = {holtwinters:'Holt', damped_hw:'Damped', ema:'EMA', linear:'Linear', similar_days:'Similar'};
+      for(const [name, w] of Object.entries(ensembleModels._weights)) {
+          if(w > 0.01) html += `<div class="weight-bar" style="width:${w*100}%; background:${colors[name]};" title="${labels[name]}: ${(w*100).toFixed(1)}%">${labels[name]} ${(w*100).toFixed(0)}%</div>`;
+      }
+      html += '</div>';
+      wContainer.innerHTML = html;
+  } else {
+      wContainer.innerHTML = '<span style="color:var(--muted); font-size:12px;">El motor Ensemble no está activo.</span>';
+  }
+
+  // Factores Estacionales
+  const tbody = document.querySelector('#auditSeasonalityTable tbody');
   tbody.innerHTML = '';
-  Object.keys(seasonalIndices).sort().forEach(key => {
-    const idx = seasonalIndices[key];
-    const pct = idx.combined * 100;
-    let pillCls = pct > 115 ? 'hi' : pct < 85 ? 'lo' : 'mid';
-
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td style="text-align:left; font-weight:600;">
-        <button class="btn-expand" id="btn-${key}" onclick="toggleAudit('${key}')"><i class="ti ti-plus"></i></button>
-        &nbsp;${idx.name}
-      </td>
-      <td>${idx.samples} d</td>
-      <td style="font-family:'IBM Plex Mono',monospace; color:var(--muted);">${Math.round(idx.avgGroup).toLocaleString('es-CL')}</td>
-      <td style="font-family:'IBM Plex Mono',monospace; color:var(--muted);">${Math.round(idx.dowAvg).toLocaleString('es-CL')}</td>
-      <td style="font-family:'IBM Plex Mono',monospace; color:var(--muted);">${(idx.womIndex*100).toFixed(1)}%</td>
-      <td><span class="idx-pill ${pillCls}">${pct.toFixed(1)}%</span></td>`;
-    tbody.appendChild(tr);
-
-    const trDet = document.createElement('tr');
-    trDet.id = `det-${key}`;
-    trDet.className = 'detail-expand'; trDet.style.display = 'none';
-    let pills = idx.details.map(x => `
-      <div class="dpill ${x.outlier ? 'outlier-flag':''}">
-        <span class="dp-date">${x.iso}</span>
-        <span class="dp-val">${x.v.toLocaleString('es-CL')}</span>
-      </div>`).join('');
-    
-    trDet.innerHTML = `
-      <td colspan="6" style="text-align:left;">
-        <div style="font-size:10.5px; color:var(--muted); font-weight:700; margin-bottom:6px;">DÍAS UTILIZADOS EN EL PROMEDIO:</div>
-        <div class="detail-pills">${pills}</div>
-      </td>`;
-    tbody.appendChild(trDet);
-  });
-}
-
-window.toggleAudit = function(key) {
-  const det = $(`det-${key}`);
-  const btn = $(`btn-${key}`);
-  const open = det.style.display === 'none';
-  det.style.display = open ? 'table-row' : 'none';
-  btn.innerHTML = open ? '<i class="ti ti-minus"></i>' : '<i class="ti ti-plus"></i>';
-};
-
-// ════════════════════════════════════════════════════════════
-// EXPORTACIÓN Y UTILS
-// ════════════════════════════════════════════════════════════
-$('btnExport').addEventListener('click', () => {
-    const to = $('filterTo').value;
-    const exportData = futureForecast.filter(f => f.iso > to).map(f => ({
-        'Fecha Operativa': f.iso,
-        'Día y Semana': f.dayName,
-        'Volumen Algorítmico Base': f.baseValue,
-        '% Factor Feriado': f.overrides.f,
-        '% Factor Eventos': f.overrides.e,
-        'Pronóstico Operativo Final': f.value,
-        'Clasificación / Notas': f.overrides.n
-    }));
-    
-    const ws = XLSX.utils.json_to_sheet(exportData);
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Forecast_WFM');
-    XLSX.writeFile(wb, `Forecast_TP_${$('serviceSelect').value.replace('.xlsx','')}_${to}.xlsx`);
-});
-
-function showLoader() { $('emptyState').style.display='none'; $('mainDashboard').style.display='none'; $('loaderScreen').style.display='flex'; $('btnExport').style.display='none'; $('btnClearMem').style.display='none';}
-function hideLoader() { $('loaderScreen').style.display='none'; }
-function toISO(date) { return `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`; }
-function parseDate(val) {
-  if(!val) return null;
-  if(val instanceof Date) return isNaN(val.getTime()) ? null : val;
-  if(typeof val === 'number') return new Date(Math.round((val-25569)*86400*1000));
-  if(typeof val === 'string') {
-    const parts = val.trim().split(/[-/]/);
-    if(parts.length === 3) {
-      if(parts[2].length === 4) return new Date(+parts[2], +parts[1]-1, +parts[0]);
-      if(parts[0].length === 4) return new Date(+parts[0], +parts[1]-1, +parts[2]);
+  
+  for(let d=0; d<7; d++) {
+    const f = overallAvg > 0 ? (dowAverages[d] || overallAvg) / overallAvg : 1;
+    tbody.innerHTML += `<tr><td style="text-align:left; font-weight:600; color:var(--magenta);"><i class="ti ti-calendar-event"></i> Día de la Semana</td><td style="text-align:left;">${DAYS[d]}</td><td style="font-family:'IBM Plex Mono',monospace; font-weight:600;">${f.toFixed(3)}x</td></tr>`;
+  }
+  for(let d=1; d<=31; d++) {
+    if(domFactors[d] && Math.abs(domFactors[d] - 1) > 0.02) {
+        tbody.innerHTML += `<tr><td style="text-align:left; font-weight:600; color:var(--blue);"><i class="ti ti-calendar-month"></i> Día del Mes</td><td style="text-align:left;">Día ${d}</td><td style="font-family:'IBM Plex Mono',monospace; font-weight:600;">${domFactors[d].toFixed(3)}x</td></tr>`;
     }
   }
+  for(let m=0; m<12; m++) {
+    if(monthFactors[m] && Math.abs(monthFactors[m] - 1) > 0.02) {
+        tbody.innerHTML += `<tr><td style="text-align:left; font-weight:600; color:var(--green);"><i class="ti ti-calendar"></i> Estacionalidad Mensual</td><td style="text-align:left;">${MONTHS[m]}</td><td style="font-family:'IBM Plex Mono',monospace; font-weight:600;">${monthFactors[m].toFixed(3)}x</td></tr>`;
+    }
+  }
+}
+
+// ════════════════════════════════════════════════════════════
+// EXPORTAR
+// ════════════════════════════════════════════════════════════
+$('btnExport').addEventListener('click', () => {
+  const to = $('filterTo').value;
+  const exportData = futureForecast.filter(f=>f.iso>to).map(f=>({
+    'Fecha Operativa': f.iso, 'Día y Semana': f.dayName, 'Feriado Chile': f.isHoliday ? f.holidayLabel : '',
+    'Volumen Algorítmico Base': f.baseValue, '% Factor Feriado': f.overrides.f, '% Factor Eventos': f.overrides.e,
+    'Pronóstico Operativo Final': f.value, 'Notas': f.overrides.n
+  }));
+  const ws = XLSX.utils.json_to_sheet(exportData); const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, 'Forecast_WFM'); XLSX.writeFile(wb, `Forecast_TP_${$('serviceSelect').value.replace('.xlsx','')}_${to}.xlsx`);
+});
+
+function showLoader()  { $('emptyState').style.display='none'; $('mainDashboard').style.display='none'; $('loaderScreen').style.display='flex'; $('btnExport').style.display='none'; $('btnClearMem').style.display='none'; }
+function hideLoader()  { $('loaderScreen').style.display='none'; }
+function toISO(date)   { return `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`; }
+function parseDate(val) {
+  if(!val) return null; if(val instanceof Date) return isNaN(val.getTime())?null:val;
+  if(typeof val==='number') return new Date(Math.round((val-25569)*86400*1000));
+  if(typeof val==='string') { const p=val.trim().split(/[-/]/); if(p.length===3) { if(p[2].length===4) return new Date(+p[2],+p[1]-1,+p[0]); if(p[0].length===4) return new Date(+p[0],+p[1]-1,+p[2]); } }
   return null;
 }
 </script>
